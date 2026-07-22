@@ -1,0 +1,43 @@
+// 将本文件复制为 opencode-lark-bridge.config.jsonc 并填入真实凭证
+//
+// 权限通知模板变量：
+//   {tool}      工具名（bash / edit / read / glob / grep / task / skill / lsp /
+//              webfetch / websearch / external_directory / doom_loop）
+//   {operation} 操作类型（permission 名或 command 起始词）
+//   {resource}  资源描述：
+//                - bash:        命令参数
+//                - read/edit:   文件路径
+//                - glob/grep:   匹配模式
+//                - webfetch:    URL 或 URI
+//                - websearch:   搜索查询词
+//                - task:        子代理类型
+//                - skill:       技能名
+//                - external_directory: 外部路径
+//                - doom_loop:   "<innerTool>: <input>"
+//
+// 任务完成通知模板变量：
+//   {projectName}  项目名
+//   {sessionTitle} 会话标题
+{
+  "app_id": "cli_xxxxxxxxxxxxxxxx",
+  "app_secret": "xxxxxxxxxxxxxxxx",
+  "default_target": {
+    "chat_id": "oc_xxxxxxxxxxxxxxxx"
+  },
+  "debounce_ms": 3000,
+  "log_file": "./logs/opencode-lark-bridge.log",
+  "categories": {
+    "permission": {
+      "target": { "chat_id": "oc_xxxxxxxxxxxxxxxx" },
+      "template": "🔔 OpenCode Permission Request\nTool: {tool}\nOperation: {operation}\nTarget: {resource}"
+    },
+    "completion": {
+      "target": { "chat_id": "oc_xxxxxxxxxxxxxxxx" },
+      "template": "✅ Task Completed\nProject: {projectName}\nSession: {sessionTitle}"
+    },
+    "question": {
+      // "target": { "chat_id": "oc_xxxx" },
+      // "template": "❓ {header}\n{question}\nOptions: {options}"
+    }
+  }
+}
