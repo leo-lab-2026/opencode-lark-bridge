@@ -33,8 +33,22 @@ export function resolveConfigPath(
 }
 
 export const OpenCodeLarkBridge = async (ctx: any) => {
+  // 紧急调试：记录 ctx 内容到固定路径，以便排查配置路径问题
+  const debugLog = "/tmp/opencode-lark-bridge-debug.log"
+  const fs = await import("node:fs")
+  try {
+    fs.appendFileSync(debugLog, `[${new Date().toISOString()}] ctx.directory=${ctx?.directory}, ctx.worktree=${ctx?.worktree}, project.name=${ctx?.project?.name}\n`)
+  } catch {}
+
   const configPath = resolveConfigPath(ctx)
+  try {
+    fs.appendFileSync(debugLog, `[${new Date().toISOString()}] configPath=${configPath}\n`)
+  } catch {}
+
   if (!configPath) {
+    try {
+      fs.appendFileSync(debugLog, `[${new Date().toISOString()}] configPath is null, returning empty hooks\n`)
+    } catch {}
     return { event: async () => {} }
   }
 
@@ -43,8 +57,11 @@ export const OpenCodeLarkBridge = async (ctx: any) => {
   try {
     config = loadConfig(configPath)
     logger = createFileLogger(path.resolve(path.dirname(configPath), config.log_file))
-    logger.info("Plugin initialized", { configPath })
-  } catch {
+    logger.info("Plugin initialized", { configPath, ctxDirectory: ctx?.directory, ctxWorktree: ctx?.worktree })
+  } catch (err) {
+    try {
+      fs.appendFileSync(debugLog, `[${new Date().toISOString()}] init error: ${(err as Error).message}\n`)
+    } catch {}
     return { event: async () => {} }
   }
 
