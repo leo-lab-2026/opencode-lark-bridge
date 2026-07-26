@@ -1,0 +1,22 @@
+{
+  "name": "my-node-app",
+  "version": "1.2.0",
+  "description": "测试用 Node.js 项目，用于验证 OpenCode Lark Bridge 端到端事件流",
+  "main": "src/index.js",
+  "scripts": {
+    "build": "tsc && npm run copy-assets",
+    "start": "node dist/index.js",
+    "test": "bun test"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "dotenv": "^16.3.1"
+  },
+  "devDependencies": {
+    "typescript": "^5.3.0",
+    "@types/node": "^20.0.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
