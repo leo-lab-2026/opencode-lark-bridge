@@ -4,19 +4,16 @@ node_modules/
 # Build output
 dist/
 
-# OpenCode runtime state
-.omo/
-
-# CodeGraph index (symlink to ~/.omo/codegraph/)
-.codegraph
 
 # Runtime logs
 src/logs/
 *.log
 
+# Plugin runtime config and secrets (project-root at .opencode/, source-tree, and any future location)
+**/opencode-lark-bridge.config.jsonc
 # Runtime config (contains secrets - keep only .example.jsonc)
 opencode-lark-bridge.config.jsonc
-.opencode/
+
 
 # OS files
 .DS_Store
@@ -28,3 +25,6 @@ Thumbs.db
 *~
 .vscode/
 .idea/
+
+# opencode-lark-bridge package artifacts
+logs/
