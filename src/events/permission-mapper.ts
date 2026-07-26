@@ -98,12 +98,17 @@ export function extractResource(props: Record<string, unknown>): string {
 
 export function mapPermissionEvent(event: any, target: NotificationTarget, template?: string): NotificationMessage {
   const props = (event?.properties ?? event) as Record<string, unknown>
-  const tool = extractToolName(props?.tool)
+  // 兼容 Permission 对象格式（OpenCode 直接传入 Permission 时无 tool 字段，有 type/pattern）
+  const rawTool = props?.tool ?? props?.type ?? event?.type
+  const tool = extractToolName(rawTool)
   const permission = typeof props.permission === "string" ? props.permission : ""
   const commandParts = tool === "bash" || permission === "bash" ? extractCommandParts(props) : null
 
   const operation = commandParts?.command ?? permission ?? tool
-  const resource = commandParts?.args ?? extractResource(props)
+  // 优先从 pattern 提取 resource，兼容 Permission 对象
+  const rawPattern = props?.pattern ?? event?.pattern
+  const patternResource = Array.isArray(rawPattern) ? rawPattern.join(", ") : typeof rawPattern === "string" ? rawPattern : undefined
+  const resource = commandParts?.args ?? patternResource ?? extractResource(props)
 
   const text = (template || DEFAULT_TEMPLATE)
     .replace(/{tool}/g, tool)
