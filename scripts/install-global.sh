@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-PROJECT_ROOT="$(cd "$(dirname "$0")/../../.." && pwd)"
+PROJECT_ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 GLOBAL_OPENCODE_DIR="${HOME}/.config/opencode"
 PLUGIN_DIR="$GLOBAL_OPENCODE_DIR/plugins/opencode-lark-bridge"
-SOURCE_DIR="$PROJECT_ROOT/packages/opencode-lark-bridge"
+SOURCE_DIR="$PROJECT_ROOT"
 CONFIG_FILE="opencode-lark-bridge.config.jsonc"
 EXAMPLE_FILE="opencode-lark-bridge.config.example.jsonc"
 GLOBAL_CONFIG="$GLOBAL_OPENCODE_DIR/$CONFIG_FILE"

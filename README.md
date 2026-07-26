@@ -54,7 +54,7 @@ npx opencode-lark-bridge init --global
 源码在仓库内时，使用本地脚本进行项目级部署：
 
 ```bash
-cd packages/opencode-lark-bridge
+cd opencode-lark-bridge
 npm run build
 npm run install:local
 ```
@@ -62,7 +62,7 @@ npm run install:local
 进行全局部署：
 
 ```bash
-cd packages/opencode-lark-bridge
+cd opencode-lark-bridge
 npm run build
 npm run install:global
 ```
@@ -171,7 +171,20 @@ npm run install:local
 1. 编译 TypeScript 源码到 `dist/`
 2. 复制编译产物到 `.opencode/plugins/opencode-lark-bridge/`
 3. 首次运行时，在项目根目录 `.opencode/` 下创建示例配置（已存在则保留）
-4. **不修改** `opencode.json` 或任何全局配置
+
+### 插件入口配置
+
+`package.json` 中的 `"main": "./index.js"` 对 OpenCode 正确加载插件入口至关重要。安装后需要在 `.opencode/opencode.jsonc`（或 `.opencode/opencode.json`）的 `plugin` 数组中注册插件路径：
+
+```json
+{
+  "plugin": [
+    ".opencode/plugins/opencode-lark-bridge"
+  ]
+}
+```
+
+也可以使用 `opencode plugin <module>` 命令自动配置。
 
 ## 测试
 
