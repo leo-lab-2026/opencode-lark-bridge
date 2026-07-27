@@ -131,6 +131,18 @@ export const OpenCodeLarkBridge = async (ctx: any) => {
         },
       }
     }
+    if (type === "session.error") {
+      const props = event?.properties ?? event ?? {}
+      const sessionID = props?.sessionID ?? props?.id ?? "unknown"
+      return {
+        ...event,
+        properties: {
+          ...props,
+          sessionID,
+          projectName: props?.projectName ?? projectName,
+        },
+      }
+    }
     if (type !== "session.idle") return event
 
     const props = event?.properties ?? event ?? {}
