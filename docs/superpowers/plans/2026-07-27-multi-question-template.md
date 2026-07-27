@@ -6,7 +6,7 @@ base-ref: f455a84ae80d495abd08bb71f06b1c262a290c21
 
 # 多问题通知模板配置实施计划
 
-> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
+> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [x]`) syntax for tracking.
 
 **Goal:** 为 question 事件新增多问题模板配置能力，支持自定义整体框架和问题项格式
 
@@ -46,7 +46,7 @@ base-ref: f455a84ae80d495abd08bb71f06b1c262a290c21
 - Consumes: 无
 - Produces: `CategoryConfig.template_multiple?: string`, `CategoryConfig.question_item_template?: string`
 
-- [ ] **Step 1: 扩展 CategoryConfig 接口**
+- [x] **Step 1: 扩展 CategoryConfig 接口**
 
 打开 `src/types.ts`，在 `CategoryConfig` 接口中添加两个新字段：
 
@@ -59,12 +59,12 @@ export interface CategoryConfig {
 }
 ```
 
-- [ ] **Step 2: 验证类型定义**
+- [x] **Step 2: 验证类型定义**
 
 运行: `npm run build`
 预期: 编译通过，无类型错误
 
-- [ ] **Step 3: 提交类型定义变更**
+- [x] **Step 3: 提交类型定义变更**
 
 ```bash
 git add src/types.ts
@@ -82,7 +82,7 @@ git commit -m "feat: 扩展 CategoryConfig 接口，新增多问题模板字段"
 - Consumes: 无
 - Produces: `DEFAULT_TEMPLATE`, `DEFAULT_TEMPLATE_MULTIPLE`, `DEFAULT_QUESTION_ITEM_TEMPLATE` 三个常量
 
-- [ ] **Step 1: 定义多问题默认模板常量**
+- [x] **Step 1: 定义多问题默认模板常量**
 
 在 `src/events/question-mapper.ts` 顶部，在 `DEFAULT_TEMPLATE` 之后添加：
 
@@ -96,12 +96,12 @@ const MAX_OPTIONS = 5
 
 注意: 同时更新 `DEFAULT_TEMPLATE`，将 `Options: {options}` 改为 `Options:\n{options}\n{suffix}`
 
-- [ ] **Step 2: 验证编译**
+- [x] **Step 2: 验证编译**
 
 运行: `npm run build`
 预期: 编译通过
 
-- [ ] **Step 3: 提交默认模板定义**
+- [x] **Step 3: 提交默认模板定义**
 
 ```bash
 git add src/events/question-mapper.ts
@@ -119,7 +119,7 @@ git commit -m "feat: 定义多问题默认模板常量"
 - Consumes: 无
 - Produces: `applyIndent(template: string, varName: string, content: string): string`
 
-- [ ] **Step 1: 编写 applyIndent 函数**
+- [x] **Step 1: 编写 applyIndent 函数**
 
 在 `truncate` 函数之后添加：
 
@@ -147,7 +147,7 @@ function applyIndent(template: string, varName: string, content: string): string
 }
 ```
 
-- [ ] **Step 2: 编写 applyIndent 单元测试**
+- [x] **Step 2: 编写 applyIndent 单元测试**
 
 在 `tests/question-mapper.test.ts` 中添加：
 
@@ -175,12 +175,12 @@ it("applyIndent 对空内容返回空字符串", () => {
 
 注意: 由于 `applyIndent` 是私有函数，需要暂时导出或在文件内测试。建议在文件内编写测试函数，或者跳过此步骤，在集成测试中验证。
 
-- [ ] **Step 3: 验证编译**
+- [x] **Step 3: 验证编译**
 
 运行: `npm run build`
 预期: 编译通过
 
-- [ ] **Step 4: 提交 applyIndent 实现**
+- [x] **Step 4: 提交 applyIndent 实现**
 
 ```bash
 git add src/events/question-mapper.ts tests/question-mapper.test.ts
@@ -198,7 +198,7 @@ git commit -m "feat: 实现 applyIndent 函数用于自动缩进"
 - Consumes: `QuestionInfo.multiple`, `QuestionInfo.custom`
 - Produces: `formatSuffix(q: QuestionInfo): string`
 
-- [ ] **Step 1: 编写 formatSuffix 函数**
+- [x] **Step 1: 编写 formatSuffix 函数**
 
 在 `applyIndent` 函数之后添加：
 
@@ -214,12 +214,12 @@ function formatSuffix(q: QuestionInfo): string {
 }
 ```
 
-- [ ] **Step 2: 验证编译**
+- [x] **Step 2: 验证编译**
 
 运行: `npm run build`
 预期: 编译通过
 
-- [ ] **Step 3: 提交 formatSuffix 实现**
+- [x] **Step 3: 提交 formatSuffix 实现**
 
 ```bash
 git add src/events/question-mapper.ts
@@ -237,7 +237,7 @@ git commit -m "feat: 实现 formatSuffix 函数"
 - Consumes: `QuestionInfo`, `MAX_OPTIONS`, `formatSuffix`
 - Produces: `formatQuestionOptions(q: QuestionInfo): string` - 仅返回选项列表，不含后缀
 
-- [ ] **Step 1: 重构 formatSingleQuestionOptions 为 formatQuestionOptions**
+- [x] **Step 1: 重构 formatSingleQuestionOptions 为 formatQuestionOptions**
 
 将原有的 `formatSingleQuestionOptions` 函数重构为 `formatQuestionOptions`，仅返回选项列表：
 
@@ -261,12 +261,12 @@ function formatQuestionOptions(q: QuestionInfo): string {
 }
 ```
 
-- [ ] **Step 2: 验证编译**
+- [x] **Step 2: 验证编译**
 
 运行: `npm run build`
 预期: 编译通过
 
-- [ ] **Step 3: 提交 formatQuestionOptions 重构**
+- [x] **Step 3: 提交 formatQuestionOptions 重构**
 
 ```bash
 git add src/events/question-mapper.ts
@@ -284,7 +284,7 @@ git commit -m "refactor: 重构 formatQuestionOptions，分离后缀逻辑"
 - Consumes: `QuestionInfo`, `MAX_QUESTION_LEN`, `formatSuffix`, `formatQuestionOptions`, `applyIndent`
 - Produces: `formatQuestionItem(q: QuestionInfo, index: number, template?: string): string`
 
-- [ ] **Step 1: 编写 removeOptionsLine 辅助函数**
+- [x] **Step 1: 编写 removeOptionsLine 辅助函数**
 
 在 `formatQuestionOptions` 之后添加：
 
@@ -299,7 +299,7 @@ function removeOptionsLine(template: string): string {
 }
 ```
 
-- [ ] **Step 2: 编写 formatQuestionItem 函数**
+- [x] **Step 2: 编写 formatQuestionItem 函数**
 
 在 `removeOptionsLine` 之后添加：
 
@@ -333,12 +333,12 @@ function formatQuestionItem(q: QuestionInfo, index: number, template?: string): 
 }
 ```
 
-- [ ] **Step 3: 验证编译**
+- [x] **Step 3: 验证编译**
 
 运行: `npm run build`
 预期: 编译通过
 
-- [ ] **Step 4: 提交 formatQuestionItem 实现**
+- [x] **Step 4: 提交 formatQuestionItem 实现**
 
 ```bash
 git add src/events/question-mapper.ts
@@ -356,7 +356,7 @@ git commit -m "feat: 实现 formatQuestionItem 函数"
 - Consumes: `QuestionInfo[]`, `formatQuestionItem`
 - Produces: `formatQuestions(questions: QuestionInfo[], itemTemplate?: string): string`
 
-- [ ] **Step 1: 编写 formatQuestions 函数**
+- [x] **Step 1: 编写 formatQuestions 函数**
 
 在 `formatQuestionItem` 之后添加：
 
@@ -371,12 +371,12 @@ function formatQuestions(questions: QuestionInfo[], itemTemplate?: string): stri
 }
 ```
 
-- [ ] **Step 2: 验证编译**
+- [x] **Step 2: 验证编译**
 
 运行: `npm run build`
 预期: 编译通过
 
-- [ ] **Step 3: 提交 formatQuestions 实现**
+- [x] **Step 3: 提交 formatQuestions 实现**
 
 ```bash
 git add src/events/question-mapper.ts
@@ -394,7 +394,7 @@ git commit -m "feat: 实现 formatQuestions 函数"
 - Consumes: 所有辅助函数
 - Produces: `mapQuestionEvent(event: any, target: NotificationTarget, template?: string, templateMultiple?: string, questionItemTemplate?: string): NotificationMessage`
 
-- [ ] **Step 1: 重构 mapQuestionEvent 函数签名**
+- [x] **Step 1: 重构 mapQuestionEvent 函数签名**
 
 更新函数签名，新增两个可选参数：
 
@@ -408,7 +408,7 @@ export function mapQuestionEvent(
 ): NotificationMessage {
 ```
 
-- [ ] **Step 2: 重构单问题分支**
+- [x] **Step 2: 重构单问题分支**
 
 在 `mapQuestionEvent` 函数中，重构单问题逻辑：
 
@@ -467,12 +467,12 @@ export function mapQuestionEvent(
 }
 ```
 
-- [ ] **Step 3: 验证编译**
+- [x] **Step 3: 验证编译**
 
 运行: `npm run build`
 预期: 编译通过
 
-- [ ] **Step 4: 提交 mapQuestionEvent 重构**
+- [x] **Step 4: 提交 mapQuestionEvent 重构**
 
 ```bash
 git add src/events/question-mapper.ts
@@ -490,7 +490,7 @@ git commit -m "refactor: 重构 mapQuestionEvent 支持多问题模板配置"
 - Consumes: `mapQuestionEvent` 新签名
 - Produces: 无新接口
 
-- [ ] **Step 1: 更新 mapQuestionEvent 调用**
+- [x] **Step 1: 更新 mapQuestionEvent 调用**
 
 找到 `event-handler.ts` 中调用 `mapQuestionEvent` 的位置，传递新参数：
 
@@ -516,12 +516,12 @@ if (eventType === "question.asked") {
 }
 ```
 
-- [ ] **Step 2: 验证编译**
+- [x] **Step 2: 验证编译**
 
 运行: `npm run build`
 预期: 编译通过
 
-- [ ] **Step 3: 提交 event-handler 更新**
+- [x] **Step 3: 提交 event-handler 更新**
 
 ```bash
 git add src/events/event-handler.ts
@@ -539,7 +539,7 @@ git commit -m "feat: 更新 event-handler 传递多问题模板参数"
 - Consumes: `mapQuestionEvent`
 - Produces: 无
 
-- [ ] **Step 1: 测试单问题 + 自定义模板**
+- [x] **Step 1: 测试单问题 + 自定义模板**
 
 ```typescript
 it("单问题使用自定义模板", () => {
@@ -568,12 +568,12 @@ it("单问题使用自定义模板", () => {
 })
 ```
 
-- [ ] **Step 2: 运行测试验证**
+- [x] **Step 2: 运行测试验证**
 
 运行: `bun test tests/question-mapper.test.ts`
 预期: 测试通过
 
-- [ ] **Step 3: 提交单问题测试**
+- [x] **Step 3: 提交单问题测试**
 
 ```bash
 git add tests/question-mapper.test.ts
@@ -591,7 +591,7 @@ git commit -m "test: 添加单问题自定义模板测试"
 - Consumes: `mapQuestionEvent`
 - Produces: 无
 
-- [ ] **Step 1: 测试多问题 + 自定义所有模板**
+- [x] **Step 1: 测试多问题 + 自定义所有模板**
 
 ```typescript
 it("多问题使用自定义模板", () => {
@@ -636,7 +636,7 @@ it("多问题使用自定义模板", () => {
 })
 ```
 
-- [ ] **Step 2: 测试多问题 + 只配置单问题模板**
+- [x] **Step 2: 测试多问题 + 只配置单问题模板**
 
 ```typescript
 it("多问题只配置单问题模板时使用默认多问题模板", () => {
@@ -660,7 +660,7 @@ it("多问题只配置单问题模板时使用默认多问题模板", () => {
 })
 ```
 
-- [ ] **Step 3: 测试不配置任何模板**
+- [x] **Step 3: 测试不配置任何模板**
 
 ```typescript
 it("不配置模板时使用默认模板", () => {
@@ -684,12 +684,12 @@ it("不配置模板时使用默认模板", () => {
 })
 ```
 
-- [ ] **Step 4: 运行测试验证**
+- [x] **Step 4: 运行测试验证**
 
 运行: `bun test tests/question-mapper.test.ts`
 预期: 测试通过
 
-- [ ] **Step 5: 提交多问题测试**
+- [x] **Step 5: 提交多问题测试**
 
 ```bash
 git add tests/question-mapper.test.ts
@@ -707,7 +707,7 @@ git commit -m "test: 添加多问题模板测试"
 - Consumes: `mapQuestionEvent`
 - Produces: 无
 
-- [ ] **Step 1: 测试空选项问题**
+- [x] **Step 1: 测试空选项问题**
 
 ```typescript
 it("空选项问题正确处理", () => {
@@ -731,7 +731,7 @@ it("空选项问题正确处理", () => {
 })
 ```
 
-- [ ] **Step 2: 测试选项截断**
+- [x] **Step 2: 测试选项截断**
 
 ```typescript
 it("选项超过 5 个时截断并显示计数", () => {
@@ -763,7 +763,7 @@ it("选项超过 5 个时截断并显示计数", () => {
 })
 ```
 
-- [ ] **Step 3: 测试选项自动缩进**
+- [x] **Step 3: 测试选项自动缩进**
 
 ```typescript
 it("选项自动应用模板缩进", () => {
@@ -789,7 +789,7 @@ it("选项自动应用模板缩进", () => {
 })
 ```
 
-- [ ] **Step 4: 测试后缀变量定位**
+- [x] **Step 4: 测试后缀变量定位**
 
 ```typescript
 it("后缀变量可在模板任意位置", () => {
@@ -819,12 +819,12 @@ it("后缀变量可在模板任意位置", () => {
 })
 ```
 
-- [ ] **Step 5: 运行测试验证**
+- [x] **Step 5: 运行测试验证**
 
 运行: `bun test tests/question-mapper.test.ts`
 预期: 测试通过
 
-- [ ] **Step 6: 提交边界场景测试**
+- [x] **Step 6: 提交边界场景测试**
 
 ```bash
 git add tests/question-mapper.test.ts
@@ -842,12 +842,12 @@ git commit -m "test: 添加边界场景测试"
 - Consumes: 无
 - Produces: 无
 
-- [ ] **Step 1: 运行全部测试**
+- [x] **Step 1: 运行全部测试**
 
 运行: `bun test`
 预期: 所有测试通过（包括现有测试）
 
-- [ ] **Step 2: 运行编译检查**
+- [x] **Step 2: 运行编译检查**
 
 运行: `npm run build`
 预期: 编译通过，无类型错误
@@ -863,7 +863,7 @@ git commit -m "test: 添加边界场景测试"
 - Consumes: 无
 - Produces: 无
 
-- [ ] **Step 1: 添加新字段示例**
+- [x] **Step 1: 添加新字段示例**
 
 在 `opencode-lark-bridge.config.example.jsonc` 的 `categories.question` 配置中添加：
 
@@ -882,7 +882,7 @@ git commit -m "test: 添加边界场景测试"
 }
 ```
 
-- [ ] **Step 2: 提交配置示例更新**
+- [x] **Step 2: 提交配置示例更新**
 
 ```bash
 git add opencode-lark-bridge.config.example.jsonc
@@ -900,7 +900,7 @@ git commit -m "docs: 添加多问题模板配置示例"
 - Consumes: 无
 - Produces: 无
 
-- [ ] **Step 1: 更新 README.md 模板配置说明**
+- [x] **Step 1: 更新 README.md 模板配置说明**
 
 在 README.md 的模板配置章节添加：
 
@@ -938,7 +938,7 @@ git commit -m "docs: 添加多问题模板配置示例"
 ```
 ```
 
-- [ ] **Step 2: 提交文档更新**
+- [x] **Step 2: 提交文档更新**
 
 ```bash
 git add README.md
@@ -956,7 +956,7 @@ git commit -m "docs: 更新 README 模板配置说明"
 - Consumes: 完整实现
 - Produces: 无
 
-- [ ] **Step 1: 创建测试配置文件**
+- [x] **Step 1: 创建测试配置文件**
 
 在项目根目录创建临时测试配置：
 
@@ -979,7 +979,7 @@ cat > test-config.jsonc << 'EOF'
 EOF
 ```
 
-- [ ] **Step 2: 手动测试单问题场景**
+- [x] **Step 2: 手动测试单问题场景**
 
 构造单问题事件，验证模板替换正确：
 
@@ -1014,7 +1014,7 @@ console.log(message.text);
 - "选项:\n• A: 选项A\n• B: 选项B"
 - "(可多选)"
 
-- [ ] **Step 3: 手动测试多问题场景**
+- [x] **Step 3: 手动测试多问题场景**
 
 构造多问题事件，验证模板替换正确：
 
@@ -1057,13 +1057,13 @@ console.log(message.text);
 - "2. [问题2]"
 - "(可自定义输入)"
 
-- [ ] **Step 4: 清理测试配置**
+- [x] **Step 4: 清理测试配置**
 
 ```bash
 rm -f test-config.jsonc
 ```
 
-- [ ] **Step 5: 最终验证**
+- [x] **Step 5: 最终验证**
 
 运行: `bun test && npm run build`
 预期: 全部通过
@@ -1072,13 +1072,13 @@ rm -f test-config.jsonc
 
 ## 验收清单
 
-- [ ] 所有 16 个任务完成
-- [ ] 所有单元测试通过
-- [ ] 编译通过无类型错误
-- [ ] 配置示例已更新
-- [ ] README 文档已更新
-- [ ] 手动测试验证模板替换正确
-- [ ] 向后兼容：现有测试继续通过
+- [x] 所有 16 个任务完成
+- [x] 所有单元测试通过
+- [x] 编译通过无类型错误
+- [x] 配置示例已更新
+- [x] README 文档已更新
+- [x] 手动测试验证模板替换正确
+- [x] 向后兼容：现有测试继续通过
 
 ---
 
