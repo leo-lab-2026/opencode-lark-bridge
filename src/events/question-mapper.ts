@@ -1,6 +1,8 @@
 import type { NotificationMessage, NotificationTarget } from "../types"
 
-const DEFAULT_TEMPLATE = "❓ OpenCode Question\nProject: {projectName}\nHeader: {header}\n{question}\nOptions: {options}"
+const DEFAULT_TEMPLATE = "❓ OpenCode Question\nProject: {projectName}\nHeader: {header}\n{question}\nOptions:\n{options}\n{suffix}"
+const DEFAULT_TEMPLATE_MULTIPLE = "❓ OpenCode Question\nProject: {projectName}\nHeader: {header}\n\n{questions}"
+const DEFAULT_QUESTION_ITEM_TEMPLATE = "{number}. {header}\n   {question}\n   Options:\n   {options}\n   {suffix}"
 const MAX_QUESTION_LEN = 200
 const MAX_OPTIONS = 5
 
@@ -113,10 +115,11 @@ export function mapQuestionEvent(event: any, target: NotificationTarget, templat
   let effectiveTemplate = template || DEFAULT_TEMPLATE
 
   // 当 options 为空时，在变量替换前移除模板中的 Options 行
+  // 支持格式: "Options: {options}" 或 "Options:\n {options}" 或 "Options:\n{options}"
   if (!optionsText) {
     effectiveTemplate = effectiveTemplate
-      .replace(/\nOptions: \{options\}/g, "")
-      .replace(/Options: \{options\}\n?/g, "")
+      .replace(/\nOptions:[ \t]*\n?[ \t]*\{options\}/g, "")
+      .replace(/Options:[ \t]*\n?[ \t]*\{options\}\n?/g, "")
   }
 
   const text = effectiveTemplate
