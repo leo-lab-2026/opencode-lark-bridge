@@ -77,6 +77,8 @@ npm run install:global
 
 安装脚本会在对应配置目录首次创建示例配置；已存在则保留不覆盖。插件目录内不再存放配置文件。
 
+**详细配置指南**：参见 [docs/CONFIG_GUIDE.md](./docs/CONFIG_GUIDE.md)，包含所有模板变量的详细说明和自定义示例。
+
 ### 项目级配置
 
 ```bash

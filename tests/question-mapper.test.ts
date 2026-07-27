@@ -410,4 +410,197 @@ describe("mapQuestionEvent", () => {
     const msg = mapQuestionEvent(event, { chat_id: "oc_1" }, template)
     expect(msg.text).toBe("Options:\n   • A: Method A\n   • B: Method B")
   })
+
+  // Task 4-6: 多问题使用自定义模板
+  it("uses custom template_multiple for multiple questions", () => {
+    const event = {
+      properties: {
+        projectName: "My Project",
+        questions: [
+          {
+            question: "First question?",
+            header: "Q1",
+            options: [{ label: "A", description: "Option A" }],
+          },
+          {
+            question: "Second question?",
+            header: "Q2",
+            options: [{ label: "B", description: "Option B" }],
+          },
+        ],
+      },
+    }
+    const templateMultiple = "Project: {projectName}\nQuestions: {questions}"
+    const msg = mapQuestionEvent(event, { chat_id: "oc_1" }, undefined, templateMultiple)
+    expect(msg.text).toContain("Project: My Project")
+    expect(msg.text).toContain("Questions:")
+    expect(msg.text).toContain("1. Q1")
+    expect(msg.text).toContain("2. Q2")
+  })
+
+  // Task 4-6: 多问题使用自定义 question_item_template
+  it("uses custom question_item_template for each question item", () => {
+    const event = {
+      properties: {
+        projectName: "My Project",
+        questions: [
+          {
+            question: "Which approach?",
+            header: "Q1",
+            options: [
+              { label: "A", description: "Method A" },
+              { label: "B", description: "Method B" },
+            ],
+          },
+          {
+            question: "Which name?",
+            header: "Q2",
+            options: [
+              { label: "X", description: "Name X" },
+            ],
+          },
+        ],
+      },
+    }
+    const itemTemplate = "[{number}] {header}: {question} | {options} | {suffix}"
+    const msg = mapQuestionEvent(event, { chat_id: "oc_1" }, undefined, undefined, itemTemplate)
+    expect(msg.text).toContain("[1] Q1")
+    expect(msg.text).toContain("Which approach?")
+    expect(msg.text).toContain("Method A")
+    expect(msg.text).toContain("[2] Q2")
+  })
+
+  // Task 4-6: 单问题使用自定义模板（无模板参数，使用默认）
+  it("single question uses default template when no custom template provided", () => {
+    const event = {
+      properties: {
+        projectName: "Test",
+        questions: [
+          {
+            question: "Simple question?",
+            header: "Q",
+            options: [{ label: "A", description: "Option A" }],
+          },
+        ],
+      },
+    }
+    const msg = mapQuestionEvent(event, { chat_id: "oc_1" })
+    expect(msg.text).toContain("❓ OpenCode Question")
+    expect(msg.text).toContain("Project: Test")
+    expect(msg.text).toContain("Q")
+    expect(msg.text).toContain("Simple question?")
+  })
+
+  // Task 4-6: 空选项处理 - suffix 变量在模板中
+  it("shows suffix hints when options are empty but suffix is in template", () => {
+    const event = {
+      properties: {
+        projectName: "Test",
+        questions: [
+          {
+            question: "Enter name",
+            header: "Name",
+            options: [],
+            custom: true,
+          },
+        ],
+      },
+    }
+    const template = "{header}: {question} | {suffix}"
+    const msg = mapQuestionEvent(event, { chat_id: "oc_1" }, template)
+    expect(msg.text).toContain("Name: Enter name")
+    expect(msg.text).toContain("(可自定义输入)")
+  })
+
+  // Task 4-6: 后缀变量自由定位 - 在模板中间
+  it("places suffix at arbitrary position in template", () => {
+    const event = {
+      properties: {
+        projectName: "Test",
+        questions: [
+          {
+            question: "Select options",
+            header: "Multi",
+            options: [
+              { label: "A", description: "First" },
+              { label: "B", description: "Second" },
+            ],
+            multiple: true,
+            custom: true,
+          },
+        ],
+      },
+    }
+    const template = "{header} {suffix} - {question}"
+    const msg = mapQuestionEvent(event, { chat_id: "oc_1" }, template)
+    expect(msg.text).toContain("Multi (可多选) (可自定义输入) - Select options")
+  })
+
+  // Task 4-6: 选项截断 - 在 question_item_template 中
+  it("truncates options in question_item_template", () => {
+    const options = Array.from({ length: 8 }, (_, i) => ({
+      label: `Option${i + 1}`,
+      description: `Description ${i + 1}`,
+    }))
+    const event = {
+      properties: {
+        projectName: "Test",
+        questions: [
+          {
+            question: "Many options",
+            header: "Q1",
+            options,
+          },
+        ],
+      },
+    }
+    const itemTemplate = "{number}. {question}\nOptions: {options}"
+    const msg = mapQuestionEvent(event, { chat_id: "oc_1" }, undefined, undefined, itemTemplate)
+    expect(msg.text).toContain("... (3 more)")
+    // 前5个应该显示
+    for (let i = 0; i < 5; i++) {
+      expect(msg.text).toContain(`Option${i + 1}`)
+    }
+    // 第6个之后不应显示
+    expect(msg.text).not.toContain("Option6")
+  })
+
+  // Task 4-6: 无问题场景 - 使用单问题模板，变量为空
+  it("handles no questions with empty variables", () => {
+    const event = {
+      properties: {
+        projectName: "Test",
+        questions: [],
+      },
+    }
+    const msg = mapQuestionEvent(event, { chat_id: "oc_1" })
+    expect(msg.text).toContain("No Questions")
+    expect(msg.text).toContain("Project: Test")
+  })
+
+  // Task 4-6: 多问题场景 - suffix 在每个问题项中
+  it("shows suffix hints for each question in multi-question mode", () => {
+    const event = {
+      properties: {
+        projectName: "Test",
+        questions: [
+          {
+            question: "Pick one",
+            header: "Q1",
+            options: [{ label: "A", description: "Option A" }],
+            multiple: true,
+          },
+          {
+            question: "Enter value",
+            header: "Q2",
+            options: [],
+            custom: true,
+          },
+        ],
+      },
+    }
+    const msg = mapQuestionEvent(event, { chat_id: "oc_1" })
+    expect(msg.text).toContain("(可多选)")
+    expect(msg.text).toContain("(可自定义输入)")
+  })
 })
