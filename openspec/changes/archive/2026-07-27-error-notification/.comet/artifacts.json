@@ -1,0 +1,9 @@
+{
+  "openspec_proposal": "openspec/changes/error-notification/proposal.md",
+  "openspec_design": "openspec/changes/error-notification/design.md",
+  "openspec_tasks": "openspec/changes/error-notification/tasks.md",
+  "openspec_delta_spec": "openspec/changes/error-notification/specs/error-notification/spec.md",
+  "handoff_context": "openspec/changes/error-notification/.comet/handoff/spec-context.json",
+  "handoff_markdown": "openspec/changes/error-notification/.comet/handoff/spec-context.md",
+  "archive_directory": "openspec/changes/archive/2026-07-27-error-notification"
+}
