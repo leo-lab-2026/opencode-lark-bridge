@@ -201,10 +201,9 @@ describe("mapQuestionEvent", () => {
     expect(msg.text).toContain("❓ OpenCode Question")
     expect(msg.text).toContain("Project: My Project")
     expect(msg.text).toContain("Header: Decision")
-    // 注意: header 在默认模板中是 {header}，不是 "Header: ..."
-    // 但模板写的是 "...\n{header}\n{question}\nOptions: {options}"
     expect(msg.text).toContain("Decision")
-    expect(msg.text).toContain("Options: • A: Do it")
+    // 默认模板是 "Options:\n{options}"，所以选项在新行
+    expect(msg.text).toContain("Options:\n• A: Do it")
   })
 
   // 字段缺失降级
@@ -327,5 +326,88 @@ describe("mapQuestionEvent", () => {
     }
     const msg = mapQuestionEvent(event, { chat_id: "oc_1" })
     expect(msg.text).toContain("(可自定义输入)")
+  })
+
+  // 自定义模板格式: "Options:\n {options}" - 支持换行和空格缩进
+  it("removes Options line with newline and space indent when no options", () => {
+    const event = {
+      properties: {
+        projectName: "Test",
+        questions: [
+          {
+            question: "Simple question",
+            header: "Q",
+            options: [],
+          },
+        ],
+      },
+    }
+    const template = "❓ {header}\n{question}:\nOptions:\n {options}"
+    const msg = mapQuestionEvent(event, { chat_id: "oc_1" }, template)
+    expect(msg.text).not.toContain("Options:")
+    expect(msg.text).toBe("❓ Q\nSimple question:")
+  })
+
+  // 自定义模板格式: "Options:\n{options}" - 支持换行无空格
+  it("removes Options line with newline without space when no options", () => {
+    const event = {
+      properties: {
+        projectName: "Test",
+        questions: [
+          {
+            question: "Simple question",
+            header: "Q",
+            options: [],
+          },
+        ],
+      },
+    }
+    const template = "❓ {header}\n{question}:\nOptions:\n{options}"
+    const msg = mapQuestionEvent(event, { chat_id: "oc_1" }, template)
+    expect(msg.text).not.toContain("Options:")
+    expect(msg.text).toBe("❓ Q\nSimple question:")
+  })
+
+  // 自定义模板格式: "Options:\t{options}" - 支持制表符
+  it("removes Options line with tab indent when no options", () => {
+    const event = {
+      properties: {
+        projectName: "Test",
+        questions: [
+          {
+            question: "Simple question",
+            header: "Q",
+            options: [],
+          },
+        ],
+      },
+    }
+    const template = "❓ {header}\n{question}:\nOptions:\t{options}"
+    const msg = mapQuestionEvent(event, { chat_id: "oc_1" }, template)
+    expect(msg.text).not.toContain("Options:")
+    expect(msg.text).toBe("❓ Q\nSimple question:")
+  })
+
+  // 选项自动应用模板缩进
+  it("applies template indent to options content", () => {
+    const event = {
+      properties: {
+        projectName: "Test",
+        questions: [
+          {
+            question: "Which approach?",
+            header: "Decision",
+            options: [
+              { label: "A", description: "Method A" },
+              { label: "B", description: "Method B" },
+            ],
+            custom: false,
+          },
+        ],
+      },
+    }
+    const template = "Options:\n   {options}"
+    const msg = mapQuestionEvent(event, { chat_id: "oc_1" }, template)
+    expect(msg.text).toBe("Options:\n   • A: Method A\n   • B: Method B")
   })
 })

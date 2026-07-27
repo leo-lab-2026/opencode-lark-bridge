@@ -103,6 +103,23 @@ function formatHeader(questions: QuestionInfo[]): string {
   return `Multiple Questions (${questions.length})`
 }
 
+function applyIndent(template: string, varName: string, content: string): string {
+  const lines = template.split("\n")
+  const regex = new RegExp(`^([ \\t]*)\\{${varName}\\}`)
+  
+  const match = lines.find(line => line.match(regex))?.match(regex)
+  const indent = match?.[1] || ""
+  
+  if (!indent) {
+    return content
+  }
+  
+  const contentLines = content.split("\n")
+  return contentLines
+    .map((line, index) => index === 0 ? line : indent + line)
+    .join("\n")
+}
+
 export function mapQuestionEvent(event: any, target: NotificationTarget, template?: string): NotificationMessage {
   const props = (event?.properties ?? event) as Record<string, unknown>
   const questions = extractQuestions(props)
@@ -122,11 +139,14 @@ export function mapQuestionEvent(event: any, target: NotificationTarget, templat
       .replace(/Options:[ \t]*\n?[ \t]*\{options\}\n?/g, "")
   }
 
+  // 应用缩进到 options 内容
+  const indentedOptions = optionsText ? applyIndent(effectiveTemplate, "options", optionsText) : ""
+
   const text = effectiveTemplate
     .replace(/{projectName}/g, projectName)
     .replace(/{header}/g, header)
     .replace(/{question}/g, questionText)
-    .replace(/{options}/g, optionsText)
+    .replace(/{options}/g, indentedOptions)
     .trimEnd()
 
   return { text, target }
