@@ -266,4 +266,84 @@ describe("EventHandler", () => {
     expect(sent).toHaveLength(1)
     expect(sent[0].target.user_id).toBe("ou_custom")
   })
+
+  it("sends notification for main session error", async () => {
+    const sent: any[] = []
+    const notifier: Notifier = { send: async (m) => { sent.push(m) } }
+    const handler = createEventHandler(makeConfig(100), notifier, noopLogger)
+    await handler.handle({
+      type: "session.error",
+      properties: { sessionID: "s1", error: { type: "ProviderError", message: "500 Internal Server Error" }, projectName: "Proj" },
+    })
+    expect(sent).toHaveLength(1)
+    expect(sent[0].text).toContain("ProviderError")
+    expect(sent[0].text).toContain("500 Internal Server Error")
+  })
+
+  it("sends notification for subagent session error (does not skip)", async () => {
+    const sent: any[] = []
+    const notifier: Notifier = { send: async (m) => { sent.push(m) } }
+    const handler = createEventHandler(makeConfig(100), notifier, noopLogger)
+    await handler.handle({ type: "session.created", properties: { info: { id: "sub1", parentID: "parent1" } } })
+    await handler.handle({
+      type: "session.error",
+      properties: { sessionID: "sub1", error: { type: "Error", message: "failed" } },
+    })
+    expect(sent).toHaveLength(1)
+    expect(sent[0].text).toContain("failed")
+  })
+
+  it("deduplicates error within debounce window", async () => {
+    const sent: any[] = []
+    const notifier: Notifier = { send: async (m) => { sent.push(m) } }
+    const handler = createEventHandler(makeConfig(1000), notifier, noopLogger)
+    const event = {
+      type: "session.error",
+      properties: { sessionID: "s1", error: { type: "T", message: "M" } },
+    }
+    await handler.handle(event)
+    await handler.handle(event)
+    expect(sent).toHaveLength(1)
+  })
+
+  it("sends error notifications for different sessions independently", async () => {
+    const sent: any[] = []
+    const notifier: Notifier = { send: async (m) => { sent.push(m) } }
+    const handler = createEventHandler(makeConfig(1000), notifier, noopLogger)
+    await handler.handle({ type: "session.error", properties: { sessionID: "s1", error: { type: "T", message: "M1" } } })
+    await handler.handle({ type: "session.error", properties: { sessionID: "s2", error: { type: "T", message: "M2" } } })
+    expect(sent).toHaveLength(2)
+  })
+
+  it("falls back to default_target for error category when not configured", async () => {
+    const sent: any[] = []
+    const notifier: Notifier = { send: async (m) => { sent.push(m) } }
+    const handler = createEventHandler(makeConfig(100), notifier, noopLogger)
+    await handler.handle({ type: "session.error", properties: { sessionID: "s1", error: { type: "T", message: "M" } } })
+    expect(sent).toHaveLength(1)
+    expect(sent[0].target).toEqual({ chat_id: "oc_1" })
+  })
+
+  it("suppresses completion notification after session.error for same session", async () => {
+    const sent: any[] = []
+    const notifier: Notifier = { send: async (m) => { sent.push(m) } }
+    const handler = createEventHandler(makeConfig(100), notifier, noopLogger)
+    await handler.handle({ type: "session.error", properties: { sessionID: "s1", error: { type: "T", message: "M" } } })
+    await handler.handle({ type: "session.idle", properties: { sessionID: "s1", projectName: "P", sessionTitle: "T" } })
+    expect(sent).toHaveLength(1)
+    expect(sent[0].text).toContain("⚠️")
+  })
+
+  it("removes child from pendingChildren on child session.error allowing parent completion", async () => {
+    const sent: any[] = []
+    const notifier: Notifier = { send: async (m) => { sent.push(m) } }
+    const handler = createEventHandler(makeConfig(100), notifier, noopLogger)
+    await handler.handle({ type: "session.created", properties: { info: { id: "sub1", parentID: "parent1" } } })
+    await handler.handle({ type: "session.error", properties: { sessionID: "sub1", error: { type: "T", message: "M" } } })
+    await handler.handle({ type: "session.idle", properties: { sessionID: "parent1", projectName: "P", sessionTitle: "T" } })
+    const errorNotifs = sent.filter((s) => s.text.includes("⚠️"))
+    const completionNotifs = sent.filter((s) => s.text.includes("✅") || s.text.includes("Task Completed"))
+    expect(errorNotifs).toHaveLength(1)
+    expect(completionNotifs).toHaveLength(1)
+  })
 })

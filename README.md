@@ -1,11 +1,12 @@
 # opencode-lark-bridge
 
-OpenCode 插件：将权限申请通知与任务完成通知推送到 Lark（飞书）。
+OpenCode 插件：将权限申请、任务完成、问答与错误信息通知推送到 Lark（飞书）。
 
 ## 功能
 
 - 监听 OpenCode `permission.asked` 事件
 - 监听 OpenCode `session.idle` 事件，在主会话完成时发送通知
+- 监听 OpenCode `session.error` 事件，在致命错误（模型 API 400/429/500、额度耗尽、上下文溢出等）导致会话停止时发送通知
 - 通过 `session.created` 的 `parentID` 自动识别并过滤子代理/子任务完成事件
 - 通过 `lark-cli` 以 bot 身份向指定飞书用户或群聊发送通知
 - 通知内容包含工具名、操作类型和受影响资源（如文件路径）
@@ -107,6 +108,8 @@ cp opencode-lark-bridge.config.example.jsonc opencode-lark-bridge.config.jsonc
 | `categories.permission.template` | 权限通知模板          | `🔔 {tool} {operation} {resource}` |
 | `categories.completion.target`   | 完成通知目标          | `{ "chat_id": "oc_xxxx" }`         |
 | `categories.completion.template` | 完成通知模板          | `✅ {projectName}: {sessionTitle}`  |
+| `categories.error.target`        | 错误通知目标          | `{ "chat_id": "oc_xxxx" }`         |
+| `categories.error.template`      | 错误通知模板          | `⚠️ {errorType}: {errorMessage}`   |
 
 ### 权限类型覆盖
 
@@ -154,6 +157,21 @@ cp opencode-lark-bridge.config.example.jsonc opencode-lark-bridge.config.jsonc
 | `{question}`     | 问题文本（截断至 200 字符） | `Select a language for the project`          |
 | `{options}`      | 选项列表（最多 5 项，多余截断） | `- TypeScript\n- Rust\n- Python`          |
 | `{projectName}` | 项目名         | `My Project`                               |
+
+各字段缺失时降级为字符串 `unknown`。
+
+### 错误通知
+
+插件监听 OpenCode `session.error` 事件。当致命错误（模型 API 错误 400/429/500、额度耗尽、上下文溢出等）导致会话停止时，会发送 `categories.error` 配置的通知。与完成通知不同，子代理产生的错误也会推送通知——子代理错误可能阻塞父会话，用户需及时知晓。
+
+配置项为 `categories.error`（见下方模板变量节）。模板变量如下：
+
+| 变量               | 说明               | 示例                           |
+| ---------------- | ---------------- | ---------------------------- |
+| `{errorType}`    | 错误类型            | `ProviderError`              |
+| `{errorMessage}` | 错误消息（可能含 HTTP 状态码） | `429 Too Many Requests`       |
+| `{sessionID}`    | 会话 ID（缺失为 unknown） | `sess-123`                   |
+| `{projectName}`  | 项目名             | `My Project`                 |
 
 各字段缺失时降级为字符串 `unknown`。
 

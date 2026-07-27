@@ -2,6 +2,7 @@ import type { PluginConfig, Notifier, Logger } from "../types"
 import { mapPermissionEvent, extractResource } from "./permission-mapper.js"
 import { mapCompletionEvent } from "./completion-mapper.js"
 import { mapQuestionEvent } from "./question-mapper.js"
+import { mapErrorEvent } from "./error-mapper.js"
 import { getEffectiveTarget } from "../config.js"
 
 export function createEventHandler(config: PluginConfig, notifier: Notifier, logger: Logger) {
@@ -9,6 +10,7 @@ export function createEventHandler(config: PluginConfig, notifier: Notifier, log
   const subagentSessionIds = new Set<string>()
   const subagentParentMap = new Map<string, string>()
   const pendingChildren = new Map<string, Set<string>>()
+  const erroredSessions = new Set<string>()
 
   function extractSessionID(props: Record<string, unknown>): string | undefined {
     return (typeof props.sessionID === "string" ? props.sessionID : undefined)
@@ -100,6 +102,11 @@ export function createEventHandler(config: PluginConfig, notifier: Notifier, log
           return
         }
 
+        if (erroredSessions.has(sessionID)) {
+          logger.debug("Skipping completion notification, session errored", { sessionID })
+          return
+        }
+
         const pending = pendingChildren.get(sessionID)
         if (pending && pending.size > 0) {
           logger.debug("Skipping completion notification, children still pending", { sessionID, pending: Array.from(pending) })
@@ -142,6 +149,38 @@ export function createEventHandler(config: PluginConfig, notifier: Notifier, log
         const message = mapQuestionEvent(event, target, categoryConfig.template)
         logger.info("Sending question notification", { target, text: message.text })
         await notifier.send(message)
+        return
+      }
+
+      if (eventType === "session.error") {
+        logger.debug("Received session.error event", { eventType, event })
+        const props = (event?.properties ?? event) as Record<string, unknown>
+        const sessionID = extractSessionID(props) ?? "unknown"
+
+        if (isSubagent(event)) {
+          const parentID = subagentParentMap.get(sessionID)
+          if (parentID) {
+            pendingChildren.get(parentID)?.delete(sessionID)
+            logger.debug("Removed error session from pendingChildren", { parentID, sessionID })
+          }
+        }
+
+        const key = `error:${sessionID}`
+        const now = Date.now()
+        const last = lastSent.get(key)
+        if (last && now - last < config.debounce_ms) {
+          logger.debug("Skipping duplicate error notification", { key })
+          return
+        }
+        lastSent.set(key, now)
+
+        const category = "error"
+        const target = getEffectiveTarget(config, category)
+        const categoryConfig = config.categories[category] || {}
+        const message = mapErrorEvent(event, target, categoryConfig.template)
+        logger.info("Sending error notification", { target, text: message.text })
+        await notifier.send(message)
+        erroredSessions.add(sessionID)
         return
       }
 
