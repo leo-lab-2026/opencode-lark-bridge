@@ -2,6 +2,8 @@
 comet_change: multi-question-template-support
 role: technical-design
 canonical_spec: openspec
+archived-with: 2026-07-27-multi-question-template-support
+status: final
 ---
 
 # 多问题通知模板配置技术设计

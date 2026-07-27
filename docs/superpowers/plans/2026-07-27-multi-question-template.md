@@ -2,6 +2,7 @@
 change: multi-question-template-support
 design-doc: docs/superpowers/specs/2026-07-27-multi-question-template-design.md
 base-ref: f455a84ae80d495abd08bb71f06b1c262a290c21
+archived-with: 2026-07-27-multi-question-template-support
 ---
 
 # 多问题通知模板配置实施计划
