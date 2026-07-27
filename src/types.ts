@@ -21,6 +21,8 @@ export interface Logger {
 export interface CategoryConfig {
   target?: NotificationTarget
   template?: string
+  template_multiple?: string           // 多问题整体框架模板
+  question_item_template?: string      // 多问题中每个问题项的模板
 }
 
 export interface PluginConfig {
