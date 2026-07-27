@@ -18,6 +18,12 @@
 // 任务完成通知模板变量：
 //   {projectName}  项目名
 //   {sessionTitle} 会话标题
+//
+// 错误通知模板变量：
+//   {errorType}    错误类型（如 ProviderError、ContextOverflowError）
+//   {errorMessage} 错误消息文本（可能包含 HTTP 状态码）
+//   {sessionID}    会话 ID（缺失时为 unknown）
+//   {projectName}  项目名
 {
   "app_id": "cli_xxxxxxxxxxxxxxxx",
   "app_secret": "xxxxxxxxxxxxxxxx",
@@ -38,6 +44,10 @@
     "question": {
       // "target": { "chat_id": "oc_xxxx" },
       // "template": "❓ {header}\n{question}\nOptions: {options}"
+    },
+    "error": {
+      // "target": { "chat_id": "oc_xxxx" },  // 可选：错误通知发送到指定群，未设置则用 default_target
+      // "template": "⚠️ OpenCode Error\nProject: {projectName}\nSession: {sessionID}\nType: {errorType}\nMessage: {errorMessage}"
     }
   }
 }
