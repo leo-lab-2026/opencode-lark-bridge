@@ -146,7 +146,13 @@ export function createEventHandler(config: PluginConfig, notifier: Notifier, log
         const category = "question"
         const target = getEffectiveTarget(config, category)
         const categoryConfig = config.categories[category] || {}
-        const message = mapQuestionEvent(event, target, categoryConfig.template)
+        const message = mapQuestionEvent(
+          event,
+          target,
+          categoryConfig.template,
+          categoryConfig.template_multiple,
+          categoryConfig.question_item_template
+        )
         logger.info("Sending question notification", { target, text: message.text })
         await notifier.send(message)
         return

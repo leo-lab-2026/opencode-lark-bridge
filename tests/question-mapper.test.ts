@@ -603,4 +603,92 @@ describe("mapQuestionEvent", () => {
     expect(msg.text).toContain("(可多选)")
     expect(msg.text).toContain("(可自定义输入)")
   })
+
+  // Task 7: 配置优先级验证 - 配置值 > 默认值
+  it("uses config templates over defaults when provided", () => {
+    const event = {
+      properties: {
+        projectName: "My Project",
+        questions: [
+          {
+            question: "Which approach?",
+            header: "Q1",
+            options: [{ label: "A", description: "Option A" }],
+          },
+          {
+            question: "Which name?",
+            header: "Q2",
+            options: [{ label: "X", description: "Name X" }],
+          },
+        ],
+      },
+    }
+    const templateMultiple = "自定义多问题模板: {projectName} - {questions}"
+    const itemTemplate = "[第{number}题] {header}"
+    const msg = mapQuestionEvent(event, { chat_id: "oc_1" }, undefined, templateMultiple, itemTemplate)
+    expect(msg.text).toContain("自定义多问题模板: My Project")
+    expect(msg.text).toContain("[第1题] Q1")
+    expect(msg.text).toContain("[第2题] Q2")
+    expect(msg.text).not.toContain("❓ OpenCode Question")
+  })
+
+  // Task 7: 默认模板格式验证
+  it("uses correct default template format for single question", () => {
+    const event = {
+      properties: {
+        projectName: "Test Project",
+        questions: [
+          {
+            question: "What to do?",
+            header: "Decision",
+            options: [
+              { label: "A", description: "Option A" },
+              { label: "B", description: "Option B" },
+            ],
+            multiple: true,
+            custom: true,
+          },
+        ],
+      },
+    }
+    const msg = mapQuestionEvent(event, { chat_id: "oc_1" })
+    expect(msg.text).toContain("❓ OpenCode Question")
+    expect(msg.text).toContain("Project: Test Project")
+    expect(msg.text).toContain("Header: Decision")
+    expect(msg.text).toContain("What to do?")
+    expect(msg.text).toContain("Options:")
+    expect(msg.text).toContain("• A: Option A")
+    expect(msg.text).toContain("• B: Option B")
+    expect(msg.text).toContain("(可多选)")
+    expect(msg.text).toContain("(可自定义输入)")
+  })
+
+  // Task 7: 默认模板格式验证 - 多问题
+  it("uses correct default template format for multiple questions", () => {
+    const event = {
+      properties: {
+        projectName: "Test Project",
+        questions: [
+          {
+            question: "First?",
+            header: "Q1",
+            options: [{ label: "A", description: "Opt A" }],
+          },
+          {
+            question: "Second?",
+            header: "Q2",
+            options: [{ label: "B", description: "Opt B" }],
+          },
+        ],
+      },
+    }
+    const msg = mapQuestionEvent(event, { chat_id: "oc_1" })
+    expect(msg.text).toContain("❓ OpenCode Question")
+    expect(msg.text).toContain("Project: Test Project")
+    expect(msg.text).toContain("Multiple Questions (2)")
+    expect(msg.text).toContain("1. Q1")
+    expect(msg.text).toContain("   First?")
+    expect(msg.text).toContain("2. Q2")
+    expect(msg.text).toContain("   Second?")
+  })
 })
