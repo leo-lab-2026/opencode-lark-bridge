@@ -1,6 +1,8 @@
 // 将本文件复制为 opencode-lark-bridge.config.jsonc 并填入真实凭证
 //
-// 权限通知模板变量：
+// 所有模板都支持自定义修改。模板中的变量会被实际值替换，其他文本保持不变。
+//
+// === 权限通知模板变量（permission） ===
 //   {tool}      工具名（bash / edit / read / glob / grep / task / skill / lsp /
 //              webfetch / websearch / external_directory / doom_loop）
 //   {operation} 操作类型（permission 名或 command 起始词）
@@ -15,15 +17,25 @@
 //                - external_directory: 外部路径
 //                - doom_loop:   "<innerTool>: <input>"
 //
-// 任务完成通知模板变量：
+// === 任务完成通知模板变量（completion） ===
 //   {projectName}  项目名
 //   {sessionTitle} 会话标题
 //
-// 错误通知模板变量：
+// === 问题通知模板变量（question） ===
+//   {projectName} 项目名
+//   {header}      问题标题（单问题时为该问题的 header，多问题时显示 "Multiple Questions (N)"）
+//   {question}    问题文本（单问题时为问题内容，多问题时每个问题带编号和选项内联显示）
+//   {options}     选项列表（单问题时显示所有选项，多问题时为空，选项已在 {question} 中内联）
+//   {suffix}      问题后缀文本（可选，如补充说明）
+//   {questions}   多问题时，所有问题项的渲染结果（仅 template_multiple 使用）
+//   {number}      问题编号（仅 question_item_template 使用）
+//                注意：当无选项时，模板中的 "Options: {options}" 或 "Options:\n {options}" 行会自动移除
+//
+// === 错误通知模板变量（error） ===
+//   {projectName}  项目名
+//   {sessionID}    会话 ID（缺失时为 unknown）
 //   {errorType}    错误类型（如 ProviderError、ContextOverflowError）
 //   {errorMessage} 错误消息文本（可能包含 HTTP 状态码）
-//   {sessionID}    会话 ID（缺失时为 unknown）
-//   {projectName}  项目名
 {
   "app_id": "cli_xxxxxxxxxxxxxxxx",
   "app_secret": "xxxxxxxxxxxxxxxx",
@@ -34,20 +46,28 @@
   "log_file": "./logs/opencode-lark-bridge.log",
   "categories": {
     "permission": {
-      "target": { "chat_id": "oc_xxxxxxxxxxxxxxxx" },
-      "template": "🔔 OpenCode Permission Request\nTool: {tool}\nOperation: {operation}\nTarget: {resource}"
+      //"target": { "chat_id": "oc_xxxxxxxxxxxxxxxx" }, // 可选：未设置则用 default_target
+      "template":  "🔔 OpenCode 权限申请\n工具：{tool}\n操作：{operation}\n目标：{resource}"
     },
     "completion": {
-      "target": { "chat_id": "oc_xxxxxxxxxxxxxxxx" },
-      "template": "✅ Task Completed\nProject: {projectName}\nSession: {sessionTitle}"
+      //"target": { "chat_id": "oc_xxxxxxxxxxxxxxxx" }, // 可选：未设置则用 default_target
+      "template": "✅ 任务完成\nProject: {projectName}\nSession: {sessionTitle}"
     },
     "question": {
-      // "target": { "chat_id": "oc_xxxx" },
-      // "template": "❓ {header}\n{question}\nOptions: {options}"
+      // "target": { "chat_id": "oc_xxxx" },  // 可选：未设置则用 default_target
+      // 单问题通知模板
+      // 支持的格式：Options: {options} 或 Options:\n {options}（换行+缩进）
+      "template": "❓ OpenCode Question\nProject: {projectName}\nHeader: {header}\n{question}\nOptions:\n{options}",
+      // 多问题通知整体框架模板（可选，不设置则使用 template）
+      // {questions} 会被每个问题项的渲染结果替换
+      "template_multiple": "❓ OpenCode Question\nProject: {projectName}\nHeader: {header}\n\n{questions}",
+      // 多问题中每个问题项的模板（可选，配合 template_multiple 使用）
+      // {number} 为问题编号，{header}/{question}/{options}/{suffix} 为该问题的具体字段
+      "question_item_template": "{number}. {header}\n   {question}\n   Options:\n   {options}\n   {suffix}"
     },
     "error": {
-      // "target": { "chat_id": "oc_xxxx" },  // 可选：错误通知发送到指定群，未设置则用 default_target
-      // "template": "⚠️ OpenCode Error\nProject: {projectName}\nSession: {sessionID}\nType: {errorType}\nMessage: {errorMessage}"
+      // "target": { "chat_id": "oc_xxxx" },  // 可选：未设置则用 default_target
+      "template": "⚠️ OpenCode Error\nProject: {projectName}\nSession: {sessionID}\nType: {errorType}\nMessage: {errorMessage}"
     }
   }
 }

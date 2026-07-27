@@ -1,0 +1,8 @@
+{
+  "openspec_proposal": "openspec/changes/multi-question-template-support/proposal.md",
+  "openspec_design": "openspec/changes/multi-question-template-support/design.md",
+  "openspec_tasks": "openspec/changes/multi-question-template-support/tasks.md",
+  "openspec_delta_spec": "openspec/changes/multi-question-template-support/specs/question-template-configuration/spec.md",
+  "handoff_context": "openspec/changes/multi-question-template-support/.comet/handoff/spec-context.json",
+  "handoff_markdown": "openspec/changes/multi-question-template-support/.comet/handoff/spec-context.md"
+}
