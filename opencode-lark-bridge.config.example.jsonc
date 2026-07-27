@@ -26,6 +26,9 @@
 //   {header}      问题标题（单问题时为该问题的 header，多问题时显示 "Multiple Questions (N)"）
 //   {question}    问题文本（单问题时为问题内容，多问题时每个问题带编号和选项内联显示）
 //   {options}     选项列表（单问题时显示所有选项，多问题时为空，选项已在 {question} 中内联）
+//   {suffix}      问题后缀文本（可选，如补充说明）
+//   {questions}   多问题时，所有问题项的渲染结果（仅 template_multiple 使用）
+//   {number}      问题编号（仅 question_item_template 使用）
 //                注意：当无选项时，模板中的 "Options: {options}" 或 "Options:\n {options}" 行会自动移除
 //
 // === 错误通知模板变量（error） ===
@@ -52,8 +55,15 @@
     },
     "question": {
       // "target": { "chat_id": "oc_xxxx" },  // 可选：未设置则用 default_target
+      // 单问题通知模板
       // 支持的格式：Options: {options} 或 Options:\n {options}（换行+缩进）
-     "template": "❓ OpenCode 问题确认\n项目: {projectName}\n标题: {header}\n{question}\n选项:\n{options}"
+      "template": "❓ OpenCode Question\nProject: {projectName}\nHeader: {header}\n{question}\nOptions:\n{options}",
+      // 多问题通知整体框架模板（可选，不设置则使用 template）
+      // {questions} 会被每个问题项的渲染结果替换
+      "template_multiple": "❓ OpenCode Question\nProject: {projectName}\nHeader: {header}\n\n{questions}",
+      // 多问题中每个问题项的模板（可选，配合 template_multiple 使用）
+      // {number} 为问题编号，{header}/{question}/{options}/{suffix} 为该问题的具体字段
+      "question_item_template": "{number}. {header}\n   {question}\n   Options:\n   {options}\n   {suffix}"
     },
     "error": {
       // "target": { "chat_id": "oc_xxxx" },  // 可选：未设置则用 default_target

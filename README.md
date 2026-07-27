@@ -151,14 +151,25 @@ cp opencode-lark-bridge.config.example.jsonc opencode-lark-bridge.config.jsonc
 
 插件监听 OpenCode `question.asked` 事件。当 agent 向用户提出多选问题时，会推送包含问题标题、问题文本和选项列表的通知。若短时间内有多个问题同时进入，将合并为一条通知，避免重复骚扰。
 
-配置项为 `categories.question`（见下方模板变量节）。模板变量如下：
+配置项为 `categories.question`。支持以下模板字段：
 
-| 变量               | 说明          | 示例                                         |
-| ---------------- | ----------- | ------------------------------------------ |
-| `{header}`       | 问题标题（截断至 200 字符） | `Which language?`                           |
-| `{question}`     | 问题文本（截断至 200 字符） | `Select a language for the project`          |
-| `{options}`      | 选项列表（最多 5 项，多余截断） | `- TypeScript\n- Rust\n- Python`          |
-| `{projectName}` | 项目名         | `My Project`                               |
+| 字段                        | 说明                       | 默认值                                            |
+| ------------------------- | ------------------------ | ---------------------------------------------- |
+| `template`                | 单问题通知模板                  | `❓ OpenCode Question\nProject: {projectName}…`  |
+| `template_multiple`       | 多问题通知整体框架模板（可选）          | `❓ OpenCode Question\nProject: {projectName}…`  |
+| `question_item_template`  | 多问题中每个问题项的模板（可选，配合上方字段） | `{number}. {header}\n   {question}\n   Options…` |
+
+模板变量如下：
+
+| 变量              | 说明                          | 示例                               |
+| --------------- | --------------------------- | -------------------------------- |
+| `{header}`      | 问题标题（截断至 200 字符）            | `Which language?`                 |
+| `{question}`    | 问题文本（截断至 200 字符）            | `Select a language for the project` |
+| `{options}`     | 选项列表（最多 5 项，多余截断）           | `- TypeScript\n- Rust\n- Python`  |
+| `{projectName}` | 项目名                         | `My Project`                      |
+| `{suffix}`      | 问题后缀文本（可选，如补充说明）            | `Please select one option`        |
+| `{questions}`   | 多问题时，所有问题项的渲染结果（仅多问题模板）     | `1. Header 1\n   Question 1…`     |
+| `{number}`      | 问题编号（仅 `question_item_template` 使用） | `1`                               |
 
 各字段缺失时降级为字符串 `unknown`。
 
