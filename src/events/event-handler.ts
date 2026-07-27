@@ -10,6 +10,7 @@ export function createEventHandler(config: PluginConfig, notifier: Notifier, log
   const subagentSessionIds = new Set<string>()
   const subagentParentMap = new Map<string, string>()
   const pendingChildren = new Map<string, Set<string>>()
+  const erroredSessions = new Set<string>()
 
   function extractSessionID(props: Record<string, unknown>): string | undefined {
     return (typeof props.sessionID === "string" ? props.sessionID : undefined)
@@ -101,6 +102,11 @@ export function createEventHandler(config: PluginConfig, notifier: Notifier, log
           return
         }
 
+        if (erroredSessions.has(sessionID)) {
+          logger.debug("Skipping completion notification, session errored", { sessionID })
+          return
+        }
+
         const pending = pendingChildren.get(sessionID)
         if (pending && pending.size > 0) {
           logger.debug("Skipping completion notification, children still pending", { sessionID, pending: Array.from(pending) })
@@ -174,6 +180,7 @@ export function createEventHandler(config: PluginConfig, notifier: Notifier, log
         const message = mapErrorEvent(event, target, categoryConfig.template)
         logger.info("Sending error notification", { target, text: message.text })
         await notifier.send(message)
+        erroredSessions.add(sessionID)
         return
       }
 
