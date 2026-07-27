@@ -2,7 +2,7 @@
 
 ### Requirement: 支持多问题整体框架模板配置
 
-系统应允许用户通过配置文件自定义多问题通知的整体框架模板。
+系统 SHALL 允许用户通过配置文件自定义多问题通知的整体框架模板。
 
 #### Scenario: 配置多问题整体框架模板
 - **WHEN** 用户在配置文件的 `categories.question.template_multiple` 字段中定义模板
@@ -18,7 +18,7 @@
 
 ### Requirement: 支持多问题中单个问题项模板配置
 
-系统应允许用户通过配置文件自定义多问题中每个问题项的格式。
+系统 SHALL 允许用户通过配置文件自定义多问题中每个问题项的格式。
 
 #### Scenario: 配置问题项模板
 - **WHEN** 用户在配置文件的 `categories.question.question_item_template` 字段中定义模板
@@ -34,7 +34,7 @@
 
 ### Requirement: 选项列表自动缩进
 
-系统应自动应用模板中 `{options}` 变量前的缩进到每个选项行。
+系统 SHALL 自动应用模板中 `{options}` 变量前的缩进到每个选项行。
 
 #### Scenario: 选项列表缩进处理
 - **WHEN** 模板中 `{options}` 前有缩进（如 `   {options}` 表示 3 个空格）
@@ -46,7 +46,7 @@
 
 ### Requirement: 后缀变量自由定位
 
-系统应允许用户通过 `{suffix}` 变量在模板中自由定位选择方式说明。
+系统 SHALL 允许用户通过 `{suffix}` 变量在模板中自由定位选择方式说明。
 
 #### Scenario: 后缀变量替换
 - **WHEN** 问题有 `multiple: true` 属性
@@ -66,7 +66,7 @@
 
 ### Requirement: 配置优先级原则
 
-所有 category 的所有模板字段都应遵循"配置 > 默认"优先级原则。
+所有 category 的所有模板字段都 SHALL 遵循"配置 > 默认"优先级原则。
 
 #### Scenario: 配置字段优先使用配置值
 - **WHEN** 配置文件中存在模板字段（如 `template`、`template_multiple`、`question_item_template`）
@@ -90,7 +90,7 @@
 
 ### Requirement: 默认模板提供清晰层次格式
 
-系统应提供改进后的默认硬编码模板，确保层次清晰、格式正确。
+系统 SHALL 提供改进后的默认硬编码模板，确保层次清晰、格式正确。
 
 #### Scenario: 默认单问题模板格式
 - **WHEN** 用户未配置 `template` 字段
@@ -106,7 +106,7 @@
 
 ### Requirement: 向后兼容
 
-系统应确保新增配置字段不破坏现有配置和代码。
+系统 SHALL 确保新增配置字段不破坏现有配置和代码。
 
 #### Scenario: 现有配置继续工作
 - **WHEN** 用户配置文件中只包含现有字段（如 `template`）
