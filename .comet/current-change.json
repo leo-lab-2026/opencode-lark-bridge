@@ -1,6 +1,0 @@
-{
-  "schema": "comet.selection.v2",
-  "workflow": "classic",
-  "change": "multi-question-template-support",
-  "branch": "feature/20260727/error-notification"
-}

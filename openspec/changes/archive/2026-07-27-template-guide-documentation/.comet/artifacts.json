@@ -1,5 +1,6 @@
 {
   "openspec_proposal": "openspec/changes/template-guide-documentation/proposal.md",
   "openspec_design": "openspec/changes/template-guide-documentation/design.md",
-  "openspec_tasks": "openspec/changes/template-guide-documentation/tasks.md"
+  "openspec_tasks": "openspec/changes/template-guide-documentation/tasks.md",
+  "archive_directory": "openspec/changes/archive/2026-07-27-template-guide-documentation"
 }
