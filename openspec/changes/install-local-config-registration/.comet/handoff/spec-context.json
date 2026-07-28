@@ -1,0 +1,30 @@
+{
+  "change": "install-local-config-registration",
+  "phase": "design",
+  "mode": "beta",
+  "canonical_spec": "openspec",
+  "generated_by": "comet-handoff.sh",
+  "context_hash": "ecabc04a75a25e866a37d9ef4f7e83798993a4ef139b22b83b614d1c20fcc389",
+  "files": [
+    {
+      "path": "openspec/changes/install-local-config-registration/proposal.md",
+      "sha256": "f17e77a0a0e26cb4f826d5841907b58a938548b87301e4f47b23bb40877b2ccc",
+      "role": "supporting"
+    },
+    {
+      "path": "openspec/changes/install-local-config-registration/design.md",
+      "sha256": "84acc655dc295a570fbeda4b6544365df4a6cafb555f271509961d494bdf5d74",
+      "role": "supporting"
+    },
+    {
+      "path": "openspec/changes/install-local-config-registration/tasks.md",
+      "sha256": "e2edcdb6406f3c8db2ae5a6a6baed8230849ef44e72f135b918a0ea71dcc2637",
+      "role": "supporting"
+    },
+    {
+      "path": "openspec/changes/install-local-config-registration/specs/install-config-registration/spec.md",
+      "sha256": "23a204ccf1d4ad16b043c40640653f226855ebd22771ef0b42a4180301319fe7",
+      "role": "spec"
+    }
+  ]
+}
