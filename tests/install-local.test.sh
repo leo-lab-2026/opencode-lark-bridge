@@ -247,6 +247,39 @@ test_check_all_global_never_written() {
   assert_file_not_contains "$HOME/.config/opencode/opencode.json" "$PLUGIN_PATH"
 }
 
+# ===== select_write_target tests =====
+
+test_select_prefers_opencode_jsonc() {
+  sandbox_setup
+  touch ".opencode/opencode.jsonc" "opencode.jsonc" ".opencode/opencode.json"
+  assert_eq ".opencode/opencode.jsonc" "$(select_write_target)"
+}
+
+test_select_prefers_root_jsonc_over_opencode_json() {
+  sandbox_setup
+  touch "opencode.jsonc" ".opencode/opencode.json"
+  assert_eq "opencode.jsonc" "$(select_write_target)"
+}
+
+test_select_falls_back_to_json() {
+  sandbox_setup
+  touch ".opencode/opencode.json"
+  assert_eq ".opencode/opencode.json" "$(select_write_target)"
+}
+
+test_select_json_priority_opencode_over_root() {
+  sandbox_setup
+  touch "opencode.json"
+  assert_eq "opencode.json" "$(select_write_target)"
+  touch ".opencode/opencode.json"
+  assert_eq ".opencode/opencode.json" "$(select_write_target)"
+}
+
+test_select_default_when_none_exist() {
+  sandbox_setup
+  assert_eq ".opencode/opencode.jsonc" "$(select_write_target)"
+}
+
 # ===== Main =====
 
 run_test "strip: pure comment line" test_strip_pure_comment_line
@@ -268,6 +301,11 @@ run_test "check_all: global registered" test_check_all_global_registered
 run_test "check_all: none registered" test_check_all_none_registered
 run_test "check_all: no files exist" test_check_all_no_files
 run_test "check_all: global never written" test_check_all_global_never_written
+run_test "select: prefers .opencode/opencode.jsonc" test_select_prefers_opencode_jsonc
+run_test "select: root jsonc over opencode json" test_select_prefers_root_jsonc_over_opencode_json
+run_test "select: falls back to json" test_select_falls_back_to_json
+run_test "select: json priority opencode over root" test_select_json_priority_opencode_over_root
+run_test "select: default when none exist" test_select_default_when_none_exist
 
 echo ""
 echo "Results: PASS=$PASS FAIL=$FAIL SKIP=$SKIP"

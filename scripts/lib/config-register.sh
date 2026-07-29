@@ -93,3 +93,18 @@ check_all_configs() {
   done
   return 1
 }
+
+# Choose the config file to write to, by priority:
+#   .opencode/opencode.jsonc > opencode.jsonc
+#   .opencode/opencode.json  > opencode.json
+# If none exist, return ".opencode/opencode.jsonc" (to be created).
+select_write_target() {
+  local cfg
+  for cfg in ".opencode/opencode.jsonc" "opencode.jsonc"; do
+    [ -f "$cfg" ] && echo "$cfg" && return
+  done
+  for cfg in ".opencode/opencode.json" "opencode.json"; do
+    [ -f "$cfg" ] && echo "$cfg" && return
+  done
+  echo ".opencode/opencode.jsonc"
+}
