@@ -50,12 +50,12 @@ base-ref: 53093f2
 - Produces: `strip_jsonc_comments`（stdin→stdout 剥离 `//` 注释）、常量 `PLUGIN_PATH`、`GLOBAL_CONFIGS`/`PROJECT_CONFIGS` 数组、测试断言工具集
 - Consumes: 无
 
-- [ ] **Step 1: 安装 jq（测试用，mise 管理）**
+- [x] **Step 1: 安装 jq（测试用，mise 管理）**
 
 Run: `mise use jq@latest`
 Expected: jq 安装成功，`mise which jq` 输出路径
 
-- [ ] **Step 2: 创建 lib 骨架（仅常量，函数待 TDD 补全）**
+- [x] **Step 2: 创建 lib 骨架（仅常量，函数待 TDD 补全）**
 
 Create `scripts/lib/config-register.sh`:
 
@@ -82,7 +82,7 @@ PROJECT_CONFIGS=(
 )
 ```
 
-- [ ] **Step 3: 创建测试脚手架（断言 + 沙箱 + run_test）**
+- [x] **Step 3: 创建测试脚手架（断言 + 沙箱 + run_test）**
 
 Create `tests/install-local.test.sh`:
 
@@ -194,7 +194,7 @@ fi
 exit 0
 ```
 
-- [ ] **Step 4: 写 strip_jsonc_comments 的失败测试**
+- [x] **Step 4: 写 strip_jsonc_comments 的失败测试**
 
 Append to `tests/install-local.test.sh`（在 `# ===== Main =====` 之前插入测试函数，并在 Main 区块添加 run_test 调用）:
 
@@ -248,12 +248,12 @@ run_test "strip: preserves // in string" test_strip_preserves_double_slash_in_st
 run_test "strip: no comment unchanged" test_strip_preserves_code_without_comment
 ```
 
-- [ ] **Step 5: 运行测试确认失败**
+- [x] **Step 5: 运行测试确认失败**
 
 Run: `bash tests/install-local.test.sh`
 Expected: FAIL — `strip_jsonc_comments: command not found`（函数尚未定义）
 
-- [ ] **Step 6: 实现 strip_jsonc_comments**
+- [x] **Step 6: 实现 strip_jsonc_comments**
 
 Append to `scripts/lib/config-register.sh`（在常量定义之后）:
 
@@ -286,12 +286,12 @@ strip_jsonc_comments() {
 }
 ```
 
-- [ ] **Step 7: 运行测试确认通过**
+- [x] **Step 7: 运行测试确认通过**
 
 Run: `bash tests/install-local.test.sh`
 Expected: PASS=5 FAIL=0
 
-- [ ] **Step 8: Commit**
+- [x] **Step 8: Commit**
 
 ```bash
 git add scripts/lib/config-register.sh tests/install-local.test.sh
