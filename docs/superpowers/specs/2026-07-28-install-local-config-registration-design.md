@@ -2,6 +2,8 @@
 comet_change: install-local-config-registration
 role: technical-design
 canonical_spec: openspec
+archived-with: 2026-07-29-install-local-config-registration
+status: final
 ---
 
 # 技术设计：install-local.sh 智能配置注册

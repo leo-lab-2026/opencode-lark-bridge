@@ -203,15 +203,40 @@ npm run install:local
 2. 复制编译产物到 `.opencode/plugins/opencode-lark-bridge/`
 3. 首次运行时，在项目根目录 `.opencode/` 下创建示例配置（已存在则保留）
 
-### 插件入口配置
+### 自动配置注册
 
-`package.json` 中的 `"main": "./index.js"` 对 OpenCode 正确加载插件入口至关重要。安装后需要在 `.opencode/opencode.jsonc`（或 `.opencode/opencode.json`）的 `plugin` 数组中注册插件路径：
+运行 `npm run install:local` 后，脚本会自动检查 opencode 主配置文件（`opencode.jsonc` / `opencode.json`）是否已注册本插件路径 `.opencode/plugins/opencode-lark-bridge`：
 
-```json
+- **已注册**（项目级或全局任一配置文件包含）：跳过写入，输出提示
+- **未注册**：按优先级写入项目级配置文件
+  - 优先级：`.opencode/opencode.jsonc` > `./opencode.jsonc` > `.opencode/opencode.json` > `./opencode.json`
+  - 若都不存在，创建 `.opencode/opencode.jsonc`（含 `$schema` 与 `plugin` 字段骨架）
+- **全局配置只读**：脚本只检查 `~/.config/opencode/` 下的配置，绝不修改
+- **保留注释**：写入时用 sed/awk 定点修改，保留原有 JSONC 注释与字段
+- **容错**：检查或写入失败仅输出警告，不中断安装
+
+#### 可选依赖：jq
+
+脚本使用 `jq` 进行 JSON 解析（更精确的插件注册检测）。若系统未安装 `jq`，自动回退到 `grep` 模式（仍可正常工作，但精确度稍低）。建议安装 `jq` 以获得最佳体验：
+
+```bash
+# macOS
+brew install jq
+
+# Ubuntu/Debian
+sudo apt install jq
+
+# 通过 mise（推荐）
+mise use jq@latest
+```
+
+#### 手动注册
+
+如需手动注册，在 opencode 配置文件的 `plugin` 数组添加：
+
+```jsonc
 {
-  "plugin": [
-    ".opencode/plugins/opencode-lark-bridge"
-  ]
+  "plugin": [".opencode/plugins/opencode-lark-bridge"]
 }
 ```
 
