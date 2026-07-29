@@ -470,7 +470,7 @@ git commit -m "feat: add is_plugin_registered with jq + grep fallback"
 - Produces: `check_all_configs` → 返回 0=任一文件已注册（stdout 打印位置），1=全部未注册
 - Consumes: `is_plugin_registered`、`GLOBAL_CONFIGS`、`PROJECT_CONFIGS`
 
-- [ ] **Step 1: 写失败测试**
+- [x] **Step 1: 写失败测试**
 
 追加测试函数:
 
@@ -528,12 +528,12 @@ run_test "check_all: no files exist" test_check_all_no_files
 run_test "check_all: global never written" test_check_all_global_never_written
 ```
 
-- [ ] **Step 2: 运行测试确认失败**
+- [x] **Step 2: 运行测试确认失败**
 
 Run: `bash tests/install-local.test.sh`
 Expected: 新增 5 个 FAIL（`check_all_configs: command not found`）
 
-- [ ] **Step 3: 实现 check_all_configs**
+- [x] **Step 3: 实现 check_all_configs**
 
 追加到 `scripts/lib/config-register.sh`:
 
@@ -558,12 +558,12 @@ check_all_configs() {
 }
 ```
 
-- [ ] **Step 4: 运行测试确认通过**
+- [x] **Step 4: 运行测试确认通过**
 
 Run: `bash tests/install-local.test.sh`
 Expected: PASS=19 FAIL=0
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```bash
 git add scripts/lib/config-register.sh tests/install-local.test.sh
