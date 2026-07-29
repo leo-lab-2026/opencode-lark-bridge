@@ -108,3 +108,43 @@ select_write_target() {
   done
   echo ".opencode/opencode.jsonc"
 }
+
+write_plugin_registration() {
+  local target="$1"
+
+  if [ ! -f "$target" ]; then
+    mkdir -p "$(dirname "$target")"
+    cat > "$target" <<EOF
+{
+  "\$schema": "https://opencode.ai/config.json",
+  "plugin": [
+    "$PLUGIN_PATH"
+  ]
+}
+EOF
+    echo "Created config with plugin registration: $target"
+    return 0
+  fi
+
+  if ! grep -q '{' "$target" || ! grep -q '}' "$target"; then
+    echo "WARNING: $target does not look like a valid JSON config, skipping write" >&2
+    return 1
+  fi
+
+  if ! grep -q '"plugin"' "$target"; then
+    local last_brace
+    last_brace=$(grep -n '}' "$target" | tail -1 | cut -d: -f1)
+    if [ -z "$last_brace" ]; then
+      echo "WARNING: Could not find insertion point in $target" >&2
+      return 1
+    fi
+    sed -i.bak "${last_brace}i\\
+  \"plugin\": [\"$PLUGIN_PATH\"]," "$target"
+    rm -f "$target.bak"
+    echo "Added plugin field to: $target"
+    return 0
+  fi
+
+  echo "WARNING: plugin field exists but append logic not yet implemented for $target" >&2
+  return 1
+}

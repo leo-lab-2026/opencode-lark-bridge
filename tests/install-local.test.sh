@@ -280,7 +280,72 @@ test_select_default_when_none_exist() {
   assert_eq ".opencode/opencode.jsonc" "$(select_write_target)"
 }
 
+test_write_creates_new_file() {
+  sandbox_setup
+  local target=".opencode/opencode.jsonc"
+  rm -f "$target"
+  write_plugin_registration "$target"
+  assert_file_contains "$target" '"$schema": "https://opencode.ai/config.json"'
+  assert_file_contains "$target" "\"$PLUGIN_PATH\""
+  assert_file_contains "$target" '"plugin"'
+}
+
+test_write_creates_parent_dir() {
+  sandbox_setup
+  rm -rf ".opencode"
+  write_plugin_registration ".opencode/opencode.jsonc"
+  assert_file_contains ".opencode/opencode.jsonc" '"plugin"'
+}
+
+test_write_adds_plugin_field_preserving_comments() {
+  sandbox_setup
+  local target=".opencode/opencode.jsonc"
+  cat > "$target" <<'EOF'
+{
+  // my theme
+  "theme": "dark",
+  "model": "gpt-4"
+}
+EOF
+  write_plugin_registration "$target"
+  assert_file_contains "$target" "// my theme"
+  assert_file_contains "$target" '"theme": "dark"'
+  assert_file_contains "$target" '"plugin"'
+  assert_file_contains "$target" "\"$PLUGIN_PATH\""
+}
+
+test_write_adds_plugin_field_to_nested_config() {
+  sandbox_setup
+  local target=".opencode/opencode.jsonc"
+  cat > "$target" <<'EOF'
+{
+  "nested": {
+    "a": 1
+  }
+}
+EOF
+  write_plugin_registration "$target"
+  assert_file_contains "$target" '"plugin"'
+  assert_file_contains "$target" "\"$PLUGIN_PATH\""
+  assert_file_contains "$target" '"a": 1'
+}
+
+test_write_skips_non_json_file() {
+  sandbox_setup
+  local target=".opencode/opencode.jsonc"
+  printf 'not json at all' > "$target"
+  local err
+  err=$(write_plugin_registration "$target" 2>&1 >/dev/null) || true
+  assert_contains "$err" "WARNING"
+}
+
 # ===== Main =====
+
+run_test "write: creates new file with schema+plugin" test_write_creates_new_file
+run_test "write: creates parent dir" test_write_creates_parent_dir
+run_test "write: adds plugin field preserving comments" test_write_adds_plugin_field_preserving_comments
+run_test "write: adds plugin field to nested config" test_write_adds_plugin_field_to_nested_config
+run_test "write: skips non-json file" test_write_skips_non_json_file
 
 run_test "strip: pure comment line" test_strip_pure_comment_line
 run_test "strip: trailing comment" test_strip_trailing_comment
