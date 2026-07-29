@@ -680,7 +680,7 @@ git commit -m "feat: add select_write_target priority selector"
 - Produces: `write_plugin_registration <target>` → 返回 0 成功，1 失败（附 stderr 警告）
 - Consumes: `PLUGIN_PATH`
 
-- [ ] **Step 1: 写失败测试（场景 1：新建文件）**
+- [x] **Step 1: 写失败测试（场景 1：新建文件）**
 
 追加测试函数:
 
@@ -703,7 +703,7 @@ test_write_creates_parent_dir() {
 }
 ```
 
-- [ ] **Step 2: 写失败测试（场景 2：无 plugin 字段）**
+- [x] **Step 2: 写失败测试（场景 2：无 plugin 字段）**
 
 追加测试函数:
 
@@ -761,12 +761,12 @@ run_test "write: adds plugin field to nested config" test_write_adds_plugin_fiel
 run_test "write: skips non-json file" test_write_skips_non_json_file
 ```
 
-- [ ] **Step 3: 运行测试确认失败**
+- [x] **Step 3: 运行测试确认失败**
 
 Run: `bash tests/install-local.test.sh`
 Expected: 新增 5 个 FAIL
 
-- [ ] **Step 4: 实现 write_plugin_registration（场景 1 & 2）**
+- [x] **Step 4: 实现 write_plugin_registration（场景 1 & 2）**
 
 追加到 `scripts/lib/config-register.sh`:
 
@@ -820,12 +820,12 @@ EOF
 }
 ```
 
-- [ ] **Step 5: 运行测试确认通过**
+- [x] **Step 5: 运行测试确认通过**
 
 Run: `bash tests/install-local.test.sh`
 Expected: PASS=29 FAIL=0（场景 1、2 的 5 个新测试通过）
 
-- [ ] **Step 6: Commit**
+- [x] **Step 6: Commit**
 
 ```bash
 git add scripts/lib/config-register.sh tests/install-local.test.sh
