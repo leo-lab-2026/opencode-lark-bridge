@@ -1027,12 +1027,12 @@ ${indent}\"$PLUGIN_PATH\"" "$target"
 }
 ```
 
-- [ ] **Step 5: 运行测试确认通过**
+- [x] **Step 5: 运行测试确认通过**
 
 Run: `bash tests/install-local.test.sh`
 Expected: PASS=36 FAIL=0
 
-- [ ] **Step 6: Commit**
+- [x] **Step 6: Commit**
 
 ```bash
 git add scripts/lib/config-register.sh tests/install-local.test.sh
@@ -1051,7 +1051,7 @@ git commit -m "feat: write_plugin_registration scenarios 3 (empty array) & 4 (ap
 - Produces: `register_plugin_config` → 编排 check → select → write；返回 0 已注册或写入成功，1 写入失败（附提示）
 - Consumes: `check_all_configs`、`select_write_target`、`write_plugin_registration`
 
-- [ ] **Step 1: 写失败测试（端到端场景）**
+- [x] **Step 1: 写失败测试（端到端场景）**
 
 追加测试函数:
 
