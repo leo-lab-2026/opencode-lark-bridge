@@ -1353,20 +1353,20 @@ Run: `grep -n "install:local\|install-local\|安装" README.md`
 \`\`\`
 ```
 
-- [ ] **Step 3: 验证 README 渲染**
+- [x] **Step 3: 验证 README 渲染**
 
 Run: 检查 README.md 无 Markdown 语法错误（肉眼审查代码块闭合）
 
-- [ ] **Step 4: 运行全量测试回归**
+- [x] **Step 4: 运行全量测试回归**
 
 Run: `bash tests/install-local.test.sh`
 Expected: PASS=43 FAIL=0（README 改动不影响测试）
 
-- [ ] **Step 5: 勾选 OpenSpec tasks.md 全部条目**
+- [x] **Step 5: 勾选 OpenSpec tasks.md 全部条目**
 
 逐项确认 `openspec/changes/install-local-config-registration/tasks.md` 中 1.1–5.1 已实现，勾选 `[x]`。
 
-- [ ] **Step 6: Commit**
+- [x] **Step 6: Commit**
 
 ```bash
 git add README.md openspec/changes/install-local-config-registration/tasks.md
