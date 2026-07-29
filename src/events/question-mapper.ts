@@ -41,10 +41,21 @@ function truncate(text: string, maxLen: number): string {
   return text.slice(0, maxLen) + "..."
 }
 
-function formatSuffix(q: QuestionInfo): string {
+function formatSuffix(q: QuestionInfo, template?: string): string {
   const suffix: string[] = []
   if (q.multiple) suffix.push("(可多选)")
-  if (q.custom) suffix.push("(可自定义输入)")
+  
+  // 判断是否应该显示"(可自定义输入)"
+  // 1. 无选项时，总是显示（作为提示）
+  // 2. 有选项且模板不包含 {options} 变量时，显示（因为选项列表不会显示）
+  // 3. 有选项且模板包含 {options} 变量时，不显示（已作为选项列表项添加）
+  const templateStr = template || DEFAULT_TEMPLATE
+  const hasOptionsVar = templateStr.includes("{options}")
+  
+  if (q.custom && (q.options.length === 0 || !hasOptionsVar)) {
+    suffix.push("(可自定义输入)")
+  }
+  
   return suffix.join(" ")
 }
 
@@ -52,11 +63,15 @@ function formatQuestionOptions(q: QuestionInfo): string {
   if (q.options.length === 0) return ""
 
   const visibleOptions = q.options.slice(0, MAX_OPTIONS)
-  const optionsText = visibleOptions
+  const optionsList = visibleOptions
     .map((o) => `• ${o.label}: ${o.description}`)
-    .join("\n")
 
-  let result = optionsText
+  // 如果 custom: true，在选项列表末尾添加自定义选项
+  if (q.custom) {
+    optionsList.push("• (可自定义输入)")
+  }
+
+  let result = optionsList.join("\n")
   if (q.options.length > MAX_OPTIONS) {
     result += `\n... (${q.options.length - MAX_OPTIONS} more)`
   }
@@ -67,7 +82,7 @@ function formatQuestionItem(q: QuestionInfo, index: number, template?: string): 
   const effectiveTemplate = template || DEFAULT_QUESTION_ITEM_TEMPLATE
   const questionText = truncate(q.question, MAX_QUESTION_LEN)
   const optionsText = formatQuestionOptions(q)
-  const suffixText = formatSuffix(q)
+  const suffixText = formatSuffix(q, effectiveTemplate)
 
   let processedTemplate = effectiveTemplate
 
@@ -78,11 +93,14 @@ function formatQuestionItem(q: QuestionInfo, index: number, template?: string): 
       .replace(/[ \t]*Options:[ \t]*\n?[ \t]*\{options\}\n?/gi, "")
   }
 
+  // 应用缩进到 options 内容
+  const indentedOptions = optionsText ? applyIndent(processedTemplate, "options", optionsText) : ""
+
   const text = processedTemplate
     .replace(/{number}/g, String(index + 1))
     .replace(/{header}/g, q.header)
     .replace(/{question}/g, questionText)
-    .replace(/{options}/g, optionsText)
+    .replace(/{options}/g, indentedOptions)
     .replace(/{suffix}/g, suffixText)
     .trimEnd()
 
@@ -174,7 +192,7 @@ export function mapQuestionEvent(
     const effectiveTemplate = template || DEFAULT_TEMPLATE
     const questionText = truncate(questions[0].question, MAX_QUESTION_LEN)
     const optionsText = formatQuestionOptions(questions[0])
-    const suffixText = formatSuffix(questions[0])
+    const suffixText = formatSuffix(questions[0], effectiveTemplate)
 
     let processedTemplate = effectiveTemplate
 

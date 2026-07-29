@@ -31,4 +31,10 @@ else
   echo "Preserved existing config at $GLOBAL_CONFIG"
 fi
 
+# Register plugin in global opencode.jsonc (best-effort, non-blocking).
+source "$PROJECT_ROOT/scripts/lib/config-register.sh"
+# Override PLUGIN_PATH for global installation (use absolute path)
+export PLUGIN_PATH="$PLUGIN_DIR"
+register_plugin_config || true
+
 echo "Plugin installed to $PLUGIN_DIR"

@@ -1,0 +1,6 @@
+{
+  "schema": "comet.selection.v2",
+  "workflow": "classic",
+  "change": "fix-plugin-path-and-notification-format",
+  "branch": "hotfix/20260729/fix-plugin-path-and-notification-format"
+}
