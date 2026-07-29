@@ -339,6 +339,98 @@ test_write_skips_non_json_file() {
   assert_contains "$err" "WARNING"
 }
 
+# ===== write_plugin_registration scenario 3 & 4 tests =====
+
+test_write_empty_array_single_line() {
+  sandbox_setup
+  local target=".opencode/opencode.jsonc"
+  cat > "$target" <<'EOF'
+{
+  "plugin": []
+}
+EOF
+  write_plugin_registration "$target"
+  assert_file_contains "$target" "\"$PLUGIN_PATH\""
+  assert_file_not_contains "$target" "[]"
+}
+
+test_write_empty_array_with_spaces() {
+  sandbox_setup
+  local target=".opencode/opencode.jsonc"
+  printf '{\n  "plugin": [ ]\n}\n' > "$target"
+  write_plugin_registration "$target"
+  assert_file_contains "$target" "\"$PLUGIN_PATH\""
+}
+
+test_write_append_single_line_array() {
+  sandbox_setup
+  local target=".opencode/opencode.jsonc"
+  printf '{\n  "plugin": ["other"]\n}\n' > "$target"
+  write_plugin_registration "$target"
+  assert_file_contains "$target" '"other"'
+  assert_file_contains "$target" "\"$PLUGIN_PATH\""
+  assert_contains "$(cat "$target")" '"other", "'
+}
+
+test_write_append_single_line_multi_element() {
+  sandbox_setup
+  local target=".opencode/opencode.jsonc"
+  printf '{\n  "plugin": ["a", "b"]\n}\n' > "$target"
+  write_plugin_registration "$target"
+  assert_file_contains "$target" '"a"'
+  assert_file_contains "$target" '"b"'
+  assert_file_contains "$target" "\"$PLUGIN_PATH\""
+}
+
+test_write_append_multiline_array() {
+  sandbox_setup
+  local target=".opencode/opencode.jsonc"
+  cat > "$target" <<'EOF'
+{
+  "plugin": [
+    "other"
+  ]
+}
+EOF
+  write_plugin_registration "$target"
+  assert_file_contains "$target" '"other"'
+  assert_file_contains "$target" "\"$PLUGIN_PATH\""
+  assert_file_contains "$target" '"other",'
+}
+
+test_write_append_multiline_preserves_comments() {
+  sandbox_setup
+  local target=".opencode/opencode.jsonc"
+  cat > "$target" <<'EOF'
+{
+  // plugins list
+  "plugin": [
+    "other"
+  ],
+  "theme": "dark"
+}
+EOF
+  write_plugin_registration "$target"
+  assert_file_contains "$target" "// plugins list"
+  assert_file_contains "$target" '"theme": "dark"'
+  assert_file_contains "$target" "\"$PLUGIN_PATH\""
+}
+
+test_write_append_trailing_comma_style() {
+  sandbox_setup
+  local target=".opencode/opencode.jsonc"
+  cat > "$target" <<'EOF'
+{
+  "plugin": [
+    "other",
+  ]
+}
+EOF
+  write_plugin_registration "$target"
+  assert_file_contains "$target" "\"$PLUGIN_PATH\""
+  assert_file_contains "$target" '"other",'
+}
+
 # ===== Main =====
 
 run_test "write: creates new file with schema+plugin" test_write_creates_new_file
@@ -346,6 +438,13 @@ run_test "write: creates parent dir" test_write_creates_parent_dir
 run_test "write: adds plugin field preserving comments" test_write_adds_plugin_field_preserving_comments
 run_test "write: adds plugin field to nested config" test_write_adds_plugin_field_to_nested_config
 run_test "write: skips non-json file" test_write_skips_non_json_file
+run_test "write: empty array single line" test_write_empty_array_single_line
+run_test "write: empty array with spaces" test_write_empty_array_with_spaces
+run_test "write: append single-line array" test_write_append_single_line_array
+run_test "write: append single-line multi-element" test_write_append_single_line_multi_element
+run_test "write: append multiline array" test_write_append_multiline_array
+run_test "write: append multiline preserves comments" test_write_append_multiline_preserves_comments
+run_test "write: append trailing-comma style" test_write_append_trailing_comma_style
 
 run_test "strip: pure comment line" test_strip_pure_comment_line
 run_test "strip: trailing comment" test_strip_trailing_comment

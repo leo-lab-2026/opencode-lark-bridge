@@ -145,6 +145,59 @@ EOF
     return 0
   fi
 
-  echo "WARNING: plugin field exists but append logic not yet implemented for $target" >&2
-  return 1
+  # Scenario 3: empty array [] (single-line, possibly with spaces)
+  if grep -qE '"plugin"[[:space:]]*:[[:space:]]*\[[[:space:]]*\]' "$target"; then
+    sed -i.bak -E "s|(\"plugin\"[[:space:]]*:[[:space:]]*\[)[[:space:]]*\]|\\1\"$PLUGIN_PATH\"]|g" "$target"
+    rm -f "$target.bak"
+    echo "Added plugin to empty array in: $target"
+    return 0
+  fi
+
+  # Scenario 4: non-empty array -> append
+  # Sub-case 4a: single-line array "plugin": ["a", ...]
+  if grep -qE '"plugin"[[:space:]]*:[[:space:]]*\[.*\]' "$target"; then
+    sed -i.bak -E "s|(\"plugin\"[[:space:]]*:[[:space:]]*\[[[:space:]]*[^]]*[^[:space:]])([[:space:]]*\])|\\1, \"$PLUGIN_PATH\"\\2|" "$target"
+    rm -f "$target.bak"
+    echo "Appended plugin to single-line array in: $target"
+    return 0
+  fi
+
+  # Sub-case 4b: multi-line array — locate closing ] on its own line
+  local close_line
+  close_line=$(awk '
+    /"plugin"[[:space:]]*:/ { found=1 }
+    found && /\]/ { print NR; exit }
+  ' "$target")
+  if [ -z "$close_line" ]; then
+    echo "WARNING: Could not locate plugin array closing bracket in $target" >&2
+    return 1
+  fi
+
+  # Find last non-blank line before close_line (the last element)
+  local last_elem_line=$((close_line - 1))
+  while [ "$last_elem_line" -gt 0 ]; do
+    local content
+    content=$(sed -n "${last_elem_line}p" "$target")
+    [ -n "$(printf '%s' "$content" | tr -d '[:space:]')" ] && break
+    last_elem_line=$((last_elem_line - 1))
+  done
+
+  # Add trailing comma to last element if missing (replaces trailing whitespace)
+  local last_content
+  last_content=$(sed -n "${last_elem_line}p" "$target")
+  if ! printf '%s' "$last_content" | grep -qE ',[[:space:]]*$'; then
+    sed -i.bak -E "${last_elem_line}s|[[:space:]]*$|,|" "$target"
+    rm -f "$target.bak"
+  fi
+
+  # Indentation matching the last element
+  local indent
+  indent=$(sed -n "${last_elem_line}p" "$target" | awk '{ match($0, /^[[:space:]]*/); print substr($0, 1, RLENGTH) }')
+
+  # Insert new element before closing ]
+  sed -i.bak "${close_line}i\\
+${indent}\"$PLUGIN_PATH\"" "$target"
+  rm -f "$target.bak"
+  echo "Appended plugin to multi-line array in: $target"
+  return 0
 }
