@@ -1141,12 +1141,12 @@ run_test "orchestrate: idempotent" test_orchestrate_idempotent
 run_test "orchestrate: write failure warns not aborts" test_orchestrate_write_failure_warns_not_aborts
 ```
 
-- [ ] **Step 2: 运行测试确认失败**
+- [x] **Step 2: 运行测试确认失败**
 
 Run: `bash tests/install-local.test.sh`
 Expected: 新增 7 个 FAIL（`register_plugin_config: command not found`）
 
-- [ ] **Step 3: 实现 register_plugin_config**
+- [x] **Step 3: 实现 register_plugin_config**
 
 追加到 `scripts/lib/config-register.sh`:
 
@@ -1171,12 +1171,12 @@ register_plugin_config() {
 }
 ```
 
-- [ ] **Step 4: 运行测试确认通过**
+- [x] **Step 4: 运行测试确认通过**
 
 Run: `bash tests/install-local.test.sh`
 Expected: PASS=43 FAIL=0
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```bash
 git add scripts/lib/config-register.sh tests/install-local.test.sh
@@ -1193,7 +1193,7 @@ git commit -m "feat: add register_plugin_config orchestrator with fault toleranc
 **Interfaces:**
 - Consumes: `register_plugin_config` from `scripts/lib/config-register.sh`
 
-- [ ] **Step 1: 修改 install-local.sh**
+- [x] **Step 1: 修改 install-local.sh**
 
 在 `scripts/install-local.sh` 末尾的 `echo "Plugin installed to $PLUGIN_DIR"` 之前（即种子配置块之后）插入:
 
@@ -1225,12 +1225,12 @@ register_plugin_config || true
 echo "Plugin installed to $PLUGIN_DIR"
 ```
 
-- [ ] **Step 2: 运行完整测试套件**
+- [x] **Step 2: 运行完整测试套件**
 
 Run: `bash tests/install-local.test.sh`
 Expected: PASS=43 FAIL=0
 
-- [ ] **Step 3: 端到端手动验证（场景：无配置文件 → 自动创建）**
+- [x] **Step 3: 端到端手动验证（场景：无配置文件 → 自动创建）**
 
 Run:
 ```bash
