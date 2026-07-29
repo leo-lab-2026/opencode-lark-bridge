@@ -310,7 +310,7 @@ git commit -m "feat: add config-register lib scaffold + strip_jsonc_comments"
 - Produces: `is_plugin_registered <file>` → 返回 0=已注册，1=未注册（含解析失败，附 stderr 警告）
 - Consumes: `strip_jsonc_comments`、`PLUGIN_PATH`、`JQ_BIN`（默认 `jq`，测试可覆盖以强制 grep 回退）
 
-- [ ] **Step 1: 写失败测试**
+- [x] **Step 1: 写失败测试**
 
 追加测试函数到 `tests/install-local.test.sh`:
 
@@ -408,12 +408,12 @@ run_test "is_registered: malformed json warns jq" test_malformed_json_warns_jq
 run_test "is_registered: jq endswith absolute path" test_registered_absolute_path_jq
 ```
 
-- [ ] **Step 2: 运行测试确认失败**
+- [x] **Step 2: 运行测试确认失败**
 
 Run: `bash tests/install-local.test.sh`
 Expected: 新增 9 个 FAIL（`is_plugin_registered: command not found`）
 
-- [ ] **Step 3: 实现 is_plugin_registered**
+- [x] **Step 3: 实现 is_plugin_registered**
 
 追加到 `scripts/lib/config-register.sh`:
 
@@ -446,12 +446,12 @@ is_plugin_registered() {
 }
 ```
 
-- [ ] **Step 4: 运行测试确认通过**
+- [x] **Step 4: 运行测试确认通过**
 
 Run: `bash tests/install-local.test.sh`
 Expected: PASS=14 FAIL=0（5 旧 + 9 新）
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```bash
 git add scripts/lib/config-register.sh tests/install-local.test.sh
