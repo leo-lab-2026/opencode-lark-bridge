@@ -5,12 +5,6 @@
 # Plugin path as stored in opencode config (relative to project root).
 PLUGIN_PATH="${PLUGIN_PATH:-.opencode/plugins/opencode-lark-bridge}"
 
-# Global opencode configs (read-only check only).
-GLOBAL_CONFIGS=(
-  "$HOME/.config/opencode/opencode.jsonc"
-  "$HOME/.config/opencode/opencode.json"
-)
-
 # Project-level configs (check + write), ordered by priority.
 PROJECT_CONFIGS=(
   ".opencode/opencode.jsonc"
@@ -143,16 +137,14 @@ EOF
       return 1
     fi
     sed -i.bak "${last_brace}i\\
-  \"plugin\": [\"$PLUGIN_PATH\"]," "$target"
-    rm -f "$target.bak"
+  \"plugin\": [\"$PLUGIN_PATH\"]," "$target" && rm -f "$target.bak"
     echo "Added plugin field to: $target"
     return 0
   fi
 
   # Scenario 3: empty array [] (single-line, possibly with spaces)
   if grep -qE '"plugin"[[:space:]]*:[[:space:]]*\[[[:space:]]*\]' "$target"; then
-    sed -i.bak -E "s|(\"plugin\"[[:space:]]*:[[:space:]]*\[)[[:space:]]*\]|\\1\"$PLUGIN_PATH\"]|g" "$target"
-    rm -f "$target.bak"
+    sed -i.bak -E "s|(\"plugin\"[[:space:]]*:[[:space:]]*\[)[[:space:]]*\]|\\1\"$PLUGIN_PATH\"]|g" "$target" && rm -f "$target.bak"
     echo "Added plugin to empty array in: $target"
     return 0
   fi
@@ -160,8 +152,7 @@ EOF
   # Scenario 4: non-empty array -> append
   # Sub-case 4a: single-line array "plugin": ["a", ...]
   if grep -qE '"plugin"[[:space:]]*:[[:space:]]*\[.*\]' "$target"; then
-    sed -i.bak -E "s|(\"plugin\"[[:space:]]*:[[:space:]]*\[[[:space:]]*[^]]*[^[:space:]])([[:space:]]*\])|\\1, \"$PLUGIN_PATH\"\\2|" "$target"
-    rm -f "$target.bak"
+    sed -i.bak -E "s|(\"plugin\"[[:space:]]*:[[:space:]]*\[[[:space:]]*[^]]*[^[:space:]])([[:space:]]*\])|\\1, \"$PLUGIN_PATH\"\\2|" "$target" && rm -f "$target.bak"
     echo "Appended plugin to single-line array in: $target"
     return 0
   fi
@@ -190,8 +181,7 @@ EOF
   local last_content
   last_content=$(sed -n "${last_elem_line}p" "$target")
   if ! printf '%s' "$last_content" | grep -qE ',[[:space:]]*$'; then
-    sed -i.bak -E "${last_elem_line}s|[[:space:]]*$|,|" "$target"
-    rm -f "$target.bak"
+    sed -i.bak -E "${last_elem_line}s|[[:space:]]*$|,|" "$target" && rm -f "$target.bak"
   fi
 
   # Indentation matching the last element
@@ -200,8 +190,7 @@ EOF
 
   # Insert new element before closing ]
   sed -i.bak "${close_line}i\\
-${indent}\"$PLUGIN_PATH\"" "$target"
-  rm -f "$target.bak"
+${indent}\"$PLUGIN_PATH\"" "$target" && rm -f "$target.bak"
   echo "Appended plugin to multi-line array in: $target"
   return 0
 }
