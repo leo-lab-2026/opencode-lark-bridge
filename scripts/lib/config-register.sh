@@ -114,7 +114,7 @@ write_plugin_registration() {
 
   if [ ! -f "$target" ]; then
     mkdir -p "$(dirname "$target")"
-    cat > "$target" <<EOF
+    if ! cat > "$target" <<EOF
 {
   "\$schema": "https://opencode.ai/config.json",
   "plugin": [
@@ -122,6 +122,10 @@ write_plugin_registration() {
   ]
 }
 EOF
+    then
+      echo "WARNING: Failed to create $target" >&2
+      return 1
+    fi
     echo "Created config with plugin registration: $target"
     return 0
   fi
@@ -199,5 +203,24 @@ EOF
 ${indent}\"$PLUGIN_PATH\"" "$target"
   rm -f "$target.bak"
   echo "Appended plugin to multi-line array in: $target"
+  return 0
+}
+
+# Orchestrate: check all configs -> if not registered, select target -> write.
+# Best-effort: returns 0 if already registered or write succeeded, 1 on write
+# failure (caller should use `register_plugin_config || true` to stay non-blocking).
+register_plugin_config() {
+  if check_all_configs; then
+    return 0
+  fi
+
+  local target
+  target=$(select_write_target)
+
+  if ! write_plugin_registration "$target"; then
+    echo "WARNING: Failed to write plugin registration to $target" >&2
+    echo "         Please manually add '$PLUGIN_PATH' to your opencode config." >&2
+    return 1
+  fi
   return 0
 }

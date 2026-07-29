@@ -471,6 +471,86 @@ run_test "select: falls back to json" test_select_falls_back_to_json
 run_test "select: json priority opencode over root" test_select_json_priority_opencode_over_root
 run_test "select: default when none exist" test_select_default_when_none_exist
 
+# ===== register_plugin_config orchestration tests =====
+
+test_orchestrate_skips_when_already_registered() {
+  skip_if_no_jq
+  sandbox_setup
+  printf '{\n  "plugin": ["%s"]\n}\n' "$PLUGIN_PATH" > ".opencode/opencode.jsonc"
+  local out
+  out=$(register_plugin_config) || true
+  assert_contains "$out" "already registered"
+}
+
+test_orchestrate_creates_when_none_exist() {
+  sandbox_setup
+  register_plugin_config
+  assert_file_contains ".opencode/opencode.jsonc" "\"$PLUGIN_PATH\""
+}
+
+test_orchestrate_writes_to_existing_jsonc() {
+  skip_if_no_jq
+  sandbox_setup
+  cat > ".opencode/opencode.jsonc" <<'EOF'
+{
+  // existing
+  "theme": "dark"
+}
+EOF
+  register_plugin_config
+  assert_file_contains ".opencode/opencode.jsonc" "// existing"
+  assert_file_contains ".opencode/opencode.jsonc" "\"$PLUGIN_PATH\""
+}
+
+test_orchestrate_writes_to_json_when_no_jsonc() {
+  skip_if_no_jq
+  sandbox_setup
+  printf '{\n  "theme": "dark"\n}\n' > "opencode.json"
+  register_plugin_config
+  assert_file_contains "opencode.json" "\"$PLUGIN_PATH\""
+  assert_file_not_contains "opencode.json" "// existing"
+  [ ! -f ".opencode/opencode.jsonc" ] || exit 1
+}
+
+test_orchestrate_never_modifies_global() {
+  skip_if_no_jq
+  sandbox_setup
+  printf '{\n  "plugin": ["other"]\n}\n' > "$HOME/.config/opencode/opencode.json"
+  register_plugin_config
+  assert_file_not_contains "$HOME/.config/opencode/opencode.json" "$PLUGIN_PATH"
+  assert_file_contains ".opencode/opencode.jsonc" "$PLUGIN_PATH"
+}
+
+test_orchestrate_idempotent() {
+  skip_if_no_jq
+  sandbox_setup
+  register_plugin_config
+  local before
+  before=$(cat ".opencode/opencode.jsonc")
+  register_plugin_config
+  local after
+  after=$(cat ".opencode/opencode.jsonc")
+  assert_eq "$before" "$after"
+}
+
+test_orchestrate_write_failure_warns_not_aborts() {
+  sandbox_setup
+  mkdir -p ".opencode"
+  chmod 555 ".opencode"
+  local err
+  err=$(register_plugin_config 2>&1) || true
+  chmod 755 ".opencode"
+  assert_contains "$err" "WARNING"
+}
+
+run_test "orchestrate: skips when already registered" test_orchestrate_skips_when_already_registered
+run_test "orchestrate: creates when none exist" test_orchestrate_creates_when_none_exist
+run_test "orchestrate: writes to existing jsonc" test_orchestrate_writes_to_existing_jsonc
+run_test "orchestrate: writes to json when no jsonc" test_orchestrate_writes_to_json_when_no_jsonc
+run_test "orchestrate: never modifies global" test_orchestrate_never_modifies_global
+run_test "orchestrate: idempotent" test_orchestrate_idempotent
+run_test "orchestrate: write failure warns not aborts" test_orchestrate_write_failure_warns_not_aborts
+
 echo ""
 echo "Results: PASS=$PASS FAIL=$FAIL SKIP=$SKIP"
 if [ "$FAIL" -ne 0 ]; then

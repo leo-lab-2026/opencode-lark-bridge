@@ -34,4 +34,8 @@ else
   echo "Preserved existing config at $PROJECT_CONFIG"
 fi
 
+# Register plugin in opencode.jsonc (best-effort, non-blocking).
+source "$PROJECT_ROOT/scripts/lib/config-register.sh"
+register_plugin_config || true
+
 echo "Plugin installed to $PLUGIN_DIR"
