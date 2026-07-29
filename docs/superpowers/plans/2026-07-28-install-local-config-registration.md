@@ -2,6 +2,7 @@
 change: install-local-config-registration
 design-doc: docs/superpowers/specs/2026-07-28-install-local-config-registration-design.md
 base-ref: 53093f2
+archived-with: 2026-07-29-install-local-config-registration
 ---
 # install-local.sh 智能配置注册 Implementation Plan
 
