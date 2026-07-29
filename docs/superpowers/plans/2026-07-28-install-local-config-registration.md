@@ -1254,7 +1254,7 @@ Expected: 输出包含 `$schema` 和 `plugin` 数组含 `.opencode/plugins/openc
 rm -rf "$E2E"
 ```
 
-- [ ] **Step 4: 端到端手动验证（场景：已有配置 → 追加且保留注释）**
+- [x] **Step 4: 端到端手动验证（场景：已有配置 → 追加且保留注释）**
 
 Run:
 ```bash
@@ -1278,7 +1278,7 @@ Expected: 注释 `// my config` 保留，`"theme": "dark"` 保留，新增 `"plu
 rm -rf "$E2E"
 ```
 
-- [ ] **Step 5: 验证全局配置未被修改**
+- [x] **Step 5: 验证全局配置未被修改**
 
 Run:
 ```bash
@@ -1298,17 +1298,17 @@ rm -rf "$E2E"
 ```
 Expected: 全局文件保持 `"other"` 不变，项目文件含插件路径
 
-- [ ] **Step 6: 运行实际安装脚本（完整流程）**
+- [x] **Step 6: 运行实际安装脚本（完整流程）**
 
 Run: `npm run install:local`
 Expected: 安装完成，末尾输出注册结果（"Created config..." 或 "already registered..."），不中断
 
-- [ ] **Step 7: 验证 install-global.sh 未受影响（回归）**
+- [x] **Step 7: 验证 install-global.sh 未受影响（回归）**
 
 Run: `npm run install:global`
 Expected: 正常完成（install-global.sh 未修改，不调用 config-register）
 
-- [ ] **Step 8: Commit**
+- [x] **Step 8: Commit**
 
 ```bash
 git add scripts/install-local.sh
@@ -1322,12 +1322,12 @@ git commit -m "feat: integrate config registration into install-local.sh"
 **Files:**
 - Modify: `README.md`
 
-- [ ] **Step 1: 读取 README 当前安装章节**
+- [x] **Step 1: 读取 README 当前安装章节**
 
 Run: `grep -n "install:local\|install-local\|安装" README.md`
 定位安装说明段落。
 
-- [ ] **Step 2: 添加自动注册行为说明**
+- [x] **Step 2: 添加自动注册行为说明**
 
 在 `npm run install:local` 说明段落后，追加:
 
