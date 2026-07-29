@@ -582,7 +582,7 @@ git commit -m "feat: add check_all_configs scanner"
 - Produces: `select_write_target` → stdout 输出目标文件路径（相对 CWD）
 - Consumes: 无（硬编码优先级顺序）
 
-- [ ] **Step 1: 写失败测试**
+- [x] **Step 1: 写失败测试**
 
 追加测试函数:
 
@@ -630,12 +630,12 @@ run_test "select: json priority opencode over root" test_select_json_priority_op
 run_test "select: default when none exist" test_select_default_when_none_exist
 ```
 
-- [ ] **Step 2: 运行测试确认失败**
+- [x] **Step 2: 运行测试确认失败**
 
 Run: `bash tests/install-local.test.sh`
 Expected: 新增 5 个 FAIL
 
-- [ ] **Step 3: 实现 select_write_target**
+- [x] **Step 3: 实现 select_write_target**
 
 追加到 `scripts/lib/config-register.sh`:
 
@@ -656,12 +656,12 @@ select_write_target() {
 }
 ```
 
-- [ ] **Step 4: 运行测试确认通过**
+- [x] **Step 4: 运行测试确认通过**
 
 Run: `bash tests/install-local.test.sh`
 Expected: PASS=24 FAIL=0
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```bash
 git add scripts/lib/config-register.sh tests/install-local.test.sh
