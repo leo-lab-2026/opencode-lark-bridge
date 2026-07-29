@@ -2,7 +2,16 @@
 # Config registration helpers for install-local.sh.
 # Source-only: defines functions and constants, no side effects on source.
 
-# Plugin path as stored in opencode config (relative to project root).
+# OpenCode 自动发现机制说明：
+# - OpenCode 会自动扫描并加载 .opencode/plugins/ 目录下的插件
+# - 目录形式的插件只要有入口点（`exports`、`module`、`main` 或 `index.js`）就会被加载
+# - 因此，通常无需在 `opencode.jsonc` 中手动注册插件
+# - 如果用户手动配置，路径应相对于 .opencode/ 目录，例如 ./plugins/opencode-lark-bridge
+#
+# 参考：https://opencode.ai/v2/docs/build/plugins
+# 参考：https://github.com/anomalyco/opencode/issues/28384
+
+# 保留 PLUGIN_PATH 用于向后兼容和警告信息
 PLUGIN_PATH="${PLUGIN_PATH:-.opencode/plugins/opencode-lark-bridge}"
 
 # Project-level configs (check + write), ordered by priority.
@@ -195,21 +204,17 @@ ${indent}\"$PLUGIN_PATH\"" "$target" && rm -f "$target.bak"
   return 0
 }
 
-# Orchestrate: check all configs -> if not registered, select target -> write.
-# Best-effort: returns 0 if already registered or write succeeded, 1 on write
-# failure (caller should use `register_plugin_config || true` to stay non-blocking).
+# Orchestrate: 输出警告信息，不进行实际注册。
+# OpenCode 会自动发现 .opencode/plugins/ 下的插件，无需手动注册。
+# 如果用户需要手动配置，路径应为 ./plugins/opencode-lark-bridge（相对于 .opencode/ 目录）。
 register_plugin_config() {
-  if check_all_configs; then
-    return 0
-  fi
-
-  local target
-  target=$(select_write_target)
-
-  if ! write_plugin_registration "$target"; then
-    echo "WARNING: Failed to write plugin registration to $target" >&2
-    echo "         Please manually add '$PLUGIN_PATH' to your opencode config." >&2
-    return 1
-  fi
+  echo "ℹ️  OpenCode 会自动发现 .opencode/plugins/ 下的插件，无需手动注册。"
+  echo "   如果插件未被加载，请检查："
+  echo "   1. 插件目录是否包含 package.json 和 main 入口点"
+  echo "   2. 插件配置文件是否正确填写了飞书凭证"
+  echo ""
+  echo "   如需手动注册，请在 opencode.jsonc 中添加："
+  echo "   { \"plugin\": [\"./plugins/opencode-lark-bridge\"] }"
+  echo "   （注意：路径相对于 .opencode/ 目录）"
   return 0
 }

@@ -34,7 +34,8 @@ else
   echo "Preserved existing config at $PROJECT_CONFIG"
 fi
 
-# Register plugin in opencode.jsonc (best-effort, non-blocking).
+# OpenCode 会自动发现 `.opencode/plugins/` 下的插件。
+# 输出提示信息，帮助用户排查问题（如果插件未被加载）。
 source "$PROJECT_ROOT/scripts/lib/config-register.sh"
 register_plugin_config || true
 
