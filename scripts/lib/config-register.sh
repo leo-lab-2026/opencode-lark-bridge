@@ -72,3 +72,24 @@ is_plugin_registered() {
     grep -qF "$PLUGIN_PATH" "$file" 2>/dev/null && return 0 || return 1
   fi
 }
+
+check_all_configs() {
+  local cfg
+  local global_configs=(
+    "$HOME/.config/opencode/opencode.jsonc"
+    "$HOME/.config/opencode/opencode.json"
+  )
+  for cfg in "${global_configs[@]}"; do
+    if is_plugin_registered "$cfg"; then
+      echo "Plugin already registered in global config: $cfg"
+      return 0
+    fi
+  done
+  for cfg in "${PROJECT_CONFIGS[@]}"; do
+    if is_plugin_registered "$cfg"; then
+      echo "Plugin already registered in project config: $cfg"
+      return 0
+    fi
+  done
+  return 1
+}

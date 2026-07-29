@@ -204,6 +204,49 @@ test_registered_absolute_path_jq() {
   assert_exit 0 is_plugin_registered "$f"
 }
 
+# ===== check_all_configs tests =====
+
+test_check_all_project_registered() {
+  skip_if_no_jq
+  sandbox_setup
+  printf '{\n  "plugin": ["%s"]\n}\n' "$PLUGIN_PATH" > ".opencode/opencode.jsonc"
+  local out
+  out=$(check_all_configs) || true
+  assert_contains "$out" "already registered"
+  assert_contains "$out" ".opencode/opencode.jsonc"
+  assert_exit 0 check_all_configs
+}
+
+test_check_all_global_registered() {
+  skip_if_no_jq
+  sandbox_setup
+  printf '{\n  "plugin": ["%s"]\n}\n' "$PLUGIN_PATH" > "$HOME/.config/opencode/opencode.jsonc"
+  local out
+  out=$(check_all_configs) || true
+  assert_contains "$out" "already registered"
+  assert_exit 0 check_all_configs
+}
+
+test_check_all_none_registered() {
+  skip_if_no_jq
+  sandbox_setup
+  printf '{\n  "plugin": ["other"]\n}\n' > ".opencode/opencode.json"
+  assert_exit 1 check_all_configs
+}
+
+test_check_all_no_files() {
+  sandbox_setup
+  assert_exit 1 check_all_configs
+}
+
+test_check_all_global_never_written() {
+  skip_if_no_jq
+  sandbox_setup
+  printf '{\n  "plugin": ["other"]\n}\n' > "$HOME/.config/opencode/opencode.json"
+  assert_exit 1 check_all_configs
+  assert_file_not_contains "$HOME/.config/opencode/opencode.json" "$PLUGIN_PATH"
+}
+
 # ===== Main =====
 
 run_test "strip: pure comment line" test_strip_pure_comment_line
@@ -220,6 +263,11 @@ run_test "is_registered: grep fallback registered" test_registered_grep_fallback
 run_test "is_registered: grep fallback not registered" test_not_registered_grep_fallback
 run_test "is_registered: malformed json warns jq" test_malformed_json_warns_jq
 run_test "is_registered: jq endswith absolute path" test_registered_absolute_path_jq
+run_test "check_all: project registered" test_check_all_project_registered
+run_test "check_all: global registered" test_check_all_global_registered
+run_test "check_all: none registered" test_check_all_none_registered
+run_test "check_all: no files exist" test_check_all_no_files
+run_test "check_all: global never written" test_check_all_global_never_written
 
 echo ""
 echo "Results: PASS=$PASS FAIL=$FAIL SKIP=$SKIP"
