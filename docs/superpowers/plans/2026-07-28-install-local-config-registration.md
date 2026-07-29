@@ -844,7 +844,7 @@ git commit -m "feat: write_plugin_registration scenarios 1 (new file) & 2 (add f
 - Produces: 同 Task 5（补全场景 3、4）
 - Consumes: `PLUGIN_PATH`
 
-- [ ] **Step 1: 写失败测试（场景 3：空数组）**
+- [x] **Step 1: 写失败测试（场景 3：空数组）**
 
 追加测试函数:
 
@@ -871,7 +871,7 @@ test_write_empty_array_with_spaces() {
 }
 ```
 
-- [ ] **Step 2: 写失败测试（场景 4：非空数组追加）**
+- [x] **Step 2: 写失败测试（场景 4：非空数组追加）**
 
 追加测试函数:
 
@@ -959,12 +959,12 @@ run_test "write: append multiline preserves comments" test_write_append_multilin
 run_test "write: append trailing-comma style" test_write_append_trailing_comma_style
 ```
 
-- [ ] **Step 3: 运行测试确认失败**
+- [x] **Step 3: 运行测试确认失败**
 
 Run: `bash tests/install-local.test.sh`
 Expected: 新增 7 个 FAIL（场景 3、4 占位逻辑返回 WARNING）
 
-- [ ] **Step 4: 实现场景 3 & 4**
+- [x] **Step 4: 实现场景 3 & 4**
 
 替换 `write_plugin_registration` 末尾的占位块（`# Scenarios 3 & 4 are implemented in Task 6.` 那段）为:
 
