@@ -43,5 +43,32 @@ strip_jsonc_comments() {
       i++
     }
     print out
-  }'
+    }'
+}
+
+# Check if PLUGIN_PATH is registered in the given config file.
+# Returns: 0 = registered, 1 = not registered (or unparseable).
+# Uses jq for precise check when available; falls back to grep.
+# Override JQ_BIN to force a mode (used by tests).
+is_plugin_registered() {
+  local file="$1"
+  [ ! -f "$file" ] && return 1
+
+  local jq_bin="${JQ_BIN:-jq}"
+  if command -v "$jq_bin" &> /dev/null; then
+    local code
+    strip_jsonc_comments < "$file" | "$jq_bin" -e --arg p "$PLUGIN_PATH" \
+      '.plugin // [] | any(. == $p or endswith($p))' >/dev/null 2>/dev/null
+    code=${PIPESTATUS[1]:-$?}
+    if [ "$code" -eq 0 ]; then
+      return 0
+    elif [ "$code" -eq 1 ]; then
+      return 1
+    else
+      echo "WARNING: Failed to parse $file (jq exit $code), skipping" >&2
+      return 1
+    fi
+  else
+    grep -qF "$PLUGIN_PATH" "$file" 2>/dev/null && return 0 || return 1
+  fi
 }

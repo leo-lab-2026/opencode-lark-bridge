@@ -126,6 +126,84 @@ test_strip_preserves_code_without_comment() {
   assert_eq '{"a": 1, "b": 2}' "$out"
 }
 
+test_registered_jq_mode() {
+  skip_if_no_jq
+  sandbox_setup
+  local f=".opencode/opencode.jsonc"
+  printf '{\n  "plugin": ["%s"]\n}\n' "$PLUGIN_PATH" > "$f"
+  assert_exit 0 is_plugin_registered "$f"
+}
+
+test_not_registered_jq_mode() {
+  skip_if_no_jq
+  sandbox_setup
+  local f=".opencode/opencode.jsonc"
+  printf '{\n  "plugin": ["other-plugin"]\n}\n' > "$f"
+  assert_exit 1 is_plugin_registered "$f"
+}
+
+test_registered_jsonc_with_comments_jq() {
+  skip_if_no_jq
+  sandbox_setup
+  local f=".opencode/opencode.jsonc"
+  cat > "$f" <<EOF
+{
+  // registered plugins
+  "plugin": [
+    "$PLUGIN_PATH"
+  ]
+}
+EOF
+  assert_exit 0 is_plugin_registered "$f"
+}
+
+test_no_plugin_field_jq() {
+  skip_if_no_jq
+  sandbox_setup
+  local f=".opencode/opencode.jsonc"
+  printf '{\n  "theme": "dark"\n}\n' > "$f"
+  assert_exit 1 is_plugin_registered "$f"
+}
+
+test_nonexistent_file() {
+  sandbox_setup
+  assert_exit 1 is_plugin_registered ".opencode/nope.jsonc"
+}
+
+test_registered_grep_fallback() {
+  sandbox_setup
+  local f=".opencode/opencode.jsonc"
+  printf '{\n  "plugin": ["%s"]\n}\n' "$PLUGIN_PATH" > "$f"
+  JQ_BIN="__nojq__" assert_exit 0 is_plugin_registered "$f"
+}
+
+test_not_registered_grep_fallback() {
+  sandbox_setup
+  local f=".opencode/opencode.jsonc"
+  printf '{\n  "plugin": ["other"]\n}\n' > "$f"
+  JQ_BIN="__nojq__" assert_exit 1 is_plugin_registered "$f"
+}
+
+test_malformed_json_warns_jq() {
+  skip_if_no_jq
+  sandbox_setup
+  local f=".opencode/opencode.jsonc"
+  printf '{ broken json }}}' > "$f"
+  local err
+  err=$(is_plugin_registered "$f" 2>&1 >/dev/null) || true
+  assert_contains "$err" "WARNING"
+  assert_exit 1 is_plugin_registered "$f"
+}
+
+test_registered_absolute_path_jq() {
+  skip_if_no_jq
+  sandbox_setup
+  local f=".opencode/opencode.jsonc"
+  local abs="/abs/path$PLUGIN_PATH"
+  printf '{\n  "plugin": ["%s"]\n}\n' "$abs" > "$f"
+  assert_exit 0 is_plugin_registered "$f"
+}
+
 # ===== Main =====
 
 run_test "strip: pure comment line" test_strip_pure_comment_line
@@ -133,6 +211,15 @@ run_test "strip: trailing comment" test_strip_trailing_comment
 run_test "strip: preserves URL in string" test_strip_preserves_url_in_string
 run_test "strip: preserves // in string" test_strip_preserves_double_slash_in_string
 run_test "strip: no comment unchanged" test_strip_preserves_code_without_comment
+run_test "is_registered: jq mode registered" test_registered_jq_mode
+run_test "is_registered: jq mode not registered" test_not_registered_jq_mode
+run_test "is_registered: jq mode jsonc with comments" test_registered_jsonc_with_comments_jq
+run_test "is_registered: jq mode no plugin field" test_no_plugin_field_jq
+run_test "is_registered: nonexistent file" test_nonexistent_file
+run_test "is_registered: grep fallback registered" test_registered_grep_fallback
+run_test "is_registered: grep fallback not registered" test_not_registered_grep_fallback
+run_test "is_registered: malformed json warns jq" test_malformed_json_warns_jq
+run_test "is_registered: jq endswith absolute path" test_registered_absolute_path_jq
 
 echo ""
 echo "Results: PASS=$PASS FAIL=$FAIL SKIP=$SKIP"
