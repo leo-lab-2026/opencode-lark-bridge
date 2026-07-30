@@ -2,17 +2,16 @@
 # Config registration helpers for install-local.sh.
 # Source-only: defines functions and constants, no side effects on source.
 
-# OpenCode 自动发现机制说明：
-# - OpenCode 会自动扫描并加载 .opencode/plugins/ 目录下的插件
-# - 目录形式的插件只要有入口点（`exports`、`module`、`main` 或 `index.js`）就会被加载
-# - 因此，通常无需在 `opencode.jsonc` 中手动注册插件
-# - 如果用户手动配置，路径应相对于 .opencode/ 目录，例如 ./plugins/opencode-lark-bridge
+# OpenCode V1 插件配置说明：
+# - OpenCode V1 的自动发现机制不稳定，需要显式配置插件路径
+# - 配置字段名为 `plugin`（单数），路径相对于 .opencode/ 目录
+# - 推荐路径：./plugins/opencode-lark-bridge
 #
 # 参考：https://opencode.ai/v2/docs/build/plugins
 # 参考：https://github.com/anomalyco/opencode/issues/28384
 
-# 保留 PLUGIN_PATH 用于向后兼容和警告信息
-PLUGIN_PATH="${PLUGIN_PATH:-.opencode/plugins/opencode-lark-bridge}"
+# Plugin path relative to .opencode/ directory
+PLUGIN_PATH="${PLUGIN_PATH:-./plugins/opencode-lark-bridge}"
 
 # Project-level configs (check + write), ordered by priority.
 PROJECT_CONFIGS=(
@@ -204,17 +203,24 @@ ${indent}\"$PLUGIN_PATH\"" "$target" && rm -f "$target.bak"
   return 0
 }
 
-# Orchestrate: 输出警告信息，不进行实际注册。
-# OpenCode 会自动发现 .opencode/plugins/ 下的插件，无需手动注册。
-# 如果用户需要手动配置，路径应为 ./plugins/opencode-lark-bridge（相对于 .opencode/ 目录）。
+# Orchestrate: 自动注册插件到 opencode.jsonc。
+# OpenCode V1 的自动发现机制不稳定，显式配置是必要的。
+# 路径应为 ./plugins/opencode-lark-bridge（相对于 .opencode/ 目录）。
 register_plugin_config() {
-  echo "ℹ️  OpenCode 会自动发现 .opencode/plugins/ 下的插件，无需手动注册。"
-  echo "   如果插件未被加载，请检查："
-  echo "   1. 插件目录是否包含 package.json 和 main 入口点"
-  echo "   2. 插件配置文件是否正确填写了飞书凭证"
-  echo ""
-  echo "   如需手动注册，请在 opencode.jsonc 中添加："
-  echo "   { \"plugin\": [\"./plugins/opencode-lark-bridge\"] }"
-  echo "   （注意：路径相对于 .opencode/ 目录）"
-  return 0
+  if check_all_configs; then
+    echo "✓ Plugin already registered"
+    return 0
+  fi
+
+  local target
+  target=$(select_write_target)
+  
+  echo "Registering plugin in: $target"
+  if write_plugin_registration "$target"; then
+    echo "✓ Plugin registered successfully"
+    return 0
+  else
+    echo "✗ Failed to register plugin"
+    return 1
+  fi
 }

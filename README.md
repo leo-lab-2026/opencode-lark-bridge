@@ -203,23 +203,25 @@ npm run install:local
 2. 复制编译产物到 `.opencode/plugins/opencode-lark-bridge/`
 3. 首次运行时，在项目根目录 `.opencode/` 下创建示例配置（已存在则保留）
 
-### 自动发现机制
+### 插件注册机制
 
-OpenCode 会自动扫描并加载 `.opencode/plugins/` 目录下的插件：
-- 单个 `.ts` 或 `.js` 文件会被直接加载
-- 目录形式的插件只要有入口点（`exports`、`module`、`main` 或 `index.js`）就会被加载
+OpenCode V1 需要在配置文件中显式注册插件路径。安装脚本（`npm run install:local` 或 `npm run install:global`）会自动将插件注册到 `.opencode/opencode.jsonc`：
 
-本插件部署后包含 `package.json`（有 `main: "./index.js"`）和 `index.js`，会被 OpenCode 自动发现和加载，**通常无需手动注册**。
+```jsonc
+{
+  "plugin": ["./plugins/opencode-lark-bridge"]
+}
+```
 
 #### 插件导出格式要求
 
 OpenCode 要求插件模块必须有**默认导出**（`export default`）。本插件同时提供：
-- **默认导出**：`export default OpenCodeLarkBridge`（OpenCode 自动发现需要）
-- **命名导出**：`export const OpenCodeLarkBridge`（向后兼容手动注册）
+- **默认导出**：`export default OpenCodeLarkBridge`（OpenCode 要求）
+- **命名导出**：`export const OpenCodeLarkBridge`（向后兼容）
 
-#### 手动注册（如需要）
+#### 手动配置（如需要）
 
-如果插件未被自动加载，可在 opencode 配置文件中手动注册。**注意：路径应相对于 `.opencode/` 目录**：
+安装脚本通常会自动完成配置。如果需要手动配置，**注意路径应相对于 `.opencode/` 目录**：
 
 ```jsonc
 {
