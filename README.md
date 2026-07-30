@@ -203,17 +203,37 @@ npm run install:local
 2. 复制编译产物到 `.opencode/plugins/opencode-lark-bridge/`
 3. 首次运行时，在项目根目录 `.opencode/` 下创建示例配置（已存在则保留）
 
-### 自动配置注册
+### 插件注册机制
 
-运行 `npm run install:local` 后，脚本会自动检查 opencode 主配置文件（`opencode.jsonc` / `opencode.json`）是否已注册本插件路径 `.opencode/plugins/opencode-lark-bridge`：
+OpenCode V1 需要在配置文件中显式注册插件路径。安装脚本（`npm run install:local` 或 `npm run install:global`）会自动将插件注册到 `.opencode/opencode.jsonc`：
 
-- **已注册**（项目级或全局任一配置文件包含）：跳过写入，输出提示
-- **未注册**：按优先级写入项目级配置文件
-  - 优先级：`.opencode/opencode.jsonc` > `./opencode.jsonc` > `.opencode/opencode.json` > `./opencode.json`
-  - 若都不存在，创建 `.opencode/opencode.jsonc`（含 `$schema` 与 `plugin` 字段骨架）
-- **全局配置只读**：脚本只检查 `~/.config/opencode/` 下的配置，绝不修改
-- **保留注释**：写入时用 sed/awk 定点修改，保留原有 JSONC 注释与字段
-- **容错**：检查或写入失败仅输出警告，不中断安装
+```jsonc
+{
+  "plugin": ["./plugins/opencode-lark-bridge"]
+}
+```
+
+#### 插件导出格式要求
+
+OpenCode 要求插件模块必须有**默认导出**（`export default`）。本插件同时提供：
+- **默认导出**：`export default OpenCodeLarkBridge`（OpenCode 要求）
+- **命名导出**：`export const OpenCodeLarkBridge`（向后兼容）
+
+#### 手动配置（如需要）
+
+安装脚本通常会自动完成配置。如果需要手动配置，**注意路径应相对于 `.opencode/` 目录**：
+
+```jsonc
+{
+  "plugin": ["./plugins/opencode-lark-bridge"]
+}
+```
+
+**重要**：当配置文件位于 `.opencode/opencode.jsonc` 时：
+- ❌ 错误：`.opencode/plugins/opencode-lark-bridge`（会被错误解析为 `.opencode/.opencode/plugins/opencode-lark-bridge`）
+- ✅ 正确：`./plugins/opencode-lark-bridge`（相对于 `.opencode/` 目录）
+
+参考：[OpenCode Plugin Documentation](https://opencode.ai/v2/docs/build/plugins)、[Path Resolution Issue #28384](https://github.com/anomalyco/opencode/issues/28384)
 
 #### 可选依赖：jq
 
@@ -228,16 +248,6 @@ sudo apt install jq
 
 # 通过 mise（推荐）
 mise use jq@latest
-```
-
-#### 手动注册
-
-如需手动注册，在 opencode 配置文件的 `plugin` 数组添加：
-
-```jsonc
-{
-  "plugin": [".opencode/plugins/opencode-lark-bridge"]
-}
 ```
 
 也可以使用 `opencode plugin <module>` 命令自动配置。

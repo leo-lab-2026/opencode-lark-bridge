@@ -1,11 +1,13 @@
 # PROJECT KNOWLEDGE BASE
 
-**Generated:** 2026-07-22
-**Repo:** opencode-lark-bridge (非 git 仓库)
+**Generated:** 2026-07-30
+**Repo:** opencode-lark-bridge (git 仓库)
 
 ## OVERVIEW
 
 OpenCode 插件（TypeScript + Bun, ESM），将 OpenCode 的权限申请/任务完成/问答事件通过 `lark-cli` 以 bot 身份推送到飞书用户或群聊。事件监听层与发送层通过 `Notifier` 接口解耦。
+
+**重要**：OpenCode V1 的自动发现机制不稳定，需要显式配置插件路径。安装脚本（`npm run install:local` 或 `npm run install:global`）会自动将插件注册到 `.opencode/opencode.jsonc`。
 
 ## STRUCTURE
 
@@ -93,6 +95,7 @@ opencode-lark-bridge/
 
 ## UNIQUE STYLES
 
+- **插件显式注册**：OpenCode V1 自动发现机制不稳定，安装脚本主动注册插件到 `.opencode/opencode.jsonc`，使用 `plugin`（单数）字段，路径相对于 `.opencode/` 目录（如 `./plugins/opencode-lark-bridge`）
 - **`{resource}` 按 tool 类型分派提取**：bash→命令参数，read/edit→filepath，webfetch→url，task→type，skill→name，doom_loop→`<innerTool>: <input>`，缺失降级为 `unknown`（见 permission-mapper.ts:49）
 - **工具名解析兼容 `functions.bash:14` 格式**：OpenCode 新格式，正则 `^functions\.([^.:]+)(?::\d+)?$` 提取（permission-mapper.ts + event-handler.ts 均有副本）
 - **子代理识别靠 `session.created` 的 `properties.info.parentID`**：加入父会话 pendingChildren 集合，idle 时移除
@@ -114,7 +117,6 @@ npx opencode-lark-bridge init [--global|-g]  # 仅生成示例配置不装包
 
 ## NOTES
 
-- **非 git 仓库**：当前工作目录未初始化 git，无 commit/branch 元数据
 - **`src/logs/plugin-load.marker`**：日志目录在源码树内（非标准），内含标记文件
 - **`.codegraph` 是符号链接**：指向 `~/.omo/codegraph/projects/opencode-lark-bridge-b027196311ad82f9`，集中式索引
 - **`docs/superpowers/{plans,reports,specs}/`**：Obra Superpowers 工作流的历史开发记录，按日期命名，非运行时代码

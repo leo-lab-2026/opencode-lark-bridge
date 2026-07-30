@@ -533,6 +533,7 @@ describe("mapQuestionEvent", () => {
     }
     const template = "{header} {suffix} - {question}"
     const msg = mapQuestionEvent(event, { chat_id: "oc_1" }, template)
+    // 当模板不包含 {options} 变量时，suffix 应该显示"(可自定义输入)"提示
     expect(msg.text).toContain("Multi (可多选) (可自定义输入) - Select options")
   })
 
