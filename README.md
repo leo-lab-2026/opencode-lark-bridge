@@ -211,6 +211,12 @@ OpenCode 会自动扫描并加载 `.opencode/plugins/` 目录下的插件：
 
 本插件部署后包含 `package.json`（有 `main: "./index.js"`）和 `index.js`，会被 OpenCode 自动发现和加载，**通常无需手动注册**。
 
+#### 插件导出格式要求
+
+OpenCode 要求插件模块必须有**默认导出**（`export default`）。本插件同时提供：
+- **默认导出**：`export default OpenCodeLarkBridge`（OpenCode 自动发现需要）
+- **命名导出**：`export const OpenCodeLarkBridge`（向后兼容手动注册）
+
 #### 手动注册（如需要）
 
 如果插件未被自动加载，可在 opencode 配置文件中手动注册。**注意：路径应相对于 `.opencode/` 目录**：

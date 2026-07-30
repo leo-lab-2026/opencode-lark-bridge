@@ -196,3 +196,5 @@ export const OpenCodeLarkBridge = async (ctx: any) => {
     },
   }
 }
+
+export default OpenCodeLarkBridge
