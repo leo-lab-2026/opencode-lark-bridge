@@ -83,7 +83,7 @@ export function getPackageRoot(): string  // 暴露便于测试
 
 ### Step 1.1: 创建 installer.ts 骨架 + getPackageRoot
 
-- [ ] **创建 `src/installer.ts`**，实现包根目录解析函数：
+- [x] **创建 `src/installer.ts`**，实现包根目录解析函数：
 
 ```typescript
 import { existsSync, mkdirSync, cpSync, rmSync } from "node:fs"
@@ -121,7 +121,7 @@ export function getPluginDir(global: boolean): string {
 
 ### Step 1.2: 实现 copyPluginFiles
 
-- [ ] **实现 `copyPluginFiles(pluginDir, sourceDir?)`**，用 Node fs API（`cpSync`）复制文件：
+- [x] **实现 `copyPluginFiles(pluginDir, sourceDir?)`**，用 Node fs API（`cpSync`）复制文件：
 
 ```typescript
 const FILES_TO_COPY = [
@@ -158,7 +158,7 @@ export function copyPluginFiles(pluginDir: string, sourceDir?: string): void {
 
 ### Step 1.3: 实现 installDependencies
 
-- [ ] **实现 `installDependencies(pluginDir, execFn?)`**，优先 bun，回退 npm：
+- [x] **实现 `installDependencies(pluginDir, execFn?)`**，优先 bun，回退 npm：
 
 ```typescript
 export function installDependencies(pluginDir: string, execFn?: ExecFn): void {
@@ -199,7 +199,7 @@ export function installDependencies(pluginDir: string, execFn?: ExecFn): void {
 
 ### Step 1.4: 实现 installPlugin 主入口
 
-- [ ] **实现 `installPlugin(options?)`**，编排完整安装流程：
+- [x] **实现 `installPlugin(options?)`**，编排完整安装流程：
 
 ```typescript
 export function installPlugin(options?: InstallOptions): void {
@@ -265,7 +265,7 @@ export function installPlugin(options?: InstallOptions): void {
 
 ### Step 1.5: 重写 postinstall.ts main()
 
-- [ ] **修改 `src/postinstall.ts`** 的 `main()` 函数，改为调用 `installPlugin`：
+- [x] **修改 `src/postinstall.ts`** 的 `main()` 函数，改为调用 `installPlugin`：
 
 将现有 `main()`（102-110 行）替换为：
 
@@ -299,7 +299,7 @@ bun test tests/postinstall.test.ts  # 现有测试仍通过（未回归）
 
 ### Step 1.6: 编写 installer.test.ts
 
-- [ ] **创建 `tests/installer.test.ts`**，覆盖以下场景：
+- [x] **创建 `tests/installer.test.ts`**，覆盖以下场景：
 
 ```typescript
 import { describe, it, expect, beforeEach, afterEach, mock } from "bun:test"
@@ -375,7 +375,7 @@ export function registerPluginConfig(options: RegisterOptions): void
 
 ### Step 2.1: 实现 registerPluginConfig
 
-- [ ] **创建 `src/config-register.ts`**，用 `comment-json` 解析+序列化：
+- [x] **创建 `src/config-register.ts`**，用 `comment-json` 解析+序列化：
 
 ```typescript
 import { existsSync, readFileSync, writeFileSync, mkdirSync } from "node:fs"
@@ -475,7 +475,7 @@ export function registerPluginConfig(options: RegisterOptions): void {
 
 ### Step 2.2: 编写 config-register.test.ts
 
-- [ ] **创建 `tests/config-register.test.ts`**，覆盖所有场景：
+- [x] **创建 `tests/config-register.test.ts`**，覆盖所有场景：
 
 ```typescript
 import { describe, it, expect, beforeEach, afterEach } from "bun:test"
@@ -537,7 +537,7 @@ npm run build
 
 ### Step 3.1: 新增 install 命令分支
 
-- [ ] **修改 `src/cli.ts`**，在 `main()` 中新增 `install` 命令分支：
+- [x] **修改 `src/cli.ts`**，在 `main()` 中新增 `install` 命令分支：
 
 当前 `cli.ts` 只支持 `init` 命令。修改 `main()` 函数，在 `init` 分支之后、`Unknown command` 之前插入：
 
@@ -589,7 +589,7 @@ async function runInstall(global: boolean): Promise<void> {
 
 ### Step 3.2: 更新 printHelp()
 
-- [ ] **更新 `printHelp()`** 增加 install 命令说明：
+- [x] **更新 `printHelp()`** 增加 install 命令说明：
 
 ```typescript
 function printHelp(): void {
@@ -609,7 +609,7 @@ Commands:
 
 ### Step 3.3: 编写 cli.test.ts
 
-- [ ] **创建 `tests/cli.test.ts`**，验证 install 命令分支：
+- [x] **创建 `tests/cli.test.ts`**，验证 install 命令分支：
 
 ```typescript
 import { describe, it, expect, mock } from "bun:test"
@@ -658,7 +658,7 @@ npm run build
 
 ### Step 4.1: 补充发布合规字段
 
-- [ ] **修改 `package.json`**，在现有字段基础上补充：
+- [x] **修改 `package.json`**，在现有字段基础上补充：
 
 ```json
 {
@@ -709,7 +709,7 @@ npm run build
 
 ### Step 4.2: 新增 npm scripts
 
-- [ ] **在 `package.json` 的 `scripts` 中新增**：
+- [x] **在 `package.json` 的 `scripts` 中新增**：
 
 ```json
 {
@@ -734,7 +734,7 @@ npm run build
 
 ### Step 4.3: 创建 LICENSE 文件
 
-- [ ] **创建 `LICENSE`** 文件（MIT，2026，leo-lab-2026）：
+- [x] **创建 `LICENSE`** 文件（MIT，2026，leo-lab-2026）：
 
 ```
 MIT License
@@ -762,7 +762,7 @@ SOFTWARE.
 
 ### Step 4.4: 验证 postinstall 在发布包内正确执行
 
-- [ ] **验证 postinstall 条件检查逻辑**：
+- [x] **验证 postinstall 条件检查逻辑**：
 
 当前 postinstall 脚本：`node -e "if (require('fs').existsSync('./dist/postinstall.js')) require('child_process').execFileSync(process.execPath, ['./dist/postinstall.js'], {stdio: 'inherit'})"`
 
@@ -796,7 +796,7 @@ npm pack --dry-run  # 确认文件列表只含 files 声明
 
 ### Step 5.1: 创建 docs/PUBLISH.md
 
-- [ ] **创建 `docs/PUBLISH.md`**，内容覆盖：
+- [x] **创建 `docs/PUBLISH.md`**，内容覆盖：
 
 ```markdown
 # 发布流程
@@ -805,12 +805,12 @@ npm pack --dry-run  # 确认文件列表只含 files 声明
 
 ## 发布前检查清单
 
-- [ ] `npm run build` 编译无错误
-- [ ] `bun test` 全部测试通过
-- [ ] `npm run test:install` 本地安装验证通过
-- [ ] `npm run pack:dry` 包内容只含 files 声明的文件
-- [ ] `package.json` 的 `version` 已更新
-- [ ] CHANGELOG 已更新（如有）
+- [x] `npm run build` 编译无错误
+- [x] `bun test` 全部测试通过
+- [x] `npm run test:install` 本地安装验证通过
+- [x] `npm run pack:dry` 包内容只含 files 声明的文件
+- [x] `package.json` 的 `version` 已更新
+- [x] CHANGELOG 已更新（如有）
 
 ## 发布步骤
 
@@ -864,7 +864,7 @@ npm run test:install
 
 ### Step 5.2: 创建 scripts/test-install.sh
 
-- [ ] **创建 `scripts/test-install.sh`**，自动化验证安装流程：
+- [x] **创建 `scripts/test-install.sh`**，自动化验证安装流程：
 
 ```bash
 #!/usr/bin/env bash
@@ -938,7 +938,7 @@ echo "✓ All install tests passed"
 
 ### Step 5.3: 更新 README.md 安装说明
 
-- [ ] **修改 `README.md`** 的安装章节，增加 npm install 用法和发布文档链接：
+- [x] **修改 `README.md`** 的安装章节，增加 npm install 用法和发布文档链接：
 
 在现有「安装」章节后补充说明 postinstall 自动安装行为，并在末尾添加：
 
@@ -977,7 +977,7 @@ bash scripts/test-install.sh  # 完整端到端验证（需 bun/npm 可用）
 
 ### Step 6.1: TypeScript 编译验证
 
-- [ ] **运行全量编译**：
+- [x] **运行全量编译**：
 
 ```bash
 npm run build
@@ -987,7 +987,7 @@ npm run build
 
 ### Step 6.2: 全量测试
 
-- [ ] **运行全部单元测试**：
+- [x] **运行全部单元测试**：
 
 ```bash
 bun test
@@ -1002,7 +1002,7 @@ bun test
 
 ### Step 6.3: npm pack 验证包内容
 
-- [ ] **验证发布包内容**：
+- [x] **验证发布包内容**：
 
 ```bash
 npm run pack:dry
@@ -1020,7 +1020,7 @@ npm run pack:dry
 
 ### Step 6.4: 本地端到端安装验证
 
-- [ ] **运行完整安装测试脚本**：
+- [x] **运行完整安装测试脚本**：
 
 ```bash
 npm run test:install
@@ -1032,7 +1032,7 @@ npm run test:install
 
 ### Step 6.5: CLI install 命令手动验证
 
-- [ ] **手动验证 CLI install**：
+- [x] **手动验证 CLI install**：
 
 ```bash
 # 在临时项目目录
@@ -1046,7 +1046,7 @@ cat .opencode/opencode.jsonc
 
 ### Step 6.6: 回归确认
 
-- [ ] **确认现有功能未回归**：
+- [x] **确认现有功能未回归**：
 
 ```bash
 # 现有 shell 安装脚本仍可用
@@ -1101,12 +1101,12 @@ Task 5 (文档+脚本) ──> 依赖 Task 4 (package.json scripts) ────
 
 ## 完成标准
 
-- [ ] `npm run build` 零错误
-- [ ] `bun test` 全部通过（含新增 3 个测试文件）
-- [ ] `npm run pack:dry` 包内容只含 `files` 声明
-- [ ] `npm run test:install` 端到端验证通过
-- [ ] `npx opencode-lark-bridge install` 手动验证可用
-- [ ] `docs/PUBLISH.md` 发布流程文档完整
-- [ ] `LICENSE` MIT 文件就位
-- [ ] `package.json` 合规字段齐全
-- [ ] 现有 `tests/postinstall.test.ts` 未回归
+- [x] `npm run build` 零错误
+- [x] `bun test` 全部通过（含新增 3 个测试文件）
+- [x] `npm run pack:dry` 包内容只含 `files` 声明
+- [x] `npm run test:install` 端到端验证通过
+- [x] `npx opencode-lark-bridge install` 手动验证可用
+- [x] `docs/PUBLISH.md` 发布流程文档完整
+- [x] `LICENSE` MIT 文件就位
+- [x] `package.json` 合规字段齐全
+- [x] 现有 `tests/postinstall.test.ts` 未回归

@@ -293,3 +293,22 @@ OpenCode session.created / session.idle 事件
 ## 配置文件示例
 
 参见 `opencode-lark-bridge.config.example.jsonc`。
+
+## 发布
+
+若要自行发布此包，请参考 [docs/PUBLISH.md](./docs/PUBLISH.md)。
+
+## 本地测试安装
+
+发布前验证完整安装流程：
+
+```bash
+npm run test:install
+```
+
+该脚本会自动执行以下验证：
+1. 编译和测试
+2. 打包生成 tarball
+3. 项目级安装验证
+4. 全局安装验证
+5. CLI install 命令验证

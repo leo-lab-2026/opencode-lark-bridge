@@ -1,21 +1,48 @@
 {
   "name": "opencode-lark-bridge",
   "version": "0.1.0",
+  "description": "OpenCode plugin to push permission/task/question events to Feishu (Lark) via lark-cli",
+  "license": "MIT",
+  "author": "leo-lab-2026",
+  "homepage": "https://github.com/leo-lab-2026/opencode-lark-bridge",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/leo-lab-2026/opencode-lark-bridge.git"
+  },
+  "bugs": {
+    "url": "https://github.com/leo-lab-2026/opencode-lark-bridge/issues"
+  },
+  "keywords": [
+    "opencode",
+    "lark",
+    "feishu",
+    "plugin",
+    "notification",
+    "bot"
+  ],
   "type": "module",
   "main": "./index.js",
   "bin": {
     "opencode-lark-bridge": "./dist/cli.js"
   },
+  "engines": {
+    "node": ">=18"
+  },
   "files": [
     "dist",
     "opencode-lark-bridge.config.example.jsonc",
-    "README.md"
+    "README.md",
+    "package.json",
+    "bun.lock"
   ],
   "scripts": {
     "build": "tsc",
     "test": "bun test",
     "install:local": "bash scripts/install-local.sh",
     "install:global": "bash scripts/install-global.sh",
+    "prepublishOnly": "npm run build && bun test",
+    "pack:dry": "npm pack --dry-run",
+    "test:install": "bash scripts/test-install.sh",
     "postinstall": "node -e \"if (require('fs').existsSync('./dist/postinstall.js')) require('child_process').execFileSync(process.execPath, ['./dist/postinstall.js'], {stdio: 'inherit'})\""
   },
   "dependencies": {
