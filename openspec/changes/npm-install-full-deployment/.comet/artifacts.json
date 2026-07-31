@@ -1,0 +1,8 @@
+{
+  "openspec_proposal": "openspec/changes/npm-install-full-deployment/proposal.md",
+  "openspec_design": "openspec/changes/npm-install-full-deployment/design.md",
+  "openspec_tasks": "openspec/changes/npm-install-full-deployment/tasks.md",
+  "openspec_delta_spec": "openspec/changes/npm-install-full-deployment/specs/install-config-registration/spec.md",
+  "handoff_context": "openspec/changes/npm-install-full-deployment/.comet/handoff/spec-context.json",
+  "handoff_markdown": "openspec/changes/npm-install-full-deployment/.comet/handoff/spec-context.md"
+}

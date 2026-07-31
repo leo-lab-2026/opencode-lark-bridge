@@ -1,0 +1,40 @@
+{
+  "change": "npm-install-full-deployment",
+  "phase": "design",
+  "mode": "beta",
+  "canonical_spec": "openspec",
+  "generated_by": "comet-handoff.sh",
+  "context_hash": "1e3f83b457b77ae72ac917edfd1907b5aeb726d14bdbf2c4f390e7b0b391438d",
+  "files": [
+    {
+      "path": "openspec/changes/npm-install-full-deployment/proposal.md",
+      "sha256": "fa3239bcd90d0698ce67c3f272cb8dfe172dd20106440ad5e52b31cec955c299",
+      "role": "supporting"
+    },
+    {
+      "path": "openspec/changes/npm-install-full-deployment/design.md",
+      "sha256": "25db0ce43758fd3896165718348ab2ba0e3cde06ea460c1b13d5fe65f4a2867f",
+      "role": "supporting"
+    },
+    {
+      "path": "openspec/changes/npm-install-full-deployment/tasks.md",
+      "sha256": "abd0b3ec0ef3bc67c073b387dd0a74f69c44a8e933cfc7a22ca5761caa242582",
+      "role": "supporting"
+    },
+    {
+      "path": "openspec/changes/npm-install-full-deployment/specs/install-config-registration/spec.md",
+      "sha256": "0fcbd0c1acd6660febcc7524060617b36a6720844810cd806700f993cb38ee0a",
+      "role": "spec"
+    },
+    {
+      "path": "openspec/changes/npm-install-full-deployment/specs/npm-package-install/spec.md",
+      "sha256": "989f8995b7586fb963da5c8ac6933809e77a94f2a92b152bf1920e879e1214ef",
+      "role": "spec"
+    },
+    {
+      "path": "openspec/changes/npm-install-full-deployment/specs/npm-publish-preparation/spec.md",
+      "sha256": "a7a491f6412741b1edf1b5c087a287ea18debe1a888da80384886d5d4f06a6ef",
+      "role": "spec"
+    }
+  ]
+}
