@@ -1,6 +1,0 @@
-{
-  "schema": "comet.selection.v2",
-  "workflow": "classic",
-  "change": "npm-install-full-deployment",
-  "branch": "feature/20260731/npm-install-full-deployment"
-}

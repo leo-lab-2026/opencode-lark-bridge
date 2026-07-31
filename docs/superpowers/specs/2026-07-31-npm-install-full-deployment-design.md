@@ -2,6 +2,8 @@
 comet_change: npm-install-full-deployment
 role: technical-design
 canonical_spec: openspec
+archived-with: 2026-07-31-npm-install-full-deployment
+status: final
 ---
 
 # Design Doc: npm-install-full-deployment

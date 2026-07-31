@@ -4,5 +4,6 @@
   "openspec_tasks": "openspec/changes/npm-install-full-deployment/tasks.md",
   "openspec_delta_spec": "openspec/changes/npm-install-full-deployment/specs/install-config-registration/spec.md",
   "handoff_context": "openspec/changes/npm-install-full-deployment/.comet/handoff/spec-context.json",
-  "handoff_markdown": "openspec/changes/npm-install-full-deployment/.comet/handoff/spec-context.md"
+  "handoff_markdown": "openspec/changes/npm-install-full-deployment/.comet/handoff/spec-context.md",
+  "archive_directory": "openspec/changes/archive/2026-07-31-npm-install-full-deployment"
 }

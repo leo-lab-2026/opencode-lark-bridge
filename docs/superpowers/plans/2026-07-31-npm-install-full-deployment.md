@@ -2,6 +2,7 @@
 change: npm-install-full-deployment
 design-doc: docs/superpowers/specs/2026-07-31-npm-install-full-deployment-design.md
 base-ref: 6ff3edab15bd3a27cfd4667b232e9b041f046f70
+archived-with: 2026-07-31-npm-install-full-deployment
 ---
 # npm-install-full-deployment Implementation Plan
 
