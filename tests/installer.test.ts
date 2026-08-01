@@ -69,6 +69,7 @@ describe("installDependencies", () => {
 
     expect(calls.length).toBeGreaterThan(0)
     expect(calls[0]).toContain("bun install")
+    expect(calls[0]).toContain("--ignore-scripts")
   })
 
   it("falls back to npm install when bun fails", async () => {
@@ -84,6 +85,7 @@ describe("installDependencies", () => {
 
     expect(calls.some((c) => c.includes("bun install"))).toBe(true)
     expect(calls.some((c) => c.includes("npm install"))).toBe(true)
+    expect(calls.some((c) => c.includes("--ignore-scripts"))).toBe(true)
   })
 
   it("warns when both bun and npm fail", async () => {

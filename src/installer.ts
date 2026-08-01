@@ -64,12 +64,12 @@ export function installDependencies(pluginDir: string, execFn?: ExecFn): void {
     }
   }
 
-  if (tryCmd("bun install --production")) {
+  if (tryCmd("bun install --production --ignore-scripts")) {
     console.log("Dependencies installed via bun")
     return
   }
 
-  if (tryCmd("npm install --production")) {
+  if (tryCmd("npm install --production --ignore-scripts")) {
     console.log("Dependencies installed via npm")
     return
   }
