@@ -1,0 +1,22 @@
+schema: comet.native.v3
+minimum_runtime_version: 3
+revision: 5
+name: fix-npm-install-registration
+language: zh-CN
+phase: archive
+brief: brief.md
+approval: confirmed
+approved_contract_hash: 307c4438e76615b50047dd5bec930be2b9c568d47e0f0e68e2802c669a038e0c
+spec_changes:
+  - capability: npm-install-registration
+    operation: create
+    source: specs/npm-install-registration/spec.md
+    base_hash: null
+verification_result: pass
+verification_report: verification.md
+implementation_scope: runtime/evidence/scopes/7557c913fe39b596b3a65add5aae218a62103d0dfff96f08d9f34f7effbdbfea.json
+verification_evidence: runtime/evidence/verifications/7694b7b4b8144c251bed7a6efb4dd53168c685b6545619d7ddade3a0eb127a46.json
+partial_allowance: runtime/evidence/allowances/67778cd4eb23124986ee832b1a535683674d6241ceee2f64b96df5ff6e6e10df.json
+archived: true
+created_at: 2026-08-01
+run_id: e9e06c02-d927-4b89-887c-bba0bdbabe0c

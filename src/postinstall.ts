@@ -99,14 +99,9 @@ export function initConfig(options: {
   return { created: true, path: targetPath }
 }
 
-function main(): void {
-  const targetDir = resolveTargetDir()
-  const result = initConfig({ targetDir })
-  if (result.created) {
-    console.log(`Created example config at ${result.path}`)
-  } else {
-    console.log(`Preserved existing config at ${result.path}`)
-  }
+async function main(): Promise<void> {
+  const { installPlugin } = await import("./installer.js")
+  installPlugin({ global: isGlobalInstall() })
 }
 
 if (import.meta.url === pathToFileURL(process.argv[1]).href) {

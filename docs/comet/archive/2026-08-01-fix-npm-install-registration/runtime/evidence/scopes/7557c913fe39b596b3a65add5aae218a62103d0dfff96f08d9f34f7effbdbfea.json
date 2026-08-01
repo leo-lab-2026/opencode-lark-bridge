@@ -1,0 +1,266 @@
+{
+  "schema": "comet.native.implementation-scope.v2",
+  "contractHash": "307c4438e76615b50047dd5bec930be2b9c568d47e0f0e68e2802c669a038e0c",
+  "baselineProjectionRef": "runtime/evidence/snapshots/4aa8a3237ec492b4fcae216dacab12bba22114264c76ecc1ac4f47186299e9df.json",
+  "baselineProjectionHash": "4aa8a3237ec492b4fcae216dacab12bba22114264c76ecc1ac4f47186299e9df",
+  "currentProjectionRef": "runtime/evidence/snapshots/a07e88adb418c9896b9ba4a6bfea5d9beb7ca50e19ea7e62074fb1db2f1883ae.json",
+  "currentProjectionHash": "a07e88adb418c9896b9ba4a6bfea5d9beb7ca50e19ea7e62074fb1db2f1883ae",
+  "complete": false,
+  "declaredArtifacts": [
+    {
+      "path": ".gitignore",
+      "kind": "file"
+    },
+    {
+      "path": "README.md",
+      "kind": "file"
+    },
+    {
+      "path": "docs/PUBLISH.md",
+      "kind": "file"
+    },
+    {
+      "path": "scripts/test-install.sh",
+      "kind": "file"
+    },
+    {
+      "path": "src/cli.ts",
+      "kind": "file"
+    },
+    {
+      "path": "src/config-register.ts",
+      "kind": "file"
+    },
+    {
+      "path": "src/installer.ts",
+      "kind": "file"
+    },
+    {
+      "path": "tests/cli.test.ts",
+      "kind": "file"
+    },
+    {
+      "path": "tests/config-register.test.ts",
+      "kind": "file"
+    },
+    {
+      "path": "tests/installer.test.ts",
+      "kind": "file"
+    }
+  ],
+  "changes": [
+    {
+      "path": ".gitignore",
+      "kind": "modified",
+      "before": {
+        "hash": "005a3b1efdefd0c37d1fed6c99d29d2f34324f274f79a183c0d681e92cc6029c",
+        "size": 563
+      },
+      "after": {
+        "hash": "71a9188e6af237c934fc074f9a78eb10ea701f7864b5f914b7b0bc0dbeb515b4",
+        "size": 591
+      },
+      "attributedTo": [
+        {
+          "path": ".gitignore",
+          "kind": "file"
+        }
+      ]
+    },
+    {
+      "path": "README.md",
+      "kind": "modified",
+      "before": {
+        "hash": "0b75acb7e505ae024376e2d791834f49a9a74f802548d79ba15f9d55cd90dbdf",
+        "size": 13192
+      },
+      "after": {
+        "hash": "f9142c9960621151455cd0edf44ca1ba26b5352532ce58c8fcd1dcf1a89ce7c7",
+        "size": 14040
+      },
+      "attributedTo": [
+        {
+          "path": "README.md",
+          "kind": "file"
+        }
+      ]
+    },
+    {
+      "path": "docs/PUBLISH.md",
+      "kind": "modified",
+      "before": {
+        "hash": "b2ff440bb593f8e5bd989dc1a55b41bc0776167388f18e0d56d4b34b89d124a7",
+        "size": 1613
+      },
+      "after": {
+        "hash": "6c13ae99995528046ef40a15e43f70264fcefb7d00b15c85ea4de6e0349a3c85",
+        "size": 2117
+      },
+      "attributedTo": [
+        {
+          "path": "docs/PUBLISH.md",
+          "kind": "file"
+        }
+      ]
+    },
+    {
+      "path": "opencode-lark-bridge-0.1.0.tgz",
+      "kind": "removed",
+      "before": {
+        "hash": "8d163b0ffe908891bbccf8b8171c30905aace6e0f61e96bfc82eb17a48436ce3",
+        "size": 26377
+      },
+      "after": null,
+      "attributedTo": []
+    },
+    {
+      "path": "scripts/test-install.sh",
+      "kind": "modified",
+      "before": {
+        "hash": "7669fd87496d9431be21c92b86751b45c2bd83187ed1c46214b9e00ddf31127d",
+        "size": 2767
+      },
+      "after": {
+        "hash": "60ac8e9e011d1ac1ce6e6db6a13db885c07e3ad207c9d4949d600a68b9161991",
+        "size": 3124
+      },
+      "attributedTo": [
+        {
+          "path": "scripts/test-install.sh",
+          "kind": "file"
+        }
+      ]
+    },
+    {
+      "path": "src/cli.ts",
+      "kind": "modified",
+      "before": {
+        "hash": "c8691b1c4f7636932072c419052d346390f4ecf63d743280d605b4429d65efef",
+        "size": 1804
+      },
+      "after": {
+        "hash": "c1dffa9416764d4cad56ffaf90745bfe03bc76187c7e3416223394a80d1cd59a",
+        "size": 2404
+      },
+      "attributedTo": [
+        {
+          "path": "src/cli.ts",
+          "kind": "file"
+        }
+      ]
+    },
+    {
+      "path": "src/config-register.ts",
+      "kind": "modified",
+      "before": {
+        "hash": "8a6a5ae91e46d7a51c218d51f17e5d3faf65dafc40161abbe7112893d8fa11e1",
+        "size": 2432
+      },
+      "after": {
+        "hash": "8b17f41bd47bac53ed90397bd80e2e4425c2bdd5c9f456bc42a5d77a300aeca8",
+        "size": 7946
+      },
+      "attributedTo": [
+        {
+          "path": "src/config-register.ts",
+          "kind": "file"
+        }
+      ]
+    },
+    {
+      "path": "src/installer.ts",
+      "kind": "modified",
+      "before": {
+        "hash": "1006555699c3bf0aedda56e77d4f5005cd82fb243bdcb31aed28b701d683c64f",
+        "size": 3838
+      },
+      "after": {
+        "hash": "74b5bb69c2973f9a348064d1760e6a56c064f2fd905ebabfee13c01200db7c64",
+        "size": 4650
+      },
+      "attributedTo": [
+        {
+          "path": "src/installer.ts",
+          "kind": "file"
+        }
+      ]
+    },
+    {
+      "path": "tests/cli.test.ts",
+      "kind": "modified",
+      "before": {
+        "hash": "6cfd93fe0e8b2cad2a709039c2e7ba34a57a0e1ee7ed63f86ce08e2127f7edba",
+        "size": 2039
+      },
+      "after": {
+        "hash": "aa2180dcb4b72b02d7f1336730b12188cd757cad368e6a7daa0390dce58f6abb",
+        "size": 3470
+      },
+      "attributedTo": [
+        {
+          "path": "tests/cli.test.ts",
+          "kind": "file"
+        }
+      ]
+    },
+    {
+      "path": "tests/config-register.test.ts",
+      "kind": "modified",
+      "before": {
+        "hash": "bbea55faf289d56e8eee3678441d5e4aaaf7c9e533dbc889a22b80c58a1d5040",
+        "size": 4693
+      },
+      "after": {
+        "hash": "9b4ccb3e4fe17bb14a79e0efe31601b28134bf0a245d6ee2b00d085044385639",
+        "size": 13320
+      },
+      "attributedTo": [
+        {
+          "path": "tests/config-register.test.ts",
+          "kind": "file"
+        }
+      ]
+    },
+    {
+      "path": "tests/installer.test.ts",
+      "kind": "modified",
+      "before": {
+        "hash": "de3eeaf793807dab14f6ad26ee8df9d3d7628e3bae6b282431313356becbff17",
+        "size": 5688
+      },
+      "after": {
+        "hash": "8292fc3ff5210487e8838605b2b136a9b7062ec01bc9b972d8e8cfadd2588753",
+        "size": 8007
+      },
+      "attributedTo": [
+        {
+          "path": "tests/installer.test.ts",
+          "kind": "file"
+        }
+      ]
+    }
+  ],
+  "unattributed": [
+    {
+      "path": "opencode-lark-bridge-0.1.0.tgz",
+      "kind": "removed",
+      "before": {
+        "hash": "8d163b0ffe908891bbccf8b8171c30905aace6e0f61e96bfc82eb17a48436ce3",
+        "size": 26377
+      },
+      "after": null,
+      "attributedTo": []
+    }
+  ],
+  "unresolvedScopes": [
+    {
+      "id": "scope:1ed0e82ac8ccafafa9e5f0d417fc1d0bb7ccfb51b0740e91ad6ec59061025e6b",
+      "kind": "unattributed-change",
+      "source": "implementation-scope",
+      "path": "opencode-lark-bridge-0.1.0.tgz",
+      "reason": "Changed path is not covered by a declared artifact: opencode-lark-bridge-0.1.0.tgz"
+    }
+  ],
+  "noCodeReason": null,
+  "scopeHash": "7557c913fe39b596b3a65add5aae218a62103d0dfff96f08d9f34f7effbdbfea"
+}

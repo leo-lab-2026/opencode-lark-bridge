@@ -1,0 +1,50 @@
+{
+  "schema": "comet.native.verification-evidence.v1",
+  "change": "fix-npm-install-registration",
+  "sourceRevision": 3,
+  "result": "pass",
+  "freshness": "partial",
+  "contractHash": "307c4438e76615b50047dd5bec930be2b9c568d47e0f0e68e2802c669a038e0c",
+  "acceptanceCriteriaHash": "c1dc7fe1eb58c6493d266bf90832411d539a72638b0e7db0762cedeec28d4f93",
+  "implementationScopeRef": "runtime/evidence/scopes/7557c913fe39b596b3a65add5aae218a62103d0dfff96f08d9f34f7effbdbfea.json",
+  "implementationScopeHash": "7557c913fe39b596b3a65add5aae218a62103d0dfff96f08d9f34f7effbdbfea",
+  "reportRef": "verification.md",
+  "reportHash": "9906ee2f440084a4af8e990f3fd9c433ad12759391a394b9a005210d5881b391",
+  "acceptanceTrace": {
+    "schema": "comet.native.acceptance-trace.v1",
+    "nativeRootRef": "docs/comet",
+    "criteriaHash": "c1dc7fe1eb58c6493d266bf90832411d539a72638b0e7db0762cedeec28d4f93",
+    "total": 2,
+    "evidenced": 2,
+    "skipped": 0,
+    "entries": [
+      {
+        "acceptanceId": "acceptance-43dd4ccc2cfa1ea0dcec95fcee3b0b7bddd73157c4653bd08b5d336bf9cacd28",
+        "kind": "brief-example",
+        "source": "brief.md",
+        "evidenceRefs": [
+          "tests/config-register.test.ts",
+          "tests/installer.test.ts"
+        ],
+        "skippedReason": null
+      },
+      {
+        "acceptanceId": "acceptance-90f2261aad0348ff7df22e67bcd37b5042e0e7b8708417960dc048dca7c5f301",
+        "kind": "brief-example",
+        "source": "brief.md",
+        "evidenceRefs": [
+          "tests/cli.test.ts",
+          "tests/config-register.test.ts",
+          "tests/installer.test.ts"
+        ],
+        "skippedReason": null
+      }
+    ],
+    "traceHash": "15ddee4d48e2933f639f79c7952bff6887a9ef08e7f43500cb86fbb8152f53d4"
+  },
+  "partialAllowanceRef": "runtime/evidence/allowances/67778cd4eb23124986ee832b1a535683674d6241ceee2f64b96df5ff6e6e10df.json",
+  "partialAllowanceHash": "67778cd4eb23124986ee832b1a535683674d6241ceee2f64b96df5ff6e6e10df",
+  "receiptRef": null,
+  "createdAt": "2026-08-01T13:53:15.672Z",
+  "envelopeHash": "7694b7b4b8144c251bed7a6efb4dd53168c685b6545619d7ddade3a0eb127a46"
+}
