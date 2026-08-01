@@ -11,6 +11,8 @@ Commands:
   init --global, -g   Create example config in global ~/.config/opencode/
   install             Install plugin files + deps + config registration (project)
   install --global, -g  Install to ~/.config/opencode/ (global)
+  uninstall           Remove plugin files + config registration (project)
+  uninstall --global, -g  Remove from ~/.config/opencode/ (global)
   help                Show this help message
 `)
 }
@@ -24,6 +26,18 @@ export async function runInstall(
     fn({ global })
   } catch (err) {
     console.error(`Install failed: ${err}`)
+  }
+}
+
+export async function runUninstall(
+  global: boolean,
+  uninstallFn?: (opts: { global: boolean }) => void
+): Promise<void> {
+  try {
+    const fn = uninstallFn || (await import("./installer.js")).uninstallPlugin
+    fn({ global })
+  } catch (err) {
+    console.error(`Uninstall failed: ${err}`)
   }
 }
 
@@ -54,6 +68,12 @@ async function main(): Promise<void> {
   if (command === "install") {
     const globalFlag = args.includes("--global") || args.includes("-g")
     await runInstall(globalFlag)
+    return
+  }
+
+  if (command === "uninstall") {
+    const globalFlag = args.includes("--global") || args.includes("-g")
+    await runUninstall(globalFlag)
     return
   }
 

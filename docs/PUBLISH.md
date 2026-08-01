@@ -56,6 +56,17 @@ npm run test:install
 该脚本会：
 1. `npm pack` 生成 tarball
 2. 在临时目录执行项目级 `npm install <tarball>`
-3. 验证插件文件、配置种子、plugin 注册
+3. 验证插件文件、配置种子、项目级 `opencode.jsonc` 插件注册
 4. 清理后执行全局安装验证
 5. 清理临时目录和全局安装
+
+## npm 11+ allow-scripts 警告说明
+
+`npm install` 时可能出现以下警告：
+
+```
+npm warn allow-scripts 2 packages have install scripts not yet covered by allowScripts:
+npm warn allow-scripts   opencode-lark-bridge@0.1.0 (postinstall: ...)
+```
+
+这是 npm 11 的安全提示，**postinstall 仍会自动执行**（插件安装与配置注册不受影响），不影响安装结果。若用户希望消除警告，可运行 `npm approve-scripts opencode-lark-bridge`。

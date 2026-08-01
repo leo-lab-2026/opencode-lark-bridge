@@ -151,3 +151,64 @@ describe("installPlugin", () => {
     expect(() => installPlugin({ global: false, execFn: mockExec, sourceDir: "/nonexistent/path/that/does/not/exist" })).not.toThrow()
   })
 })
+
+describe("uninstallPlugin", () => {
+  let tempDir: string
+  let sourceDir: string
+  const originalCwd = process.cwd
+  const originalInitCwd = process.env.INIT_CWD
+
+  beforeEach(() => {
+    tempDir = mkdtempSync(path.join(tmpdir(), "uninst-"))
+    sourceDir = mkdtempSync(path.join(tmpdir(), "src-uninst-"))
+    mkdirSync(path.join(sourceDir, "dist"), { recursive: true })
+    writeFileSync(path.join(sourceDir, "dist", "index.js"), "module.exports = 1")
+    writeFileSync(path.join(sourceDir, "package.json"), '{"name":"test"}')
+    writeFileSync(path.join(sourceDir, "opencode-lark-bridge.config.example.jsonc"), '{"app_id": "example"}')
+
+    process.cwd = () => tempDir
+    process.env.INIT_CWD = tempDir
+  })
+
+  afterEach(() => {
+    process.cwd = originalCwd
+    if (originalInitCwd !== undefined) {
+      process.env.INIT_CWD = originalInitCwd
+    } else {
+      delete process.env.INIT_CWD
+    }
+    rmSync(tempDir, { recursive: true, force: true })
+    rmSync(sourceDir, { recursive: true, force: true })
+  })
+
+  it("removes plugin dir and config registration", async () => {
+    const mockExec: ExecFn = () => ""
+    const { installPlugin, uninstallPlugin } = await import("../src/installer")
+    installPlugin({ global: false, execFn: mockExec, sourceDir })
+    const pluginDir = path.join(tempDir, ".opencode", "plugins", "opencode-lark-bridge")
+    expect(existsSync(pluginDir)).toBe(true)
+
+    uninstallPlugin({ global: false })
+
+    expect(existsSync(pluginDir)).toBe(false)
+  })
+
+  it("leaves other plugin entries in config after uninstall", async () => {
+    const opencodeDir = path.join(tempDir, ".opencode")
+    mkdirSync(opencodeDir, { recursive: true })
+    const configPath = path.join(opencodeDir, "opencode.jsonc")
+    writeFileSync(configPath, `{"plugin": ["./other-plugin", "./plugins/opencode-lark-bridge"]}`)
+
+    const { uninstallPlugin } = await import("../src/installer")
+    uninstallPlugin({ global: false })
+
+    const content = readFileSync(configPath, "utf-8")
+    expect(content).toContain("./other-plugin")
+    expect(content).not.toContain("./plugins/opencode-lark-bridge")
+  })
+
+  it("does not throw when nothing installed", async () => {
+    const { uninstallPlugin } = await import("../src/installer")
+    expect(() => uninstallPlugin({ global: false })).not.toThrow()
+  })
+})

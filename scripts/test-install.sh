@@ -44,6 +44,10 @@ test -f ".opencode/plugins/opencode-lark-bridge/package.json" || { echo "FAIL: p
 test -f ".opencode/opencode-lark-bridge.config.jsonc" || { echo "FAIL: config seed not found"; exit 1; }
 test -f ".opencode/opencode.jsonc" || { echo "FAIL: opencode.jsonc not created"; exit 1; }
 grep -q "opencode-lark-bridge" ".opencode/opencode.jsonc" || { echo "FAIL: plugin not registered"; exit 1; }
+# 项目级安装不得把 opencode.jsonc 写入 node_modules 包内
+if [ -d "node_modules/opencode-lark-bridge/.opencode" ]; then
+  echo "FAIL: opencode.jsonc leaked into node_modules/opencode-lark-bridge/.opencode"; exit 1
+fi
 echo "PASS: project-level install"
 
 echo "=== 5. Global install test ==="
@@ -53,7 +57,8 @@ npm install -g "$TARBALL_PATH"
 GLOBAL_PLUGIN_DIR="$HOME/.config/opencode/plugins/opencode-lark-bridge"
 if [ -f "$GLOBAL_PLUGIN_DIR/dist/postinstall.js" ]; then
   echo "--- Running global postinstall manually ---"
-  node "$GLOBAL_PLUGIN_DIR/dist/postinstall.js"
+  # 模拟 npm install -g 环境：npm_config_global=true + INIT_CWD=用户项目目录
+  npm_config_global=true INIT_CWD="$(pwd)" node "$GLOBAL_PLUGIN_DIR/dist/postinstall.js"
 fi
 
 echo "--- Verifying global install ---"

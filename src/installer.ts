@@ -4,7 +4,7 @@ import os from "node:os"
 import { execSync, type ExecSyncOptions } from "node:child_process"
 import { fileURLToPath } from "node:url"
 import { isGlobalInstall, initConfig } from "./postinstall.js"
-import { registerPluginConfig } from "./config-register.js"
+import { registerPluginConfig, unregisterPluginConfig } from "./config-register.js"
 
 type ExecFn = (cmd: string, opts?: ExecSyncOptions) => string
 
@@ -41,6 +41,7 @@ export function copyPluginFiles(pluginDir: string, sourceDir?: string): void {
   for (const item of FILES_TO_COPY) {
     const from = path.join(src, item)
     const to = path.join(pluginDir, item)
+    if (path.resolve(from) === path.resolve(to)) continue
     if (!existsSync(from)) continue
     if (item === "dist") {
       rmSync(to, { recursive: true, force: true })
@@ -122,5 +123,28 @@ export function installPlugin(options?: InstallOptions): void {
     console.log(`✓ opencode-lark-bridge installed to ${pluginDir}`)
   } catch (err) {
     console.warn(`Warning: Installation incomplete: ${err}`)
+  }
+}
+
+export function uninstallPlugin(options?: { global?: boolean }): void {
+  const global = options?.global ?? isGlobalInstall()
+
+  try {
+    const pluginDir = getPluginDir(global)
+    if (existsSync(pluginDir)) {
+      rmSync(pluginDir, { recursive: true, force: true })
+      console.log(`Removed plugin directory: ${pluginDir}`)
+    } else {
+      console.log(`Plugin directory not found, skipping: ${pluginDir}`)
+    }
+
+    const pluginPath = global
+      ? pluginDir
+      : `./plugins/${PLUGIN_NAME}`
+    unregisterPluginConfig({ global, pluginPath })
+
+    console.log(`✓ opencode-lark-bridge uninstalled (${global ? "global" : "project"})`)
+  } catch (err) {
+    console.warn(`Warning: Uninstall incomplete: ${err}`)
   }
 }

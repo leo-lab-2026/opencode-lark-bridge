@@ -18,13 +18,18 @@ OpenCode 插件：将权限申请、任务完成、问答与错误信息通知�
 
 ### 项目级安装（推荐）
 
-配置文件初始化到当前项目根目录的 `.opencode/` 下：
+配置文件初始化到当前项目根目录的 `.opencode/` 下，并在项目级 `opencode.jsonc`/`opencode.json` 中注册插件（优先级 `.opencode/opencode.jsonc` > `.opencode/opencode.json` > `./opencode.jsonc` > `./opencode.json`；已存在的配置文件只追加本插件条目，不会覆盖其他内容）：
 
 ```bash
 npm install opencode-lark-bridge
 # 或
 bun add opencode-lark-bridge
 ```
+
+> **npm 11+ 的 allow-scripts 警告**：`npm install` 时可能出现
+> `npm warn allow-scripts ... opencode-lark-bridge@0.1.0 (postinstall: ...)` 提示。
+> 这是 npm 11 的安全机制，**postinstall 仍会自动执行**，插件安装与注册不受影响。
+> 如需消除该警告，可运行：`npm approve-scripts opencode-lark-bridge`。
 
 ### 全局安装
 
@@ -48,6 +53,16 @@ npx opencode-lark-bridge init
 
 ```bash
 npx opencode-lark-bridge init --global
+```
+
+### 卸载
+
+删除插件文件并清理配置注册（`opencode.jsonc`/`opencode.json` 中的本插件条目，其他内容保留）：
+
+```bash
+npx opencode-lark-bridge uninstall
+# 全局：
+npx opencode-lark-bridge uninstall --global
 ```
 
 ### 开发者本地安装
