@@ -1,0 +1,11 @@
+{
+  "schema": "comet.native.archive-cas.v1",
+  "operationId": "spec-1-npm-install-registration",
+  "role": "post",
+  "hash": "3ec09e8a91ec54bf3bf28324adf4c58225c7378cabf195a64d96bf9405a66b7a",
+  "identity": {
+    "dev": 2096,
+    "ino": 136069,
+    "birthtimeMs": 1785592410195.456
+  }
+}

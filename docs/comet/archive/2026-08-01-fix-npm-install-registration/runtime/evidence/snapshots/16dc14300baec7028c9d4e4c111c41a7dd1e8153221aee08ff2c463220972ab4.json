@@ -1,0 +1,3267 @@
+{
+  "schema": "comet.native.content-snapshot-projection.v1",
+  "origin": "explicit",
+  "capture": {
+    "provider": "git"
+  },
+  "complete": true,
+  "limits": {
+    "maxFiles": 10000,
+    "maxFileBytes": 268435456,
+    "maxTotalBytes": 268435456,
+    "maxManifestBytes": 1048576,
+    "maxDurationMs": 60000
+  },
+  "policy": {
+    "schema": "comet.native.snapshot-policy.v1",
+    "include": [
+      "**/*"
+    ],
+    "exclude": [],
+    "hash": "cc34dce5671bc1aefad09b658911a71d0434a26a1fbb4d8ba10de57b316f1f2f"
+  },
+  "entries": [
+    {
+      "path": ".agent/skills/openspec-apply-change/SKILL.md",
+      "hash": "72527851e33238ee7ac542f387edfe29e66bec940c2f94663953766bf0139754",
+      "size": 7333,
+      "type": "file"
+    },
+    {
+      "path": ".agent/skills/openspec-archive-change/SKILL.md",
+      "hash": "4c7b6459aea02ddef3f3a366291270962c77a37a6075e2365c6f4ccc3f93711c",
+      "size": 9959,
+      "type": "file"
+    },
+    {
+      "path": ".agent/skills/openspec-bulk-archive-change/SKILL.md",
+      "hash": "d0553307ad6e05ddca0990fdf2a085ed3c47eab7ac207e0507748f63a4f98e66",
+      "size": 16057,
+      "type": "file"
+    },
+    {
+      "path": ".agent/skills/openspec-continue-change/SKILL.md",
+      "hash": "239acfdeb6b178f1072bad98a30bb594991e6b88b917981115ec240abe2d7910",
+      "size": 6400,
+      "type": "file"
+    },
+    {
+      "path": ".agent/skills/openspec-explore/SKILL.md",
+      "hash": "a53eda380d3eaf55fbe7bee32fcfc441cf3a83e3b6d54772c6e578e69faca08f",
+      "size": 11969,
+      "type": "file"
+    },
+    {
+      "path": ".agent/skills/openspec-ff-change/SKILL.md",
+      "hash": "b175bced75780b375993933cbefbe6c16d630014e894258d8b5f0da8b86a7f4a",
+      "size": 7682,
+      "type": "file"
+    },
+    {
+      "path": ".agent/skills/openspec-new-change/SKILL.md",
+      "hash": "52db66fe4acd3823c4ec1943afcf503e9f24eff2dcff3bb189747c08281c31d4",
+      "size": 3479,
+      "type": "file"
+    },
+    {
+      "path": ".agent/skills/openspec-onboard/SKILL.md",
+      "hash": "895094a9b40c36dbd257f395ff8bc8d57e1ba101d82d1b40e0c65070c08694fd",
+      "size": 15383,
+      "type": "file"
+    },
+    {
+      "path": ".agent/skills/openspec-propose/SKILL.md",
+      "hash": "178afaf43436a4b9a639fa56f33d4dc809488e63da67f690cb78f58c6381755c",
+      "size": 8045,
+      "type": "file"
+    },
+    {
+      "path": ".agent/skills/openspec-sync-specs/SKILL.md",
+      "hash": "13be8daaacaee16017d374c91802f2661ac7109d30e25e186499087cb3e18220",
+      "size": 9610,
+      "type": "file"
+    },
+    {
+      "path": ".agent/skills/openspec-verify-change/SKILL.md",
+      "hash": "8ee85d7a34109a7cfcffd79530a88fb20b6d6e2a90a4fff38c759c30d19007bb",
+      "size": 7442,
+      "type": "file"
+    },
+    {
+      "path": ".agent/workflows/opsx-apply.md",
+      "hash": "67b0da48a07db31ef50e8be761d954a0a275075cbffd507c51662f4e11218af2",
+      "size": 7044,
+      "type": "file"
+    },
+    {
+      "path": ".agent/workflows/opsx-archive.md",
+      "hash": "a7eff39bac6fb3994f96aad4267a187c446c41873f3f6cf03fb2aead2258a6fb",
+      "size": 10661,
+      "type": "file"
+    },
+    {
+      "path": ".agent/workflows/opsx-bulk-archive.md",
+      "hash": "5cb14c40e5b774ba72594bcb60ccbfa73bf836148d1ff0d264ab13c6e197cab2",
+      "size": 15809,
+      "type": "file"
+    },
+    {
+      "path": ".agent/workflows/opsx-continue.md",
+      "hash": "419d233e1e01bfed66c29919adaefbef115b40e0625ea81f60459acb76b68d31",
+      "size": 6192,
+      "type": "file"
+    },
+    {
+      "path": ".agent/workflows/opsx-explore.md",
+      "hash": "4ad64338c480d289330e1bcfe13a58ac3f676b1b5ff6c6d644caf3990726a91a",
+      "size": 7868,
+      "type": "file"
+    },
+    {
+      "path": ".agent/workflows/opsx-ff.md",
+      "hash": "c37bc6563c0ac475de0e9030920048528448aca47af5b6c3355996a31c781096",
+      "size": 7381,
+      "type": "file"
+    },
+    {
+      "path": ".agent/workflows/opsx-new.md",
+      "hash": "98a71dd20c8572e3dd31e5fce7d6be6c137e1316225b7961914ce32a2a48ef7a",
+      "size": 3154,
+      "type": "file"
+    },
+    {
+      "path": ".agent/workflows/opsx-onboard.md",
+      "hash": "38beb2ad16864a7a594d42c68a5422df6c8e0f8563c793a102be05326079874f",
+      "size": 15182,
+      "type": "file"
+    },
+    {
+      "path": ".agent/workflows/opsx-propose.md",
+      "hash": "3f14b989b16dddce02f45ebabdcc34fd621593c6cd40bb80def78db5f30afdda",
+      "size": 7704,
+      "type": "file"
+    },
+    {
+      "path": ".agent/workflows/opsx-sync.md",
+      "hash": "909029cc010e00e62148cb33c9af42e0d0950232cacbe634b4a836153c7d325b",
+      "size": 9375,
+      "type": "file"
+    },
+    {
+      "path": ".agent/workflows/opsx-verify.md",
+      "hash": "a34e1e7cc79ff28905adbde21034b12abe9f411adbc6fa26a776abf89635f68f",
+      "size": 7223,
+      "type": "file"
+    },
+    {
+      "path": ".agents/skills/brainstorming/SKILL.md",
+      "hash": "4a54a4858b99807f3155ed1614b2f116e35ea5c1b788e793f565dd837fd3891f",
+      "size": 10047,
+      "type": "file"
+    },
+    {
+      "path": ".agents/skills/brainstorming/scripts/frame-template.html",
+      "hash": "6a8a4e58bd6a44b904e2e3c57de774481d909204597e1498de53f1b2fecc4c4e",
+      "size": 8094,
+      "type": "file"
+    },
+    {
+      "path": ".agents/skills/brainstorming/scripts/helper.js",
+      "hash": "43c6d69954a46ec34a2a262bcc62a9a7e83e839c739f199cb72646d397c686e3",
+      "size": 5615,
+      "type": "file"
+    },
+    {
+      "path": ".agents/skills/brainstorming/scripts/server.cjs",
+      "hash": "2d2961ea8d11f56c5f4c3a1a68d22709efa5d7601a2246d8c880774e7e9e8412",
+      "size": 25693,
+      "type": "file"
+    },
+    {
+      "path": ".agents/skills/brainstorming/scripts/start-server.sh",
+      "hash": "a4e5ae84275bcaacd2f84345afeabe59cf7b00ba080e123da7cc1fb226f12847",
+      "size": 6908,
+      "type": "file"
+    },
+    {
+      "path": ".agents/skills/brainstorming/scripts/stop-server.sh",
+      "hash": "0b5ccbbd57f62d3ed88993f7940b5ee0e5c0fc9b21c550c623da4f6292e47daf",
+      "size": 3263,
+      "type": "file"
+    },
+    {
+      "path": ".agents/skills/brainstorming/spec-document-reviewer-prompt.md",
+      "hash": "95a0a195de9d984be2fffa95bab16fc8c563bc296a9cfc5e9c29cb3ece0d7457",
+      "size": 1747,
+      "type": "file"
+    },
+    {
+      "path": ".agents/skills/brainstorming/visual-companion.md",
+      "hash": "60cbad29b9dd7eaf08da020e301c498a72230b2e13c1813fa967a135ffcc1d71",
+      "size": 13298,
+      "type": "file"
+    },
+    {
+      "path": ".agents/skills/comet-any/SKILL.md",
+      "hash": "49d907f2813e5912159022d0c58d5db9c43843f70f655b527cd4026cea924245",
+      "size": 7986,
+      "type": "file"
+    },
+    {
+      "path": ".agents/skills/comet-any/reference/authored-zone-example.md",
+      "hash": "440f1e4ef3f9ba2404110ed0a220492b0c902e5f4ed8a0346be69eedaf2e6a08",
+      "size": 8362,
+      "type": "file"
+    },
+    {
+      "path": ".agents/skills/comet-any/reference/authoring-subagents.md",
+      "hash": "6fbbee8ceb9c3fd7844e9d9f9336f8cbc1e3d79b7f318120498d23eb35512b11",
+      "size": 6534,
+      "type": "file"
+    },
+    {
+      "path": ".agents/skills/comet-any/reference/bundle-authoring.md",
+      "hash": "5c3199221e608b20f70e4ebc06c44b1a82b848af3740c069aa1c8a29ee77e500",
+      "size": 6432,
+      "type": "file"
+    },
+    {
+      "path": ".agents/skills/comet-any/reference/eval-provider.md",
+      "hash": "5998c9588c18dc52413f73a7b2ed50d28081e682f2a28b4ba44018c448d61e5b",
+      "size": 3218,
+      "type": "file"
+    },
+    {
+      "path": ".agents/skills/comet-any/reference/subagents/pause-points-author.md",
+      "hash": "543a34062573b5e6f8c47e37650cb450cf81edde4c618ef346f4fc079a076f75",
+      "size": 4515,
+      "type": "file"
+    },
+    {
+      "path": ".agents/skills/comet-any/reference/subagents/reference-author.md",
+      "hash": "6ded3e85ef29003236a78d82bed92100f851e1928857bc7ae29c2258ff7cc733",
+      "size": 3273,
+      "type": "file"
+    },
+    {
+      "path": ".agents/skills/comet-any/reference/subagents/script-author.md",
+      "hash": "c54904e095445b02ba8ef0e6ca21253aa980193a7feaf7c715b1eea85550b4aa",
+      "size": 3785,
+      "type": "file"
+    },
+    {
+      "path": ".agents/skills/comet-any/reference/subagents/skill-core-author.md",
+      "hash": "84ef68efec0e7b708f09ce5988575a087b63089b38849ef394c70ed3db66f895",
+      "size": 7302,
+      "type": "file"
+    },
+    {
+      "path": ".agents/skills/comet-any/reference/subagents/skill-reviewer.md",
+      "hash": "9e3fd0743297f1bc8d196ffcdb1704c4bdfc6c08ff14b2a05b7340c6b1c7f013",
+      "size": 6777,
+      "type": "file"
+    },
+    {
+      "path": ".agents/skills/comet-any/reference/subagents/workflow-entry-author.md",
+      "hash": "cef96c63ec69966719c7a3059abf39a358bd610ba75153b98978ab08fdc4083f",
+      "size": 6427,
+      "type": "file"
+    },
+    {
+      "path": ".agents/skills/comet-archive/SKILL.md",
+      "hash": "464acf1051c973b2f67cc191ad09fc811f7a9cccb99b62e717790a0f04f018d7",
+      "size": 8657,
+      "type": "file"
+    },
+    {
+      "path": ".agents/skills/comet-build/SKILL.md",
+      "hash": "26408217808d2522aaeeaa696a449980184b72f5c9c88d319cee0fe903ebe2a9",
+      "size": 22733,
+      "type": "file"
+    },
+    {
+      "path": ".agents/skills/comet-classic/SKILL.md",
+      "hash": "32e98f0c4a2f0fc786562e4690b9f9288221e3c8877c220a44d5fe26aeb4dd93",
+      "size": 18601,
+      "type": "file"
+    },
+    {
+      "path": ".agents/skills/comet-design/SKILL.md",
+      "hash": "35d90b3ca56c82e700526777aa6eee5d182c031353974e9a1c5496c2338b413b",
+      "size": 12162,
+      "type": "file"
+    },
+    {
+      "path": ".agents/skills/comet-hotfix/SKILL.md",
+      "hash": "d55ccf2e5b0718887846089d480ac3d0a7c8df2cbdb40435ba9278f6ca3b5b3a",
+      "size": 12704,
+      "type": "file"
+    },
+    {
+      "path": ".agents/skills/comet-native/SKILL.md",
+      "hash": "7182d95ab2ee74916fc9d666339f5d40b7027002130546334a77327361bfa87a",
+      "size": 23620,
+      "type": "file"
+    },
+    {
+      "path": ".agents/skills/comet-native/reference/artifacts.md",
+      "hash": "3342cf0e73212a28408b193cb65fb0e3ea3604eea397ca2d38b3653f8244e079",
+      "size": 14312,
+      "type": "file"
+    },
+    {
+      "path": ".agents/skills/comet-native/reference/commands.md",
+      "hash": "f54caf112db3203e1b98511c915036e961c7cc5107e18e72a0599516d43244e6",
+      "size": 8938,
+      "type": "file"
+    },
+    {
+      "path": ".agents/skills/comet-native/reference/recovery.md",
+      "hash": "eeee898d3b8c6a32c1e9bb0ff4179015b28045f169c51c9d396ba7037720b641",
+      "size": 12069,
+      "type": "file"
+    },
+    {
+      "path": ".agents/skills/comet-native/scripts/comet-native-hook-guard.mjs",
+      "hash": "819de5cb6b2e32e79e6978988b50083a3faf2247683ff09d57d335883752c19d",
+      "size": 145,
+      "type": "file"
+    },
+    {
+      "path": ".agents/skills/comet-native/scripts/comet-native-runtime.mjs",
+      "hash": "ea4476965f04a81dc1c4d7868c90bae4ca91d98cebabf3d684d5ce0f3441649d",
+      "size": 1145894,
+      "type": "file"
+    },
+    {
+      "path": ".agents/skills/comet-open/SKILL.md",
+      "hash": "a71fee2f98f9e353f13030ac3d1d134343537ae9b28ed5996145bb6e78eb7db1",
+      "size": 17375,
+      "type": "file"
+    },
+    {
+      "path": ".agents/skills/comet-tweak/SKILL.md",
+      "hash": "12e5446de3f8c8506a107bd6e4836a2da75e1eda09a3e7e7ab4b4d5ca70ddb22",
+      "size": 13219,
+      "type": "file"
+    },
+    {
+      "path": ".agents/skills/comet-verify/SKILL.md",
+      "hash": "8cc420a16353d6cb04e0af82c6e28b635c66ed99ed46dee6d15f6427b0efebbc",
+      "size": 13170,
+      "type": "file"
+    },
+    {
+      "path": ".agents/skills/comet/SKILL.md",
+      "hash": "7a7262b67bc15afcd14d246243db9e6e7713988bbc8be6bee06f6f610b549329",
+      "size": 1343,
+      "type": "file"
+    },
+    {
+      "path": ".agents/skills/comet/reference/auto-transition.md",
+      "hash": "ceccd13a9b4f591de38d7409890759f3089025f65c27f052afefa950ee26848f",
+      "size": 1286,
+      "type": "file"
+    },
+    {
+      "path": ".agents/skills/comet/reference/comet-yaml-fields.md",
+      "hash": "77ef2ae795260ebffa35060801ea4a4b88db6bbbfcd7c1d66b1dc57553c6af82",
+      "size": 6967,
+      "type": "file"
+    },
+    {
+      "path": ".agents/skills/comet/reference/context-recovery.md",
+      "hash": "28b7846948dee6f4617a278f9fa8ee95aa85af842429cbf1200dee933dc6ba97",
+      "size": 2922,
+      "type": "file"
+    },
+    {
+      "path": ".agents/skills/comet/reference/debug-gate.md",
+      "hash": "d5471ff6de6bee8642a1d0b77d08c771eddd858e3ff6640924c400b65b7f390f",
+      "size": 2375,
+      "type": "file"
+    },
+    {
+      "path": ".agents/skills/comet/reference/decision-point.md",
+      "hash": "800482c743e2d54877231141edbe31df3011cb9281921e59e739c34eab31b066",
+      "size": 3194,
+      "type": "file"
+    },
+    {
+      "path": ".agents/skills/comet/reference/dirty-worktree.md",
+      "hash": "27f9666c3c3ae0e2670ab501e7d2a634f22ebea2d74e231727515fe181e1f853",
+      "size": 3286,
+      "type": "file"
+    },
+    {
+      "path": ".agents/skills/comet/reference/file-structure.md",
+      "hash": "21a9c52cdb3224036b1c6f627246af655be33316d7879d87f64fedbc74fc3de1",
+      "size": 1312,
+      "type": "file"
+    },
+    {
+      "path": ".agents/skills/comet/reference/intent-frame.md",
+      "hash": "390ba9afeac5242485d0869bd4e30c273aac9caeac3395558a9bd4f84b3f4f4e",
+      "size": 4629,
+      "type": "file"
+    },
+    {
+      "path": ".agents/skills/comet/reference/scripts.md",
+      "hash": "f810279be3d939761891677ca62d2e4f166e2954ea5889329c481c68aafc6880",
+      "size": 4532,
+      "type": "file"
+    },
+    {
+      "path": ".agents/skills/comet/reference/subagent-dispatch.md",
+      "hash": "f3d8d580f5ea75d62b2bb77a90a4d7fc8c552a67875835d00207fee463e8e428",
+      "size": 17193,
+      "type": "file"
+    },
+    {
+      "path": ".agents/skills/comet/runtime/classic/checks.yaml",
+      "hash": "2173d75906e5020dbd71220b6a7b517b2a54edb91463bf0ef499b0107192f58d",
+      "size": 120,
+      "type": "file"
+    },
+    {
+      "path": ".agents/skills/comet/runtime/classic/guardrails.yaml",
+      "hash": "c962776d74f40af41252f45160d0ab427d06065e09edaf409179bdabce0d3e0e",
+      "size": 236,
+      "type": "file"
+    },
+    {
+      "path": ".agents/skills/comet/runtime/classic/skill.yaml",
+      "hash": "856d4eb30d803018b37023c04ea4b1faf7ff811513552aadd468d17e88b2c254",
+      "size": 4240,
+      "type": "file"
+    },
+    {
+      "path": ".agents/skills/comet/scripts/comet-archive.mjs",
+      "hash": "8e671fbcec253885fec485f1e380e21c48d76abbb32825bc0d1889de7c2fd96a",
+      "size": 134,
+      "type": "file"
+    },
+    {
+      "path": ".agents/skills/comet/scripts/comet-entry-runtime.mjs",
+      "hash": "d9f03607329ec1d58b668d86d5e175b589b401e92d294d68101aaf1afbb7b6c9",
+      "size": 289020,
+      "type": "file"
+    },
+    {
+      "path": ".agents/skills/comet/scripts/comet-env.mjs",
+      "hash": "ec5ed6dd31451c3b48a4e1e1dc8cd148759288fa778d6180aa6f16ae810de62c",
+      "size": 668,
+      "type": "file"
+    },
+    {
+      "path": ".agents/skills/comet/scripts/comet-guard.mjs",
+      "hash": "ac07e951389437ef09d758b6138fd967d94230fbaf8c0cf4d4bd41acafb63636",
+      "size": 132,
+      "type": "file"
+    },
+    {
+      "path": ".agents/skills/comet/scripts/comet-handoff.mjs",
+      "hash": "6ca8d5c2152b68409fbd9dc880c6e7f9a8007f012e154b33d796d0acb3e6a42d",
+      "size": 134,
+      "type": "file"
+    },
+    {
+      "path": ".agents/skills/comet/scripts/comet-hook-guard.mjs",
+      "hash": "50f617c1da8dec33492e7d01877e3e26b73355d4c43e9d06f8fadebfb658edc7",
+      "size": 137,
+      "type": "file"
+    },
+    {
+      "path": ".agents/skills/comet/scripts/comet-hook-router.mjs",
+      "hash": "ef8f37e3267c8753bf095c1c95718e425a69102884f6cebefe066acd0d9b3d1b",
+      "size": 386166,
+      "type": "file"
+    },
+    {
+      "path": ".agents/skills/comet/scripts/comet-intent.mjs",
+      "hash": "762efd0e7329ec6ca1b4b0d7e7eababcd72b7485e89fb65ccabc1e116fa4e8d5",
+      "size": 133,
+      "type": "file"
+    },
+    {
+      "path": ".agents/skills/comet/scripts/comet-resume-probe.mjs",
+      "hash": "93eb865ce26c91139d00793bc9271df4849e97df61e4417eb5fd40b95e5a7be1",
+      "size": 139,
+      "type": "file"
+    },
+    {
+      "path": ".agents/skills/comet/scripts/comet-runtime.mjs",
+      "hash": "ca4540a4971d8d11c10d51f7db9f72dc7cadbfd1b2b1c8886d0469d735c0e284",
+      "size": 546708,
+      "type": "file"
+    },
+    {
+      "path": ".agents/skills/comet/scripts/comet-state.mjs",
+      "hash": "977cb85cff6dc86f7f035b32d7d6f983e29c2da1c9254ddce287c2791ccf30d1",
+      "size": 132,
+      "type": "file"
+    },
+    {
+      "path": ".agents/skills/comet/scripts/comet-yaml-validate.mjs",
+      "hash": "55414fdd30bc60a2aa881f78ea6520bbdc4782f99b67aea883b062738aee342e",
+      "size": 135,
+      "type": "file"
+    },
+    {
+      "path": ".agents/skills/dispatching-parallel-agents/SKILL.md",
+      "hash": "1968923066f3b707eb01d1992cdf4c42284c3855f70253b9cd5000ff45fca13c",
+      "size": 6078,
+      "type": "file"
+    },
+    {
+      "path": ".agents/skills/executing-plans/SKILL.md",
+      "hash": "c4c3d8b628c51114cd165fb8246fe02744cd8be180032328391252e653028d9b",
+      "size": 2305,
+      "type": "file"
+    },
+    {
+      "path": ".agents/skills/finishing-a-development-branch/SKILL.md",
+      "hash": "d0ac8360ed9d59121776ef95c84bcb38e9747de0d7ae7e227dca81e437593b9b",
+      "size": 7022,
+      "type": "file"
+    },
+    {
+      "path": ".agents/skills/receiving-code-review/SKILL.md",
+      "hash": "091df1629510af1b92fc4abd6f96732ebedb4cb2c0f3457e8f2740b0504a2438",
+      "size": 6203,
+      "type": "file"
+    },
+    {
+      "path": ".agents/skills/requesting-code-review/SKILL.md",
+      "hash": "d71cc01ba56d2325cf8af5f7c11837819b63ecd57de0bfdb812f7f3ff7751df8",
+      "size": 2956,
+      "type": "file"
+    },
+    {
+      "path": ".agents/skills/requesting-code-review/code-reviewer.md",
+      "hash": "b2f2ec7596925fe52dac158fdfbca19b3a7d779d619c481e6706a6c0001662d3",
+      "size": 5213,
+      "type": "file"
+    },
+    {
+      "path": ".agents/skills/subagent-driven-development/SKILL.md",
+      "hash": "349a08ad8b59b19b86c13a7d2f34a1a38719bf88257004a863eefefa8d9f9e40",
+      "size": 28077,
+      "type": "file"
+    },
+    {
+      "path": ".agents/skills/subagent-driven-development/implementer-prompt.md",
+      "hash": "946601616a6f76ab3f165ef98377390968f1ec124ecef87422bc3553404e0332",
+      "size": 5717,
+      "type": "file"
+    },
+    {
+      "path": ".agents/skills/subagent-driven-development/re-review-prompt.md",
+      "hash": "e1d8e0e65e58ccde6dc920843da9148d23e65aeb0f8932bcc30be1341a703c4c",
+      "size": 4300,
+      "type": "file"
+    },
+    {
+      "path": ".agents/skills/subagent-driven-development/scripts/review-package",
+      "hash": "fac3d4bd7f94369e8037b9ead2a8a502dca6ab333902b560b9455dbb3c450ebe",
+      "size": 1469,
+      "type": "file"
+    },
+    {
+      "path": ".agents/skills/subagent-driven-development/scripts/sdd-workspace",
+      "hash": "95a09d9d3983ad1aafd093ca72b4587946dea885c6e302caa02a779a2f911c31",
+      "size": 1586,
+      "type": "file"
+    },
+    {
+      "path": ".agents/skills/subagent-driven-development/scripts/task-brief",
+      "hash": "d6954ef7841c7da3d77373e6ff5118b3f2f2e998606fd95d33e6527851bce044",
+      "size": 1158,
+      "type": "file"
+    },
+    {
+      "path": ".agents/skills/subagent-driven-development/task-reviewer-prompt.md",
+      "hash": "e3b4a1bfe7cd55ed0459e5ca9cdddb6ff086c345b99e9097036db6a18545729e",
+      "size": 7816,
+      "type": "file"
+    },
+    {
+      "path": ".agents/skills/systematic-debugging/CREATION-LOG.md",
+      "hash": "c24733a5b1821bd6bed1fc950261f0b9f4e90097e0bbb96459d8179713730789",
+      "size": 4257,
+      "type": "file"
+    },
+    {
+      "path": ".agents/skills/systematic-debugging/SKILL.md",
+      "hash": "808fc5717aa88ad65efff312b11c186294d3e6ee301afb584e2f86599b137787",
+      "size": 9465,
+      "type": "file"
+    },
+    {
+      "path": ".agents/skills/systematic-debugging/condition-based-waiting-example.ts",
+      "hash": "40ae5ebe497fdf310200e43fe986552546d0a22837c0d39e855db1cfd33eb88e",
+      "size": 5054,
+      "type": "file"
+    },
+    {
+      "path": ".agents/skills/systematic-debugging/condition-based-waiting.md",
+      "hash": "e89fec8400d6cd50f43407cec9fab50976ba4d55d0ec2eb51c0bd68036b54c26",
+      "size": 3516,
+      "type": "file"
+    },
+    {
+      "path": ".agents/skills/systematic-debugging/defense-in-depth.md",
+      "hash": "1e175fb86fc357e58c6aebf5441e481e1b7868b4380c0456b63a17eefbd18ba7",
+      "size": 3650,
+      "type": "file"
+    },
+    {
+      "path": ".agents/skills/systematic-debugging/find-polluter.sh",
+      "hash": "dd7b8f13c4cc2a24b33ff87b18da9248f3e1c80a085c3316224f69ff0fa5c43c",
+      "size": 1986,
+      "type": "file"
+    },
+    {
+      "path": ".agents/skills/systematic-debugging/root-cause-tracing.md",
+      "hash": "6b0622269e098ca1399e123e553fd385f0b6412d88ef0e9c4f5a8ea9cf1cec7b",
+      "size": 5316,
+      "type": "file"
+    },
+    {
+      "path": ".agents/skills/systematic-debugging/test-academic.md",
+      "hash": "fe2ba480d78ac0d686dc025f41c2a32a43d642bf533f91b0c6053a04d35d6486",
+      "size": 653,
+      "type": "file"
+    },
+    {
+      "path": ".agents/skills/systematic-debugging/test-pressure-1.md",
+      "hash": "0b6a915db0054577819834c79be9eb614e97bddba10d73768e1fbe91cfed048a",
+      "size": 1900,
+      "type": "file"
+    },
+    {
+      "path": ".agents/skills/systematic-debugging/test-pressure-2.md",
+      "hash": "b2030aeffba07050e8ad573ddf87486457c4a016a786bb326235bebd856f2016",
+      "size": 2283,
+      "type": "file"
+    },
+    {
+      "path": ".agents/skills/systematic-debugging/test-pressure-3.md",
+      "hash": "96b50a52e2c7989c9cf20fb752c47c1e9a3a70dc362f8f7989f8f5b64dac7708",
+      "size": 2692,
+      "type": "file"
+    },
+    {
+      "path": ".agents/skills/test-driven-development/SKILL.md",
+      "hash": "bf1b8216e523851a411e91d429a7c1c2a173e79d88957bc78e348218d50edd54",
+      "size": 9015,
+      "type": "file"
+    },
+    {
+      "path": ".agents/skills/test-driven-development/writing-good-tests.md",
+      "hash": "51471c853306ff92ca8bb41dcaea05f31c0e46b03651f8f3c99754b7172f4ae1",
+      "size": 8268,
+      "type": "file"
+    },
+    {
+      "path": ".agents/skills/using-git-worktrees/SKILL.md",
+      "hash": "8cfb86f121269e8f7f12361e6795c4f6738828340e28964c9229d365666c9edd",
+      "size": 6813,
+      "type": "file"
+    },
+    {
+      "path": ".agents/skills/using-superpowers/SKILL.md",
+      "hash": "55379fe7c1c473a02c61961c822996bff30e1320d6921d9062509bc508482c05",
+      "size": 3063,
+      "type": "file"
+    },
+    {
+      "path": ".agents/skills/using-superpowers/references/antigravity-tools.md",
+      "hash": "4880f6de3da4e32f9659ebe7a72b9e0ebfff04e028c2ed96173f86d0387a04c0",
+      "size": 1495,
+      "type": "file"
+    },
+    {
+      "path": ".agents/skills/using-superpowers/references/codex-tools.md",
+      "hash": "d3f113a8ebbd748e8ba847b09b57b7685442775ca4ee194d693ce3663f8fac68",
+      "size": 1774,
+      "type": "file"
+    },
+    {
+      "path": ".agents/skills/using-superpowers/references/gemini-tools.md",
+      "hash": "62b9157bcb0ee3c6784e3d0da0798ddfa5872f9e0c34bea48f3079dabea71965",
+      "size": 4598,
+      "type": "file"
+    },
+    {
+      "path": ".agents/skills/using-superpowers/references/pi-tools.md",
+      "hash": "703dbc83d23ecab9c6f388460c38abc482e9dee2fe6772a8c7a255152ad3a4d5",
+      "size": 1242,
+      "type": "file"
+    },
+    {
+      "path": ".agents/skills/verification-before-completion/SKILL.md",
+      "hash": "2befe7fc55bcadaa3d97dd9e8efeb633d2561c0ebe74c5a8b17c4d9e7e4520b3",
+      "size": 3646,
+      "type": "file"
+    },
+    {
+      "path": ".agents/skills/writing-plans/SKILL.md",
+      "hash": "72190c88b2b5a67a96b91d66aa72b9161913e10e8769da3f28a226f4cc7b99d0",
+      "size": 6907,
+      "type": "file"
+    },
+    {
+      "path": ".agents/skills/writing-plans/plan-document-reviewer-prompt.md",
+      "hash": "aa728b96aad603c8be28875a4305637f6c984aa81ffcadcb13e743202fa2a0c7",
+      "size": 1713,
+      "type": "file"
+    },
+    {
+      "path": ".agents/skills/writing-skills/SKILL.md",
+      "hash": "d34db5c8aed6a4e0440132bd0613aace70a693ec7819d5637ad77481d8e10d1b",
+      "size": 26360,
+      "type": "file"
+    },
+    {
+      "path": ".agents/skills/writing-skills/anthropic-best-practices.md",
+      "hash": "217629b356c09c9bd11017c9788e8fc654ca1b32c92d4a51cd490e16dd65e59a",
+      "size": 46197,
+      "type": "file"
+    },
+    {
+      "path": ".agents/skills/writing-skills/examples/CLAUDE_MD_TESTING.md",
+      "hash": "0b379a3415e185d3c434b3ad283d8aa132f3022c2a4f210f168865b5986bcef0",
+      "size": 5423,
+      "type": "file"
+    },
+    {
+      "path": ".agents/skills/writing-skills/graphviz-conventions.dot",
+      "hash": "e2890a593c91370e384b42f2f67b1a6232c9e69dddea7891a0c1c46d7b20b694",
+      "size": 5970,
+      "type": "file"
+    },
+    {
+      "path": ".agents/skills/writing-skills/persuasion-principles.md",
+      "hash": "a51bc9bf75189ea73a27b3fb504a2fdfdb966fb1f7f1cdf03203230a216ccc03",
+      "size": 5901,
+      "type": "file"
+    },
+    {
+      "path": ".agents/skills/writing-skills/render-graphs.js",
+      "hash": "ccda971a87bb185f8febf81c56b556a20d026fa980c17b35fa3e8824fbb37852",
+      "size": 4857,
+      "type": "file"
+    },
+    {
+      "path": ".agents/skills/writing-skills/testing-skills-with-subagents.md",
+      "hash": "c711346852c911b24a84aa161e0cff06a4cd7f4e2fa9e9c0a266cead5afcbade",
+      "size": 12558,
+      "type": "file"
+    },
+    {
+      "path": ".comet/skills/skills/comet-any/SKILL.md",
+      "hash": "49d907f2813e5912159022d0c58d5db9c43843f70f655b527cd4026cea924245",
+      "size": 7986,
+      "type": "file"
+    },
+    {
+      "path": ".comet/skills/skills/comet-any/reference/authored-zone-example.md",
+      "hash": "440f1e4ef3f9ba2404110ed0a220492b0c902e5f4ed8a0346be69eedaf2e6a08",
+      "size": 8362,
+      "type": "file"
+    },
+    {
+      "path": ".comet/skills/skills/comet-any/reference/authoring-subagents.md",
+      "hash": "6fbbee8ceb9c3fd7844e9d9f9336f8cbc1e3d79b7f318120498d23eb35512b11",
+      "size": 6534,
+      "type": "file"
+    },
+    {
+      "path": ".comet/skills/skills/comet-any/reference/bundle-authoring.md",
+      "hash": "5c3199221e608b20f70e4ebc06c44b1a82b848af3740c069aa1c8a29ee77e500",
+      "size": 6432,
+      "type": "file"
+    },
+    {
+      "path": ".comet/skills/skills/comet-any/reference/eval-provider.md",
+      "hash": "5998c9588c18dc52413f73a7b2ed50d28081e682f2a28b4ba44018c448d61e5b",
+      "size": 3218,
+      "type": "file"
+    },
+    {
+      "path": ".comet/skills/skills/comet-any/reference/subagents/pause-points-author.md",
+      "hash": "543a34062573b5e6f8c47e37650cb450cf81edde4c618ef346f4fc079a076f75",
+      "size": 4515,
+      "type": "file"
+    },
+    {
+      "path": ".comet/skills/skills/comet-any/reference/subagents/reference-author.md",
+      "hash": "6ded3e85ef29003236a78d82bed92100f851e1928857bc7ae29c2258ff7cc733",
+      "size": 3273,
+      "type": "file"
+    },
+    {
+      "path": ".comet/skills/skills/comet-any/reference/subagents/script-author.md",
+      "hash": "c54904e095445b02ba8ef0e6ca21253aa980193a7feaf7c715b1eea85550b4aa",
+      "size": 3785,
+      "type": "file"
+    },
+    {
+      "path": ".comet/skills/skills/comet-any/reference/subagents/skill-core-author.md",
+      "hash": "84ef68efec0e7b708f09ce5988575a087b63089b38849ef394c70ed3db66f895",
+      "size": 7302,
+      "type": "file"
+    },
+    {
+      "path": ".comet/skills/skills/comet-any/reference/subagents/skill-reviewer.md",
+      "hash": "9e3fd0743297f1bc8d196ffcdb1704c4bdfc6c08ff14b2a05b7340c6b1c7f013",
+      "size": 6777,
+      "type": "file"
+    },
+    {
+      "path": ".comet/skills/skills/comet-any/reference/subagents/workflow-entry-author.md",
+      "hash": "cef96c63ec69966719c7a3059abf39a358bd610ba75153b98978ab08fdc4083f",
+      "size": 6427,
+      "type": "file"
+    },
+    {
+      "path": ".comet/skills/skills/comet-archive/SKILL.md",
+      "hash": "464acf1051c973b2f67cc191ad09fc811f7a9cccb99b62e717790a0f04f018d7",
+      "size": 8657,
+      "type": "file"
+    },
+    {
+      "path": ".comet/skills/skills/comet-build/SKILL.md",
+      "hash": "26408217808d2522aaeeaa696a449980184b72f5c9c88d319cee0fe903ebe2a9",
+      "size": 22733,
+      "type": "file"
+    },
+    {
+      "path": ".comet/skills/skills/comet-classic/SKILL.md",
+      "hash": "32e98f0c4a2f0fc786562e4690b9f9288221e3c8877c220a44d5fe26aeb4dd93",
+      "size": 18601,
+      "type": "file"
+    },
+    {
+      "path": ".comet/skills/skills/comet-design/SKILL.md",
+      "hash": "35d90b3ca56c82e700526777aa6eee5d182c031353974e9a1c5496c2338b413b",
+      "size": 12162,
+      "type": "file"
+    },
+    {
+      "path": ".comet/skills/skills/comet-hotfix/SKILL.md",
+      "hash": "d55ccf2e5b0718887846089d480ac3d0a7c8df2cbdb40435ba9278f6ca3b5b3a",
+      "size": 12704,
+      "type": "file"
+    },
+    {
+      "path": ".comet/skills/skills/comet-native/SKILL.md",
+      "hash": "7182d95ab2ee74916fc9d666339f5d40b7027002130546334a77327361bfa87a",
+      "size": 23620,
+      "type": "file"
+    },
+    {
+      "path": ".comet/skills/skills/comet-native/reference/artifacts.md",
+      "hash": "3342cf0e73212a28408b193cb65fb0e3ea3604eea397ca2d38b3653f8244e079",
+      "size": 14312,
+      "type": "file"
+    },
+    {
+      "path": ".comet/skills/skills/comet-native/reference/commands.md",
+      "hash": "f54caf112db3203e1b98511c915036e961c7cc5107e18e72a0599516d43244e6",
+      "size": 8938,
+      "type": "file"
+    },
+    {
+      "path": ".comet/skills/skills/comet-native/reference/recovery.md",
+      "hash": "eeee898d3b8c6a32c1e9bb0ff4179015b28045f169c51c9d396ba7037720b641",
+      "size": 12069,
+      "type": "file"
+    },
+    {
+      "path": ".comet/skills/skills/comet-native/scripts/comet-native-hook-guard.mjs",
+      "hash": "819de5cb6b2e32e79e6978988b50083a3faf2247683ff09d57d335883752c19d",
+      "size": 145,
+      "type": "file"
+    },
+    {
+      "path": ".comet/skills/skills/comet-native/scripts/comet-native-runtime.mjs",
+      "hash": "ea4476965f04a81dc1c4d7868c90bae4ca91d98cebabf3d684d5ce0f3441649d",
+      "size": 1145894,
+      "type": "file"
+    },
+    {
+      "path": ".comet/skills/skills/comet-open/SKILL.md",
+      "hash": "a71fee2f98f9e353f13030ac3d1d134343537ae9b28ed5996145bb6e78eb7db1",
+      "size": 17375,
+      "type": "file"
+    },
+    {
+      "path": ".comet/skills/skills/comet-tweak/SKILL.md",
+      "hash": "12e5446de3f8c8506a107bd6e4836a2da75e1eda09a3e7e7ab4b4d5ca70ddb22",
+      "size": 13219,
+      "type": "file"
+    },
+    {
+      "path": ".comet/skills/skills/comet-verify/SKILL.md",
+      "hash": "8cc420a16353d6cb04e0af82c6e28b635c66ed99ed46dee6d15f6427b0efebbc",
+      "size": 13170,
+      "type": "file"
+    },
+    {
+      "path": ".comet/skills/skills/comet/SKILL.md",
+      "hash": "7a7262b67bc15afcd14d246243db9e6e7713988bbc8be6bee06f6f610b549329",
+      "size": 1343,
+      "type": "file"
+    },
+    {
+      "path": ".comet/skills/skills/comet/reference/auto-transition.md",
+      "hash": "ceccd13a9b4f591de38d7409890759f3089025f65c27f052afefa950ee26848f",
+      "size": 1286,
+      "type": "file"
+    },
+    {
+      "path": ".comet/skills/skills/comet/reference/comet-yaml-fields.md",
+      "hash": "77ef2ae795260ebffa35060801ea4a4b88db6bbbfcd7c1d66b1dc57553c6af82",
+      "size": 6967,
+      "type": "file"
+    },
+    {
+      "path": ".comet/skills/skills/comet/reference/context-recovery.md",
+      "hash": "28b7846948dee6f4617a278f9fa8ee95aa85af842429cbf1200dee933dc6ba97",
+      "size": 2922,
+      "type": "file"
+    },
+    {
+      "path": ".comet/skills/skills/comet/reference/debug-gate.md",
+      "hash": "d5471ff6de6bee8642a1d0b77d08c771eddd858e3ff6640924c400b65b7f390f",
+      "size": 2375,
+      "type": "file"
+    },
+    {
+      "path": ".comet/skills/skills/comet/reference/decision-point.md",
+      "hash": "800482c743e2d54877231141edbe31df3011cb9281921e59e739c34eab31b066",
+      "size": 3194,
+      "type": "file"
+    },
+    {
+      "path": ".comet/skills/skills/comet/reference/dirty-worktree.md",
+      "hash": "27f9666c3c3ae0e2670ab501e7d2a634f22ebea2d74e231727515fe181e1f853",
+      "size": 3286,
+      "type": "file"
+    },
+    {
+      "path": ".comet/skills/skills/comet/reference/file-structure.md",
+      "hash": "21a9c52cdb3224036b1c6f627246af655be33316d7879d87f64fedbc74fc3de1",
+      "size": 1312,
+      "type": "file"
+    },
+    {
+      "path": ".comet/skills/skills/comet/reference/intent-frame.md",
+      "hash": "390ba9afeac5242485d0869bd4e30c273aac9caeac3395558a9bd4f84b3f4f4e",
+      "size": 4629,
+      "type": "file"
+    },
+    {
+      "path": ".comet/skills/skills/comet/reference/scripts.md",
+      "hash": "f810279be3d939761891677ca62d2e4f166e2954ea5889329c481c68aafc6880",
+      "size": 4532,
+      "type": "file"
+    },
+    {
+      "path": ".comet/skills/skills/comet/reference/subagent-dispatch.md",
+      "hash": "f3d8d580f5ea75d62b2bb77a90a4d7fc8c552a67875835d00207fee463e8e428",
+      "size": 17193,
+      "type": "file"
+    },
+    {
+      "path": ".comet/skills/skills/comet/runtime/classic/checks.yaml",
+      "hash": "2173d75906e5020dbd71220b6a7b517b2a54edb91463bf0ef499b0107192f58d",
+      "size": 120,
+      "type": "file"
+    },
+    {
+      "path": ".comet/skills/skills/comet/runtime/classic/guardrails.yaml",
+      "hash": "c962776d74f40af41252f45160d0ab427d06065e09edaf409179bdabce0d3e0e",
+      "size": 236,
+      "type": "file"
+    },
+    {
+      "path": ".comet/skills/skills/comet/runtime/classic/skill.yaml",
+      "hash": "856d4eb30d803018b37023c04ea4b1faf7ff811513552aadd468d17e88b2c254",
+      "size": 4240,
+      "type": "file"
+    },
+    {
+      "path": ".comet/skills/skills/comet/scripts/comet-archive.mjs",
+      "hash": "8e671fbcec253885fec485f1e380e21c48d76abbb32825bc0d1889de7c2fd96a",
+      "size": 134,
+      "type": "file"
+    },
+    {
+      "path": ".comet/skills/skills/comet/scripts/comet-entry-runtime.mjs",
+      "hash": "d9f03607329ec1d58b668d86d5e175b589b401e92d294d68101aaf1afbb7b6c9",
+      "size": 289020,
+      "type": "file"
+    },
+    {
+      "path": ".comet/skills/skills/comet/scripts/comet-env.mjs",
+      "hash": "ec5ed6dd31451c3b48a4e1e1dc8cd148759288fa778d6180aa6f16ae810de62c",
+      "size": 668,
+      "type": "file"
+    },
+    {
+      "path": ".comet/skills/skills/comet/scripts/comet-guard.mjs",
+      "hash": "ac07e951389437ef09d758b6138fd967d94230fbaf8c0cf4d4bd41acafb63636",
+      "size": 132,
+      "type": "file"
+    },
+    {
+      "path": ".comet/skills/skills/comet/scripts/comet-handoff.mjs",
+      "hash": "6ca8d5c2152b68409fbd9dc880c6e7f9a8007f012e154b33d796d0acb3e6a42d",
+      "size": 134,
+      "type": "file"
+    },
+    {
+      "path": ".comet/skills/skills/comet/scripts/comet-hook-guard.mjs",
+      "hash": "50f617c1da8dec33492e7d01877e3e26b73355d4c43e9d06f8fadebfb658edc7",
+      "size": 137,
+      "type": "file"
+    },
+    {
+      "path": ".comet/skills/skills/comet/scripts/comet-hook-router.mjs",
+      "hash": "ef8f37e3267c8753bf095c1c95718e425a69102884f6cebefe066acd0d9b3d1b",
+      "size": 386166,
+      "type": "file"
+    },
+    {
+      "path": ".comet/skills/skills/comet/scripts/comet-intent.mjs",
+      "hash": "762efd0e7329ec6ca1b4b0d7e7eababcd72b7485e89fb65ccabc1e116fa4e8d5",
+      "size": 133,
+      "type": "file"
+    },
+    {
+      "path": ".comet/skills/skills/comet/scripts/comet-resume-probe.mjs",
+      "hash": "93eb865ce26c91139d00793bc9271df4849e97df61e4417eb5fd40b95e5a7be1",
+      "size": 139,
+      "type": "file"
+    },
+    {
+      "path": ".comet/skills/skills/comet/scripts/comet-runtime.mjs",
+      "hash": "ca4540a4971d8d11c10d51f7db9f72dc7cadbfd1b2b1c8886d0469d735c0e284",
+      "size": 546708,
+      "type": "file"
+    },
+    {
+      "path": ".comet/skills/skills/comet/scripts/comet-state.mjs",
+      "hash": "977cb85cff6dc86f7f035b32d7d6f983e29c2da1c9254ddce287c2791ccf30d1",
+      "size": 132,
+      "type": "file"
+    },
+    {
+      "path": ".comet/skills/skills/comet/scripts/comet-yaml-validate.mjs",
+      "hash": "55414fdd30bc60a2aa881f78ea6520bbdc4782f99b67aea883b062738aee342e",
+      "size": 135,
+      "type": "file"
+    },
+    {
+      "path": ".gitignore",
+      "hash": "005a3b1efdefd0c37d1fed6c99d29d2f34324f274f79a183c0d681e92cc6029c",
+      "size": 563,
+      "type": "file"
+    },
+    {
+      "path": ".opencode/commands/comet-any.md",
+      "hash": "cab88116eeb1df60fd338415bdc8e7429845341170ef9fd763f5ac4f187a4138",
+      "size": 7944,
+      "type": "file"
+    },
+    {
+      "path": ".opencode/commands/comet-archive.md",
+      "hash": "baa7e01304f75be92e97e12840cd5040ebc65029d41a98b2022c483f56073eb1",
+      "size": 8675,
+      "type": "file"
+    },
+    {
+      "path": ".opencode/commands/comet-build.md",
+      "hash": "ed0d8aecdec8d2f85f0247858a40bd14726c88feeedd537e295cb5e4709b7cf7",
+      "size": 22745,
+      "type": "file"
+    },
+    {
+      "path": ".opencode/commands/comet-classic.md",
+      "hash": "a2e62e6e6ee075467cd90b9a313864d5465ea1afd46484e13feed88b4981a287",
+      "size": 18576,
+      "type": "file"
+    },
+    {
+      "path": ".opencode/commands/comet-design.md",
+      "hash": "48de64c15ffe029ddcf360582edce3999bb7095394cf5a886dd7f1c35bccc698",
+      "size": 12178,
+      "type": "file"
+    },
+    {
+      "path": ".opencode/commands/comet-hotfix.md",
+      "hash": "ce89e5a450357e1067bcaf2c314328a27174a0e73a96059350744a0fc3412037",
+      "size": 12716,
+      "type": "file"
+    },
+    {
+      "path": ".opencode/commands/comet-native.md",
+      "hash": "4a7b91fb302d21de94abac9738f84635c798fb24ed0deef9c1f9296700ab0582",
+      "size": 23606,
+      "type": "file"
+    },
+    {
+      "path": ".opencode/commands/comet-open.md",
+      "hash": "50d4f4a25b6f6252885573f131bb195b4d7da64891059b80a301c49b21200ffb",
+      "size": 17370,
+      "type": "file"
+    },
+    {
+      "path": ".opencode/commands/comet-tweak.md",
+      "hash": "142eb6c6df52023f72bef3122777a086a76dbcc2d60547063b92abb421b094c2",
+      "size": 13225,
+      "type": "file"
+    },
+    {
+      "path": ".opencode/commands/comet-verify.md",
+      "hash": "b337ecfe9c09c66aa53f2f5b2189b5366cd335f8e9789f38f080dbf9f0324925",
+      "size": 13187,
+      "type": "file"
+    },
+    {
+      "path": ".opencode/commands/comet.md",
+      "hash": "34c806f507e594df579ad908c44c7cec11d18fad727cd9e8bdcaef3d2e9a10dd",
+      "size": 1372,
+      "type": "file"
+    },
+    {
+      "path": ".opencode/commands/opsx-apply.md",
+      "hash": "67b0da48a07db31ef50e8be761d954a0a275075cbffd507c51662f4e11218af2",
+      "size": 7044,
+      "type": "file"
+    },
+    {
+      "path": ".opencode/commands/opsx-archive.md",
+      "hash": "a7eff39bac6fb3994f96aad4267a187c446c41873f3f6cf03fb2aead2258a6fb",
+      "size": 10661,
+      "type": "file"
+    },
+    {
+      "path": ".opencode/commands/opsx-bulk-archive.md",
+      "hash": "5cb14c40e5b774ba72594bcb60ccbfa73bf836148d1ff0d264ab13c6e197cab2",
+      "size": 15809,
+      "type": "file"
+    },
+    {
+      "path": ".opencode/commands/opsx-continue.md",
+      "hash": "419d233e1e01bfed66c29919adaefbef115b40e0625ea81f60459acb76b68d31",
+      "size": 6192,
+      "type": "file"
+    },
+    {
+      "path": ".opencode/commands/opsx-explore.md",
+      "hash": "4ad64338c480d289330e1bcfe13a58ac3f676b1b5ff6c6d644caf3990726a91a",
+      "size": 7868,
+      "type": "file"
+    },
+    {
+      "path": ".opencode/commands/opsx-ff.md",
+      "hash": "c37bc6563c0ac475de0e9030920048528448aca47af5b6c3355996a31c781096",
+      "size": 7381,
+      "type": "file"
+    },
+    {
+      "path": ".opencode/commands/opsx-new.md",
+      "hash": "98a71dd20c8572e3dd31e5fce7d6be6c137e1316225b7961914ce32a2a48ef7a",
+      "size": 3154,
+      "type": "file"
+    },
+    {
+      "path": ".opencode/commands/opsx-onboard.md",
+      "hash": "38beb2ad16864a7a594d42c68a5422df6c8e0f8563c793a102be05326079874f",
+      "size": 15182,
+      "type": "file"
+    },
+    {
+      "path": ".opencode/commands/opsx-propose.md",
+      "hash": "3f14b989b16dddce02f45ebabdcc34fd621593c6cd40bb80def78db5f30afdda",
+      "size": 7704,
+      "type": "file"
+    },
+    {
+      "path": ".opencode/commands/opsx-sync.md",
+      "hash": "909029cc010e00e62148cb33c9af42e0d0950232cacbe634b4a836153c7d325b",
+      "size": 9375,
+      "type": "file"
+    },
+    {
+      "path": ".opencode/commands/opsx-verify.md",
+      "hash": "a34e1e7cc79ff28905adbde21034b12abe9f411adbc6fa26a776abf89635f68f",
+      "size": 7223,
+      "type": "file"
+    },
+    {
+      "path": ".opencode/opencode.jsonc",
+      "hash": "89cf8ec00e5cfe33d1055e7ec2eddbdd24cd560c18c1759904424154581c75d4",
+      "size": 107,
+      "type": "file"
+    },
+    {
+      "path": ".opencode/rules/comet-workflow-guard.md",
+      "hash": "d670067cd1c1573b4c655de3ec553252f20126d3dba3d187a78717c2c87cb3c8",
+      "size": 2196,
+      "type": "file"
+    },
+    {
+      "path": ".opencode/skills/comet-any/SKILL.md",
+      "hash": "49d907f2813e5912159022d0c58d5db9c43843f70f655b527cd4026cea924245",
+      "size": 7986,
+      "type": "file"
+    },
+    {
+      "path": ".opencode/skills/comet-any/reference/authored-zone-example.md",
+      "hash": "440f1e4ef3f9ba2404110ed0a220492b0c902e5f4ed8a0346be69eedaf2e6a08",
+      "size": 8362,
+      "type": "file"
+    },
+    {
+      "path": ".opencode/skills/comet-any/reference/authoring-subagents.md",
+      "hash": "6fbbee8ceb9c3fd7844e9d9f9336f8cbc1e3d79b7f318120498d23eb35512b11",
+      "size": 6534,
+      "type": "file"
+    },
+    {
+      "path": ".opencode/skills/comet-any/reference/bundle-authoring.md",
+      "hash": "5c3199221e608b20f70e4ebc06c44b1a82b848af3740c069aa1c8a29ee77e500",
+      "size": 6432,
+      "type": "file"
+    },
+    {
+      "path": ".opencode/skills/comet-any/reference/eval-provider.md",
+      "hash": "5998c9588c18dc52413f73a7b2ed50d28081e682f2a28b4ba44018c448d61e5b",
+      "size": 3218,
+      "type": "file"
+    },
+    {
+      "path": ".opencode/skills/comet-any/reference/subagents/pause-points-author.md",
+      "hash": "543a34062573b5e6f8c47e37650cb450cf81edde4c618ef346f4fc079a076f75",
+      "size": 4515,
+      "type": "file"
+    },
+    {
+      "path": ".opencode/skills/comet-any/reference/subagents/reference-author.md",
+      "hash": "6ded3e85ef29003236a78d82bed92100f851e1928857bc7ae29c2258ff7cc733",
+      "size": 3273,
+      "type": "file"
+    },
+    {
+      "path": ".opencode/skills/comet-any/reference/subagents/script-author.md",
+      "hash": "c54904e095445b02ba8ef0e6ca21253aa980193a7feaf7c715b1eea85550b4aa",
+      "size": 3785,
+      "type": "file"
+    },
+    {
+      "path": ".opencode/skills/comet-any/reference/subagents/skill-core-author.md",
+      "hash": "84ef68efec0e7b708f09ce5988575a087b63089b38849ef394c70ed3db66f895",
+      "size": 7302,
+      "type": "file"
+    },
+    {
+      "path": ".opencode/skills/comet-any/reference/subagents/skill-reviewer.md",
+      "hash": "9e3fd0743297f1bc8d196ffcdb1704c4bdfc6c08ff14b2a05b7340c6b1c7f013",
+      "size": 6777,
+      "type": "file"
+    },
+    {
+      "path": ".opencode/skills/comet-any/reference/subagents/workflow-entry-author.md",
+      "hash": "cef96c63ec69966719c7a3059abf39a358bd610ba75153b98978ab08fdc4083f",
+      "size": 6427,
+      "type": "file"
+    },
+    {
+      "path": ".opencode/skills/comet-archive/SKILL.md",
+      "hash": "464acf1051c973b2f67cc191ad09fc811f7a9cccb99b62e717790a0f04f018d7",
+      "size": 8657,
+      "type": "file"
+    },
+    {
+      "path": ".opencode/skills/comet-build/SKILL.md",
+      "hash": "26408217808d2522aaeeaa696a449980184b72f5c9c88d319cee0fe903ebe2a9",
+      "size": 22733,
+      "type": "file"
+    },
+    {
+      "path": ".opencode/skills/comet-classic/SKILL.md",
+      "hash": "32e98f0c4a2f0fc786562e4690b9f9288221e3c8877c220a44d5fe26aeb4dd93",
+      "size": 18601,
+      "type": "file"
+    },
+    {
+      "path": ".opencode/skills/comet-design/SKILL.md",
+      "hash": "35d90b3ca56c82e700526777aa6eee5d182c031353974e9a1c5496c2338b413b",
+      "size": 12162,
+      "type": "file"
+    },
+    {
+      "path": ".opencode/skills/comet-hotfix/SKILL.md",
+      "hash": "d55ccf2e5b0718887846089d480ac3d0a7c8df2cbdb40435ba9278f6ca3b5b3a",
+      "size": 12704,
+      "type": "file"
+    },
+    {
+      "path": ".opencode/skills/comet-native/SKILL.md",
+      "hash": "7182d95ab2ee74916fc9d666339f5d40b7027002130546334a77327361bfa87a",
+      "size": 23620,
+      "type": "file"
+    },
+    {
+      "path": ".opencode/skills/comet-native/reference/artifacts.md",
+      "hash": "3342cf0e73212a28408b193cb65fb0e3ea3604eea397ca2d38b3653f8244e079",
+      "size": 14312,
+      "type": "file"
+    },
+    {
+      "path": ".opencode/skills/comet-native/reference/commands.md",
+      "hash": "f54caf112db3203e1b98511c915036e961c7cc5107e18e72a0599516d43244e6",
+      "size": 8938,
+      "type": "file"
+    },
+    {
+      "path": ".opencode/skills/comet-native/reference/recovery.md",
+      "hash": "eeee898d3b8c6a32c1e9bb0ff4179015b28045f169c51c9d396ba7037720b641",
+      "size": 12069,
+      "type": "file"
+    },
+    {
+      "path": ".opencode/skills/comet-native/scripts/comet-native-hook-guard.mjs",
+      "hash": "819de5cb6b2e32e79e6978988b50083a3faf2247683ff09d57d335883752c19d",
+      "size": 145,
+      "type": "file"
+    },
+    {
+      "path": ".opencode/skills/comet-native/scripts/comet-native-runtime.mjs",
+      "hash": "ea4476965f04a81dc1c4d7868c90bae4ca91d98cebabf3d684d5ce0f3441649d",
+      "size": 1145894,
+      "type": "file"
+    },
+    {
+      "path": ".opencode/skills/comet-open/SKILL.md",
+      "hash": "a71fee2f98f9e353f13030ac3d1d134343537ae9b28ed5996145bb6e78eb7db1",
+      "size": 17375,
+      "type": "file"
+    },
+    {
+      "path": ".opencode/skills/comet-tweak/SKILL.md",
+      "hash": "12e5446de3f8c8506a107bd6e4836a2da75e1eda09a3e7e7ab4b4d5ca70ddb22",
+      "size": 13219,
+      "type": "file"
+    },
+    {
+      "path": ".opencode/skills/comet-verify/SKILL.md",
+      "hash": "8cc420a16353d6cb04e0af82c6e28b635c66ed99ed46dee6d15f6427b0efebbc",
+      "size": 13170,
+      "type": "file"
+    },
+    {
+      "path": ".opencode/skills/comet/SKILL.md",
+      "hash": "7a7262b67bc15afcd14d246243db9e6e7713988bbc8be6bee06f6f610b549329",
+      "size": 1343,
+      "type": "file"
+    },
+    {
+      "path": ".opencode/skills/comet/reference/auto-transition.md",
+      "hash": "ceccd13a9b4f591de38d7409890759f3089025f65c27f052afefa950ee26848f",
+      "size": 1286,
+      "type": "file"
+    },
+    {
+      "path": ".opencode/skills/comet/reference/comet-yaml-fields.md",
+      "hash": "77ef2ae795260ebffa35060801ea4a4b88db6bbbfcd7c1d66b1dc57553c6af82",
+      "size": 6967,
+      "type": "file"
+    },
+    {
+      "path": ".opencode/skills/comet/reference/context-recovery.md",
+      "hash": "28b7846948dee6f4617a278f9fa8ee95aa85af842429cbf1200dee933dc6ba97",
+      "size": 2922,
+      "type": "file"
+    },
+    {
+      "path": ".opencode/skills/comet/reference/debug-gate.md",
+      "hash": "d5471ff6de6bee8642a1d0b77d08c771eddd858e3ff6640924c400b65b7f390f",
+      "size": 2375,
+      "type": "file"
+    },
+    {
+      "path": ".opencode/skills/comet/reference/decision-point.md",
+      "hash": "800482c743e2d54877231141edbe31df3011cb9281921e59e739c34eab31b066",
+      "size": 3194,
+      "type": "file"
+    },
+    {
+      "path": ".opencode/skills/comet/reference/dirty-worktree.md",
+      "hash": "27f9666c3c3ae0e2670ab501e7d2a634f22ebea2d74e231727515fe181e1f853",
+      "size": 3286,
+      "type": "file"
+    },
+    {
+      "path": ".opencode/skills/comet/reference/file-structure.md",
+      "hash": "21a9c52cdb3224036b1c6f627246af655be33316d7879d87f64fedbc74fc3de1",
+      "size": 1312,
+      "type": "file"
+    },
+    {
+      "path": ".opencode/skills/comet/reference/intent-frame.md",
+      "hash": "390ba9afeac5242485d0869bd4e30c273aac9caeac3395558a9bd4f84b3f4f4e",
+      "size": 4629,
+      "type": "file"
+    },
+    {
+      "path": ".opencode/skills/comet/reference/scripts.md",
+      "hash": "f810279be3d939761891677ca62d2e4f166e2954ea5889329c481c68aafc6880",
+      "size": 4532,
+      "type": "file"
+    },
+    {
+      "path": ".opencode/skills/comet/reference/subagent-dispatch.md",
+      "hash": "f3d8d580f5ea75d62b2bb77a90a4d7fc8c552a67875835d00207fee463e8e428",
+      "size": 17193,
+      "type": "file"
+    },
+    {
+      "path": ".opencode/skills/comet/runtime/classic/checks.yaml",
+      "hash": "2173d75906e5020dbd71220b6a7b517b2a54edb91463bf0ef499b0107192f58d",
+      "size": 120,
+      "type": "file"
+    },
+    {
+      "path": ".opencode/skills/comet/runtime/classic/guardrails.yaml",
+      "hash": "c962776d74f40af41252f45160d0ab427d06065e09edaf409179bdabce0d3e0e",
+      "size": 236,
+      "type": "file"
+    },
+    {
+      "path": ".opencode/skills/comet/runtime/classic/skill.yaml",
+      "hash": "856d4eb30d803018b37023c04ea4b1faf7ff811513552aadd468d17e88b2c254",
+      "size": 4240,
+      "type": "file"
+    },
+    {
+      "path": ".opencode/skills/comet/scripts/comet-archive.mjs",
+      "hash": "8e671fbcec253885fec485f1e380e21c48d76abbb32825bc0d1889de7c2fd96a",
+      "size": 134,
+      "type": "file"
+    },
+    {
+      "path": ".opencode/skills/comet/scripts/comet-entry-runtime.mjs",
+      "hash": "d9f03607329ec1d58b668d86d5e175b589b401e92d294d68101aaf1afbb7b6c9",
+      "size": 289020,
+      "type": "file"
+    },
+    {
+      "path": ".opencode/skills/comet/scripts/comet-env.mjs",
+      "hash": "ec5ed6dd31451c3b48a4e1e1dc8cd148759288fa778d6180aa6f16ae810de62c",
+      "size": 668,
+      "type": "file"
+    },
+    {
+      "path": ".opencode/skills/comet/scripts/comet-guard.mjs",
+      "hash": "ac07e951389437ef09d758b6138fd967d94230fbaf8c0cf4d4bd41acafb63636",
+      "size": 132,
+      "type": "file"
+    },
+    {
+      "path": ".opencode/skills/comet/scripts/comet-handoff.mjs",
+      "hash": "6ca8d5c2152b68409fbd9dc880c6e7f9a8007f012e154b33d796d0acb3e6a42d",
+      "size": 134,
+      "type": "file"
+    },
+    {
+      "path": ".opencode/skills/comet/scripts/comet-hook-guard.mjs",
+      "hash": "50f617c1da8dec33492e7d01877e3e26b73355d4c43e9d06f8fadebfb658edc7",
+      "size": 137,
+      "type": "file"
+    },
+    {
+      "path": ".opencode/skills/comet/scripts/comet-hook-router.mjs",
+      "hash": "ef8f37e3267c8753bf095c1c95718e425a69102884f6cebefe066acd0d9b3d1b",
+      "size": 386166,
+      "type": "file"
+    },
+    {
+      "path": ".opencode/skills/comet/scripts/comet-intent.mjs",
+      "hash": "762efd0e7329ec6ca1b4b0d7e7eababcd72b7485e89fb65ccabc1e116fa4e8d5",
+      "size": 133,
+      "type": "file"
+    },
+    {
+      "path": ".opencode/skills/comet/scripts/comet-resume-probe.mjs",
+      "hash": "93eb865ce26c91139d00793bc9271df4849e97df61e4417eb5fd40b95e5a7be1",
+      "size": 139,
+      "type": "file"
+    },
+    {
+      "path": ".opencode/skills/comet/scripts/comet-runtime.mjs",
+      "hash": "ca4540a4971d8d11c10d51f7db9f72dc7cadbfd1b2b1c8886d0469d735c0e284",
+      "size": 546708,
+      "type": "file"
+    },
+    {
+      "path": ".opencode/skills/comet/scripts/comet-state.mjs",
+      "hash": "977cb85cff6dc86f7f035b32d7d6f983e29c2da1c9254ddce287c2791ccf30d1",
+      "size": 132,
+      "type": "file"
+    },
+    {
+      "path": ".opencode/skills/comet/scripts/comet-yaml-validate.mjs",
+      "hash": "55414fdd30bc60a2aa881f78ea6520bbdc4782f99b67aea883b062738aee342e",
+      "size": 135,
+      "type": "file"
+    },
+    {
+      "path": ".opencode/skills/openspec-apply-change/SKILL.md",
+      "hash": "72527851e33238ee7ac542f387edfe29e66bec940c2f94663953766bf0139754",
+      "size": 7333,
+      "type": "file"
+    },
+    {
+      "path": ".opencode/skills/openspec-archive-change/SKILL.md",
+      "hash": "4c7b6459aea02ddef3f3a366291270962c77a37a6075e2365c6f4ccc3f93711c",
+      "size": 9959,
+      "type": "file"
+    },
+    {
+      "path": ".opencode/skills/openspec-bulk-archive-change/SKILL.md",
+      "hash": "d0553307ad6e05ddca0990fdf2a085ed3c47eab7ac207e0507748f63a4f98e66",
+      "size": 16057,
+      "type": "file"
+    },
+    {
+      "path": ".opencode/skills/openspec-continue-change/SKILL.md",
+      "hash": "239acfdeb6b178f1072bad98a30bb594991e6b88b917981115ec240abe2d7910",
+      "size": 6400,
+      "type": "file"
+    },
+    {
+      "path": ".opencode/skills/openspec-explore/SKILL.md",
+      "hash": "a53eda380d3eaf55fbe7bee32fcfc441cf3a83e3b6d54772c6e578e69faca08f",
+      "size": 11969,
+      "type": "file"
+    },
+    {
+      "path": ".opencode/skills/openspec-ff-change/SKILL.md",
+      "hash": "b175bced75780b375993933cbefbe6c16d630014e894258d8b5f0da8b86a7f4a",
+      "size": 7682,
+      "type": "file"
+    },
+    {
+      "path": ".opencode/skills/openspec-new-change/SKILL.md",
+      "hash": "52db66fe4acd3823c4ec1943afcf503e9f24eff2dcff3bb189747c08281c31d4",
+      "size": 3479,
+      "type": "file"
+    },
+    {
+      "path": ".opencode/skills/openspec-onboard/SKILL.md",
+      "hash": "895094a9b40c36dbd257f395ff8bc8d57e1ba101d82d1b40e0c65070c08694fd",
+      "size": 15383,
+      "type": "file"
+    },
+    {
+      "path": ".opencode/skills/openspec-propose/SKILL.md",
+      "hash": "178afaf43436a4b9a639fa56f33d4dc809488e63da67f690cb78f58c6381755c",
+      "size": 8045,
+      "type": "file"
+    },
+    {
+      "path": ".opencode/skills/openspec-sync-specs/SKILL.md",
+      "hash": "13be8daaacaee16017d374c91802f2661ac7109d30e25e186499087cb3e18220",
+      "size": 9610,
+      "type": "file"
+    },
+    {
+      "path": ".opencode/skills/openspec-verify-change/SKILL.md",
+      "hash": "8ee85d7a34109a7cfcffd79530a88fb20b6d6e2a90a4fff38c759c30d19007bb",
+      "size": 7442,
+      "type": "file"
+    },
+    {
+      "path": "AGENTS.md",
+      "hash": "004c32849bdad177510fa1dcc58ea9bb20a8344ba02d169aa5040226d960fd82",
+      "size": 13592,
+      "type": "file"
+    },
+    {
+      "path": "CLAUDE.md",
+      "hash": "5d39a2d9525253b95066731f5be5be3a5bb67622252c8da29f09f021bc1c3b71",
+      "size": 1446,
+      "type": "file"
+    },
+    {
+      "path": "LICENSE",
+      "hash": "c765717d23f8011725ef984a59a74405820ba9122227497d0b1c3ed1087df9db",
+      "size": 1069,
+      "type": "file"
+    },
+    {
+      "path": "README.md",
+      "hash": "f9142c9960621151455cd0edf44ca1ba26b5352532ce58c8fcd1dcf1a89ce7c7",
+      "size": 14040,
+      "type": "file"
+    },
+    {
+      "path": "bun.lock",
+      "hash": "efc9f774cfaa00edbdbf460a5a41355f79c6f5aa8b3ac9aa1a861d9aa69f09b3",
+      "size": 11964,
+      "type": "file"
+    },
+    {
+      "path": "docs/CONFIG_GUIDE.md",
+      "hash": "e960e4b2d2c7446b71d762a5549cfe7b1b86f200bd859463032e744b82dd6807",
+      "size": 8981,
+      "type": "file"
+    },
+    {
+      "path": "docs/NOTIFICATION_PLUGINS_ANALYSIS.md",
+      "hash": "93b91ed6067379797fee328841a2ffc4a3903a5f9292468989dc32ec6dd95187",
+      "size": 33671,
+      "type": "file"
+    },
+    {
+      "path": "docs/OPENCODE_PLUGIN_DEV_GUIDE.md",
+      "hash": "00190b91b50054ba8ef465527ba4558228f818e4e78dd329ac58688d2a6be070",
+      "size": 40245,
+      "type": "file"
+    },
+    {
+      "path": "docs/PUBLISH.md",
+      "hash": "6c13ae99995528046ef40a15e43f70264fcefb7d00b15c85ea4de6e0349a3c85",
+      "size": 2117,
+      "type": "file"
+    },
+    {
+      "path": "docs/lark-cli/README.md",
+      "hash": "e87da508110309ec615df7940393340cbcb20cba8ed58f59e7ced223c7c9bf1c",
+      "size": 5357,
+      "type": "file"
+    },
+    {
+      "path": "docs/lark-cli/commands-cheatsheet.md",
+      "hash": "ca8ed2c73d5903077f1c2d20dd576b1365a79fdff3301e72f22b47691355e595",
+      "size": 15778,
+      "type": "file"
+    },
+    {
+      "path": "docs/lark-cli/integration.md",
+      "hash": "2271c8864d99103e18bc747b1b38cf6a28be1e3ef7888cbc59531ef8fe9f74be",
+      "size": 25825,
+      "type": "file"
+    },
+    {
+      "path": "docs/lark-cli/messaging.md",
+      "hash": "f7ed298d03542bba3c9f694258c7e4803013182c68463a3d3fb750ccbe95e540",
+      "size": 17557,
+      "type": "file"
+    },
+    {
+      "path": "docs/lark-cli/overview.md",
+      "hash": "27c085f58f7fed7f347822769048681ac24818f1b2247dc9051274aaa9f71660",
+      "size": 11599,
+      "type": "file"
+    },
+    {
+      "path": "docs/superpowers/plans/2026-07-02-opencode-lark-bridge.md",
+      "hash": "e332be866ae991c39ff8d07e50e1eb9360bde87236888c926dd21226b2512420",
+      "size": 28594,
+      "type": "file"
+    },
+    {
+      "path": "docs/superpowers/plans/2026-07-07-move-config-to-opencode-root.md",
+      "hash": "c7be163695287d25f18608bc9457f432038a1769bb4d39f58d6f6acdab3925c3",
+      "size": 35704,
+      "type": "file"
+    },
+    {
+      "path": "docs/superpowers/plans/2026-07-08-permission-notification-coverage.md",
+      "hash": "c601fa29e7c3e95fedd85ba788880a05b4823a4fbd5767a9396e9f9120f0e077",
+      "size": 25948,
+      "type": "file"
+    },
+    {
+      "path": "docs/superpowers/plans/2026-07-08-task-completion-notification.md",
+      "hash": "080f0a525e0e1a3e7e0da87b34d3a694557408f2bf45d7875b9d57bfdca32053",
+      "size": 17657,
+      "type": "file"
+    },
+    {
+      "path": "docs/superpowers/plans/2026-07-13-global-and-project-install-config.md",
+      "hash": "270343557ebea8c25d9144a264ea1b018b645c5c2ee8c1d14a5896ba1aca1c41",
+      "size": 23114,
+      "type": "file"
+    },
+    {
+      "path": "docs/superpowers/plans/2026-07-14-suppress-completion-until-children-idle.md",
+      "hash": "c2c18eb1b45335cfd91d490166a68631b1b928edc869d1e6ce9f11b4c92b0f2e",
+      "size": 12704,
+      "type": "file"
+    },
+    {
+      "path": "docs/superpowers/plans/2026-07-16-question-notification.md",
+      "hash": "244dfd5ab120ab89838ac7dc5bb5fca0969044332a530ac8d7ba47025fb90e80",
+      "size": 12902,
+      "type": "file"
+    },
+    {
+      "path": "docs/superpowers/plans/2026-07-27-error-notification.md",
+      "hash": "74c9948beceb106955e2477f58d172c964ae33a9c49b07c4dc8164f822a6f255",
+      "size": 15538,
+      "type": "file"
+    },
+    {
+      "path": "docs/superpowers/plans/2026-07-27-multi-question-template.md",
+      "hash": "4e8a648c0fb600b1363ee156512bae8790fc1b93ee9f4f3947f9f1194809eabb",
+      "size": 29096,
+      "type": "file"
+    },
+    {
+      "path": "docs/superpowers/plans/2026-07-28-install-local-config-registration.md",
+      "hash": "163649bf6634a221e099c250301558416e4efe86d4f2fb5ffa1b249e92138d93",
+      "size": 43809,
+      "type": "file"
+    },
+    {
+      "path": "docs/superpowers/plans/2026-07-31-npm-install-full-deployment.md",
+      "hash": "77e0e997ae763b8595777521b33a2de2945f8de0b933deea251459e55ca76493",
+      "size": 39207,
+      "type": "file"
+    },
+    {
+      "path": "docs/superpowers/reports/2026-07-03-fix-plugin-config-path-verify.md",
+      "hash": "f41952e5997d774d423e9b7f239447ac742de46ed3328aaf5374670d41146fce",
+      "size": 2432,
+      "type": "file"
+    },
+    {
+      "path": "docs/superpowers/reports/2026-07-03-opencode-lark-bridge-verify.md",
+      "hash": "94a8b09f690e6fbed0571ac0bb200ab53bed50a0253b8f3ab55702fa086885b8",
+      "size": 4880,
+      "type": "file"
+    },
+    {
+      "path": "docs/superpowers/reports/2026-07-06-fix-plugin-export-format-verify.md",
+      "hash": "2ab276b761c2d6fffe90198ea92431cb84887c068cc526cab2efe83f5fcf9af0",
+      "size": 1677,
+      "type": "file"
+    },
+    {
+      "path": "docs/superpowers/reports/2026-07-07-fix-permission-event-handling-verify.md",
+      "hash": "770e0617b5176ee564ed12c2153faa87c1ef750590f22f7d9064956abeacd36c",
+      "size": 3073,
+      "type": "file"
+    },
+    {
+      "path": "docs/superpowers/reports/2026-07-07-move-config-to-opencode-root-verify.md",
+      "hash": "8590b87b3ee0e194e893157dca002724757b5090593e034bdaa964469b1081f1",
+      "size": 5140,
+      "type": "file"
+    },
+    {
+      "path": "docs/superpowers/reports/2026-07-08-permission-notification-coverage-verify.md",
+      "hash": "c4c76695efead5ba92223c2aaf9d521147955ad9c7604b7766b8090c27e090ef",
+      "size": 4853,
+      "type": "file"
+    },
+    {
+      "path": "docs/superpowers/reports/2026-07-08-task-completion-notification-verify.md",
+      "hash": "4c1c02ae91e74b029a2ce33815b7e4d60a1e3cdc94a04fa04c820162f353c007",
+      "size": 3853,
+      "type": "file"
+    },
+    {
+      "path": "docs/superpowers/reports/2026-07-09-fix-session-idle-notification-verify.md",
+      "hash": "50a6e33f4883e28024630b526b608e86888142e0e2df25c266f91e7616fc4601",
+      "size": 1081,
+      "type": "file"
+    },
+    {
+      "path": "docs/superpowers/reports/2026-07-10-fix-missing-config-startup-crash-verify.md",
+      "hash": "cc657b5de43b8db7bcea86928c66abed48c10556f0a8c2795953d7df7b6d201a",
+      "size": 2376,
+      "type": "file"
+    },
+    {
+      "path": "docs/superpowers/reports/2026-07-13-fix-completion-notification-empty-fields-verify.md",
+      "hash": "f948a7c4ef18337be39b77492a42209f141a522f6e5eb2e1ba4c491a9c1483de",
+      "size": 1043,
+      "type": "file"
+    },
+    {
+      "path": "docs/superpowers/reports/2026-07-13-global-and-project-install-config-verify.md",
+      "hash": "d9dd280f490d5a8aae024db2dfe89dc168967b27e653a4602d18950258ce5231",
+      "size": 3320,
+      "type": "file"
+    },
+    {
+      "path": "docs/superpowers/reports/2026-07-14-fix-completion-content-from-session-cache-verify.md",
+      "hash": "885eeed3936b15ce1b569f77a3c4964af90353d998f810cf481e781c3f99f040",
+      "size": 1572,
+      "type": "file"
+    },
+    {
+      "path": "docs/superpowers/reports/2026-07-14-fix-task-completed-project-unknown-verify.md",
+      "hash": "74919a278bb7bc67fcd2de6160e5edbcb196376db5fc942b917f78e7b56f7da9",
+      "size": 1596,
+      "type": "file"
+    },
+    {
+      "path": "docs/superpowers/reports/2026-07-14-suppress-completion-until-children-idle-verify.md",
+      "hash": "8261c34d2b2c7318df85fcdaad11044e6456b13600f6bc9c5cc8ef6080136535",
+      "size": 2367,
+      "type": "file"
+    },
+    {
+      "path": "docs/superpowers/reports/2026-07-15-fix-permission-tool-name-format-verify.md",
+      "hash": "c1f851790fad46f18d6d84eda202e773da08e63f395c309919bbc4ebea017c29",
+      "size": 678,
+      "type": "file"
+    },
+    {
+      "path": "docs/superpowers/reports/2026-07-15-fix-session-completion-notification-verify.md",
+      "hash": "3c8a3a3314e24c82d478e6974d29f779049beb1d5e0f8aa08d6681979e48979d",
+      "size": 2054,
+      "type": "file"
+    },
+    {
+      "path": "docs/superpowers/reports/2026-07-16-question-notification-verify.md",
+      "hash": "c1a1421c6fd89b100621d167d087524f28a3e56272e9e4d4ce8bd42b1d028215",
+      "size": 2950,
+      "type": "file"
+    },
+    {
+      "path": "docs/superpowers/reports/2026-07-26-apply-gitignore-verify.md",
+      "hash": "5e94f7d869c60942c25c31bf3433f89442acf5f874b783dbb57a916bfea045c4",
+      "size": 1197,
+      "type": "file"
+    },
+    {
+      "path": "docs/superpowers/reports/2026-07-26-fix-lark-notification-verify.md",
+      "hash": "688759c2ec710b0c43b2a1bd15b8a8d70c003ef89cd7e299daf5d90531e3870d",
+      "size": 1947,
+      "type": "file"
+    },
+    {
+      "path": "docs/superpowers/reports/2026-07-27-error-notification-verify.md",
+      "hash": "34a2117fc7db6f69606412053f5d7115bbf5d36fe9b71948adf57d18c4277353",
+      "size": 5448,
+      "type": "file"
+    },
+    {
+      "path": "docs/superpowers/reports/2026-07-27-multi-question-template-verify.md",
+      "hash": "19e3dd3d9302b302faf644cf908f2ba8ef06ce0d1f0e4fbcde0092119babface",
+      "size": 1785,
+      "type": "file"
+    },
+    {
+      "path": "docs/superpowers/reports/2026-07-29-fix-local-install-plugin-path-verify.md",
+      "hash": "9868d965e8c15f5db16005be0c38da033b976fb0c7011e8f2a15a0e9889ec45f",
+      "size": 4194,
+      "type": "file"
+    },
+    {
+      "path": "docs/superpowers/reports/2026-07-29-fix-plugin-default-export-verify.md",
+      "hash": "bc11045804264f5fd09d9c7f3812ac001728913cad8e425b40fc5af7c65a0b34",
+      "size": 4520,
+      "type": "file"
+    },
+    {
+      "path": "docs/superpowers/reports/2026-07-29-fix-plugin-path-and-notification-format-verify.md",
+      "hash": "74eff7a0b218a1615d1dc322628b42e5df2a0336e56be12e05682805b5c6cd5b",
+      "size": 1504,
+      "type": "file"
+    },
+    {
+      "path": "docs/superpowers/reports/2026-07-29-install-local-config-registration-verify.md",
+      "hash": "cf9d31f7f808626dc3a8018a6bb2421437ac1880183f3dcee427d898c15b3d98",
+      "size": 6658,
+      "type": "file"
+    },
+    {
+      "path": "docs/superpowers/reports/2026-07-30-debug-plugin-discovery-verify.md",
+      "hash": "4ee640fc22b480b7128556a6517968ac24bbcb740e2fa48a40529595aebe98ba",
+      "size": 1110,
+      "type": "file"
+    },
+    {
+      "path": "docs/superpowers/reports/2026-07-31-npm-install-full-deployment-verify.md",
+      "hash": "8855fe6b37fa2f3cc63e93afd1f4c25fd7d5ab5af8e0b4ee07a16042f9f41be7",
+      "size": 6563,
+      "type": "file"
+    },
+    {
+      "path": "docs/superpowers/reports/2026-08-01-fix-test-install-verify-verify.md",
+      "hash": "9bbf1a4dea4ec9abbb66ffae9da9ad2317dd5bafcd3c1a08c23d82987d6a2b15",
+      "size": 1816,
+      "type": "file"
+    },
+    {
+      "path": "docs/superpowers/specs/2026-07-02-opencode-lark-bridge-design.md",
+      "hash": "e56964a3637d749747a42447529693115f77ef7ba8213c6df3572cb39b4bf41d",
+      "size": 5468,
+      "type": "file"
+    },
+    {
+      "path": "docs/superpowers/specs/2026-07-07-move-config-to-opencode-root-design.md",
+      "hash": "d8e0422bfe87b56a7cbd0fab4f4e0237b9bae14ffd1321183b071fd2d48dcfbf",
+      "size": 3192,
+      "type": "file"
+    },
+    {
+      "path": "docs/superpowers/specs/2026-07-08-permission-notification-coverage-design.md",
+      "hash": "142fe26e5744dc91ab0befff5ac1eaf30554c21c9c55817abef40630191ef599",
+      "size": 3416,
+      "type": "file"
+    },
+    {
+      "path": "docs/superpowers/specs/2026-07-08-task-completion-notification-design.md",
+      "hash": "da9486e64fb5e1218e0c1401fd76d451c98edc0b9cacd7fd0deddd6d2c8b9e4b",
+      "size": 3222,
+      "type": "file"
+    },
+    {
+      "path": "docs/superpowers/specs/2026-07-13-global-and-project-install-config-design.md",
+      "hash": "f073fcfb3e637969bd4e33d235ddab4dfc0f93ceacc8ee4cd1fc684d4cb060f5",
+      "size": 4948,
+      "type": "file"
+    },
+    {
+      "path": "docs/superpowers/specs/2026-07-14-suppress-completion-until-children-idle-design.md",
+      "hash": "52070c4b9b0f36b7b3afc5d69341eff71ff1b9779ee8372ed10cf1c0cdd3ba5d",
+      "size": 5247,
+      "type": "file"
+    },
+    {
+      "path": "docs/superpowers/specs/2026-07-16-question-notification-design.md",
+      "hash": "30cff72b0ac3684f6e76ec114afd65ac1a3ec9521591e55d7eb58f4b914dc20a",
+      "size": 8515,
+      "type": "file"
+    },
+    {
+      "path": "docs/superpowers/specs/2026-07-27-error-notification-design.md",
+      "hash": "93b5d842e6bb39d6be97f58a04e79793f05cfbce5674e52502f74ea8645eabbc",
+      "size": 9285,
+      "type": "file"
+    },
+    {
+      "path": "docs/superpowers/specs/2026-07-27-multi-question-template-design.md",
+      "hash": "8504c7bc701cfc9938abbdb2b2de8bcd2bbb475ae30d207c0a3905514fff5bfc",
+      "size": 13879,
+      "type": "file"
+    },
+    {
+      "path": "docs/superpowers/specs/2026-07-28-install-local-config-registration-design.md",
+      "hash": "4a95e0f8f4da59e608a672666064a2843d2f8cac1954924307f7486903b88367",
+      "size": 8289,
+      "type": "file"
+    },
+    {
+      "path": "docs/superpowers/specs/2026-07-31-npm-install-full-deployment-design.md",
+      "hash": "85309cf30f3c06beb00d2c3498a1034cbd6ea644cb5aa283507896ce86c2fea3",
+      "size": 7535,
+      "type": "file"
+    },
+    {
+      "path": "docs/template-guide.md",
+      "hash": "bc4abe810b27a8e4930a5740470069ba908faff9fe5a80238ca6a0e78e640f32",
+      "size": 7768,
+      "type": "file"
+    },
+    {
+      "path": "mise.toml",
+      "hash": "2c19744c8203ba84ae19e7822d224d6c85673981a441cfc87c1923b8210c6633",
+      "size": 37,
+      "type": "file"
+    },
+    {
+      "path": "opencode-lark-bridge-0.1.0.tgz",
+      "hash": "f4ddb91706e61870a88625101d9928bb032063734ecea2473ce2969706e78740",
+      "size": 26371,
+      "type": "file"
+    },
+    {
+      "path": "opencode-lark-bridge.config.example.jsonc",
+      "hash": "ad7747e5b6775e5fb5cea792f3afa4873e52e82c9bb33548b2a7640680ba73d6",
+      "size": 4003,
+      "type": "file"
+    },
+    {
+      "path": "openspec/changes/archive/2026-07-26-apply-gitignore/.comet.yaml",
+      "hash": "f4b9220985a38b18ecc389ff27b86ff878a2e47e05b836265c3e644d0f7bb086",
+      "size": 719,
+      "type": "file"
+    },
+    {
+      "path": "openspec/changes/archive/2026-07-26-apply-gitignore/.comet/artifacts.json",
+      "hash": "037a4b10e37357c1873b8e48fa68b2aad5736a73948335b7935038ce3bb5f684",
+      "size": 284,
+      "type": "file"
+    },
+    {
+      "path": "openspec/changes/archive/2026-07-26-apply-gitignore/.comet/checkpoint.json",
+      "hash": "d5054b473bf1a9f837e4a660aff8c50b197f6215ba8f5c26821217553b5148de",
+      "size": 253,
+      "type": "file"
+    },
+    {
+      "path": "openspec/changes/archive/2026-07-26-apply-gitignore/.comet/run-state.json",
+      "hash": "db84b552a15a5f57660b137967f01991342186c3f3f8e017b4c7d43b5b93fb95",
+      "size": 549,
+      "type": "file"
+    },
+    {
+      "path": "openspec/changes/archive/2026-07-26-apply-gitignore/.comet/skill-snapshots/9bd4ffab011ae18aef91dc0db336ffc12d454b513229178c15b8b75d50930ba1/package.json",
+      "hash": "44cfc9cee00c3ddcd065d241d6e0f017f26cbaafd82b2915b67309291a90d268",
+      "size": 7851,
+      "type": "file"
+    },
+    {
+      "path": "openspec/changes/archive/2026-07-26-apply-gitignore/.comet/skill-snapshots/9bd4ffab011ae18aef91dc0db336ffc12d454b513229178c15b8b75d50930ba1/sha256",
+      "hash": "0472daf14db10eede85a433b44e3edb64aeac278179db2bf7fadf60d23c8baad",
+      "size": 65,
+      "type": "file"
+    },
+    {
+      "path": "openspec/changes/archive/2026-07-26-apply-gitignore/.comet/state-events.jsonl",
+      "hash": "1f99d0eca6c3c04a9d602bb304ba2a8e0da21c3a427b89fcbe4e7e09189db22f",
+      "size": 8091,
+      "type": "file"
+    },
+    {
+      "path": "openspec/changes/archive/2026-07-26-apply-gitignore/.comet/trajectory.jsonl",
+      "hash": "b9eca6aadd8bfe9b1888f6c3e78f693f061df71efc291c0cede77232afa586f5",
+      "size": 2175,
+      "type": "file"
+    },
+    {
+      "path": "openspec/changes/archive/2026-07-26-apply-gitignore/design.md",
+      "hash": "5e741f7fffe8eeedc96fd5bc7ba2a1bd8b23f07ba52466485690dfcbc27fa63c",
+      "size": 736,
+      "type": "file"
+    },
+    {
+      "path": "openspec/changes/archive/2026-07-26-apply-gitignore/proposal.md",
+      "hash": "d498c7b079447d7b2109b1e66e561eeabb63b22292e99ef1e98210f7d2fcb0a8",
+      "size": 964,
+      "type": "file"
+    },
+    {
+      "path": "openspec/changes/archive/2026-07-26-apply-gitignore/tasks.md",
+      "hash": "2b760b3fae4d7742b0db93518e570ea84a82ddea2372fa80b5f6007a9f881f0d",
+      "size": 311,
+      "type": "file"
+    },
+    {
+      "path": "openspec/changes/archive/2026-07-26-fix-lark-notification/.comet.yaml",
+      "hash": "da1cb2ca019026b6414c35a0ddf6c17d38e55ae6af769bb108f8358725623178",
+      "size": 757,
+      "type": "file"
+    },
+    {
+      "path": "openspec/changes/archive/2026-07-26-fix-lark-notification/.comet/artifacts.json",
+      "hash": "3a09897fc399ec0d08c89dd635774beb90a654e6e1011111f17131c7f1245f7b",
+      "size": 308,
+      "type": "file"
+    },
+    {
+      "path": "openspec/changes/archive/2026-07-26-fix-lark-notification/.comet/checkpoint.json",
+      "hash": "8faa745dfa4714a72e7d64daf8a0ad21a5b4347aace0a8c499c3f1b201071bab",
+      "size": 253,
+      "type": "file"
+    },
+    {
+      "path": "openspec/changes/archive/2026-07-26-fix-lark-notification/.comet/run-state.json",
+      "hash": "ff3836238621c9cbc8af8dd1043ae212b39d1f7c21c33073e729a0d8c17464f8",
+      "size": 549,
+      "type": "file"
+    },
+    {
+      "path": "openspec/changes/archive/2026-07-26-fix-lark-notification/.comet/skill-snapshots/9bd4ffab011ae18aef91dc0db336ffc12d454b513229178c15b8b75d50930ba1/package.json",
+      "hash": "44cfc9cee00c3ddcd065d241d6e0f017f26cbaafd82b2915b67309291a90d268",
+      "size": 7851,
+      "type": "file"
+    },
+    {
+      "path": "openspec/changes/archive/2026-07-26-fix-lark-notification/.comet/skill-snapshots/9bd4ffab011ae18aef91dc0db336ffc12d454b513229178c15b8b75d50930ba1/sha256",
+      "hash": "0472daf14db10eede85a433b44e3edb64aeac278179db2bf7fadf60d23c8baad",
+      "size": 65,
+      "type": "file"
+    },
+    {
+      "path": "openspec/changes/archive/2026-07-26-fix-lark-notification/.comet/state-events.jsonl",
+      "hash": "677274c210d2d98cbe03649f756c33d62623ad570c91ea3649244f42ea155bce",
+      "size": 8477,
+      "type": "file"
+    },
+    {
+      "path": "openspec/changes/archive/2026-07-26-fix-lark-notification/.comet/trajectory.jsonl",
+      "hash": "2dbf9a86ed5986c3a11b0e203c345e0a70783693b7b3b8f7059f6b79413a3ce3",
+      "size": 2187,
+      "type": "file"
+    },
+    {
+      "path": "openspec/changes/archive/2026-07-26-fix-lark-notification/.openspec.yaml",
+      "hash": "b47c76ffc72f324b3fb564eccb7cfee036d1f3a5424641dff2e67a7e0e74e2f5",
+      "size": 40,
+      "type": "file"
+    },
+    {
+      "path": "openspec/changes/archive/2026-07-26-fix-lark-notification/design.md",
+      "hash": "4dd5c2d88f33213f055e797dc02de9f5d0f5f9c8f9bd175f00da73f23ce142c0",
+      "size": 2176,
+      "type": "file"
+    },
+    {
+      "path": "openspec/changes/archive/2026-07-26-fix-lark-notification/proposal.md",
+      "hash": "4532f0efad11c0ac3b7032dc5ed198d22497204a508c3060e84a5758f3fd5511",
+      "size": 1182,
+      "type": "file"
+    },
+    {
+      "path": "openspec/changes/archive/2026-07-26-fix-lark-notification/tasks.md",
+      "hash": "bd244e8a60e7b2860e7906fe76e4ced6595594b86c256d420b16a36a99e994ee",
+      "size": 1930,
+      "type": "file"
+    },
+    {
+      "path": "openspec/changes/archive/2026-07-27-error-notification/.comet.yaml",
+      "hash": "bd720b79c707797179348d5f797a547e237d215cead79e4decbe512c6c46f052",
+      "size": 1010,
+      "type": "file"
+    },
+    {
+      "path": "openspec/changes/archive/2026-07-27-error-notification/.comet/artifacts.json",
+      "hash": "aaa1a5a9391773d03ac63cd9d7bd071db4a42ffe87dedb5984ecb7920a8e6478",
+      "size": 578,
+      "type": "file"
+    },
+    {
+      "path": "openspec/changes/archive/2026-07-27-error-notification/.comet/checkpoint.json",
+      "hash": "5aa7fec1766ad698ef6ac244ec28ec123b0ce2836d3a7516616b261d609a6719",
+      "size": 317,
+      "type": "file"
+    },
+    {
+      "path": "openspec/changes/archive/2026-07-27-error-notification/.comet/context.md",
+      "hash": "f27a905c6c6c760461b77bf72443374ba9c352d7a5ee39e623f9dee5ef150230",
+      "size": 6156,
+      "type": "file"
+    },
+    {
+      "path": "openspec/changes/archive/2026-07-27-error-notification/.comet/handoff/spec-context.json",
+      "hash": "2fd709a6be50688956c3d752f3b5bfeb4d800ac49894d542c330a32c4fa5ff38",
+      "size": 1015,
+      "type": "file"
+    },
+    {
+      "path": "openspec/changes/archive/2026-07-27-error-notification/.comet/handoff/spec-context.md",
+      "hash": "f27a905c6c6c760461b77bf72443374ba9c352d7a5ee39e623f9dee5ef150230",
+      "size": 6156,
+      "type": "file"
+    },
+    {
+      "path": "openspec/changes/archive/2026-07-27-error-notification/.comet/run-state.json",
+      "hash": "3de822457d8a27cf0f77da0b37a31a4451b848df6cc2bcf240d099ee857c5371",
+      "size": 550,
+      "type": "file"
+    },
+    {
+      "path": "openspec/changes/archive/2026-07-27-error-notification/.comet/skill-snapshots/9bd4ffab011ae18aef91dc0db336ffc12d454b513229178c15b8b75d50930ba1/package.json",
+      "hash": "44cfc9cee00c3ddcd065d241d6e0f017f26cbaafd82b2915b67309291a90d268",
+      "size": 7851,
+      "type": "file"
+    },
+    {
+      "path": "openspec/changes/archive/2026-07-27-error-notification/.comet/skill-snapshots/9bd4ffab011ae18aef91dc0db336ffc12d454b513229178c15b8b75d50930ba1/sha256",
+      "hash": "0472daf14db10eede85a433b44e3edb64aeac278179db2bf7fadf60d23c8baad",
+      "size": 65,
+      "type": "file"
+    },
+    {
+      "path": "openspec/changes/archive/2026-07-27-error-notification/.comet/state-events.jsonl",
+      "hash": "4877c01e31abf24a7a850d641926fe5657568292ef85d3d6ce5aeeed1b7c1122",
+      "size": 12148,
+      "type": "file"
+    },
+    {
+      "path": "openspec/changes/archive/2026-07-27-error-notification/.comet/trajectory.jsonl",
+      "hash": "5d745c6080942ccf7374927b3758dd0db7066b02bc422c69f63d4a42e9fc5715",
+      "size": 3776,
+      "type": "file"
+    },
+    {
+      "path": "openspec/changes/archive/2026-07-27-error-notification/.openspec.yaml",
+      "hash": "0db77a840c2a2356d82ebc1671bdddcc1cf7e075820f3837796105c53dfb739a",
+      "size": 40,
+      "type": "file"
+    },
+    {
+      "path": "openspec/changes/archive/2026-07-27-error-notification/design.md",
+      "hash": "5e504f307961e564084f6d0a6e71093b488b8a0a0e7b52b796d5073edfb5b890",
+      "size": 6412,
+      "type": "file"
+    },
+    {
+      "path": "openspec/changes/archive/2026-07-27-error-notification/proposal.md",
+      "hash": "706affc0194c74ff39d62eb4e8eeb49503fa5a226e1a3d41bfc5c9de1571bdaa",
+      "size": 2353,
+      "type": "file"
+    },
+    {
+      "path": "openspec/changes/archive/2026-07-27-error-notification/specs/error-notification/spec.md",
+      "hash": "3e56de1994b7f9c91a38af321322d491b69804d24746bedc88b14cee8e9c876d",
+      "size": 4719,
+      "type": "file"
+    },
+    {
+      "path": "openspec/changes/archive/2026-07-27-error-notification/tasks.md",
+      "hash": "ce12cb9d869a1cacf8ac062b3d42e8e032fdb71685b1567dd181a5f5c35c68ef",
+      "size": 2932,
+      "type": "file"
+    },
+    {
+      "path": "openspec/changes/archive/2026-07-27-multi-question-template-support/.comet.yaml",
+      "hash": "7ebb36881f4dda8dc8c75888adedbd3edfc6d05c8bbf2ff0500ddf95054770aa",
+      "size": 1049,
+      "type": "file"
+    },
+    {
+      "path": "openspec/changes/archive/2026-07-27-multi-question-template-support/.comet/artifacts.json",
+      "hash": "7b1d3b3e67b44490eeb645f73cb2fd620fd48b1400de27f67b23aa465fb552c5",
+      "size": 682,
+      "type": "file"
+    },
+    {
+      "path": "openspec/changes/archive/2026-07-27-multi-question-template-support/.comet/checkpoint.json",
+      "hash": "c856038c92f65c4bf04b2428a43360534f6f6f8bd84ba71e78e19ec16e5a7195",
+      "size": 316,
+      "type": "file"
+    },
+    {
+      "path": "openspec/changes/archive/2026-07-27-multi-question-template-support/.comet/context.md",
+      "hash": "1086c344d12ca0318c23b20d53553b4f3f7da2c8cb0432f0cd14b1e6ff901149",
+      "size": 6813,
+      "type": "file"
+    },
+    {
+      "path": "openspec/changes/archive/2026-07-27-multi-question-template-support/.comet/handoff/spec-context.json",
+      "hash": "2aae300eec7beb73b00a73aa7493e94a95f32d25479536d6fe0da9cd83d331ed",
+      "size": 1093,
+      "type": "file"
+    },
+    {
+      "path": "openspec/changes/archive/2026-07-27-multi-question-template-support/.comet/handoff/spec-context.md",
+      "hash": "1086c344d12ca0318c23b20d53553b4f3f7da2c8cb0432f0cd14b1e6ff901149",
+      "size": 6813,
+      "type": "file"
+    },
+    {
+      "path": "openspec/changes/archive/2026-07-27-multi-question-template-support/.comet/run-state.json",
+      "hash": "3fc3c537b38869e1f252c86cb1153feeec6470a747373dbb064ac76c63a1b05a",
+      "size": 549,
+      "type": "file"
+    },
+    {
+      "path": "openspec/changes/archive/2026-07-27-multi-question-template-support/.comet/skill-snapshots/9bd4ffab011ae18aef91dc0db336ffc12d454b513229178c15b8b75d50930ba1/package.json",
+      "hash": "44cfc9cee00c3ddcd065d241d6e0f017f26cbaafd82b2915b67309291a90d268",
+      "size": 7851,
+      "type": "file"
+    },
+    {
+      "path": "openspec/changes/archive/2026-07-27-multi-question-template-support/.comet/skill-snapshots/9bd4ffab011ae18aef91dc0db336ffc12d454b513229178c15b8b75d50930ba1/sha256",
+      "hash": "0472daf14db10eede85a433b44e3edb64aeac278179db2bf7fadf60d23c8baad",
+      "size": 65,
+      "type": "file"
+    },
+    {
+      "path": "openspec/changes/archive/2026-07-27-multi-question-template-support/.comet/state-events.jsonl",
+      "hash": "750a6d3be4901d777b414be1aad9de06dad1372c8cd80abc057af333d4552ac8",
+      "size": 10310,
+      "type": "file"
+    },
+    {
+      "path": "openspec/changes/archive/2026-07-27-multi-question-template-support/.comet/trajectory.jsonl",
+      "hash": "9f1ff7ae17f0fdd7779cda254d8a166fb72add59d3d8169f4d54ab8f1c421f0c",
+      "size": 3436,
+      "type": "file"
+    },
+    {
+      "path": "openspec/changes/archive/2026-07-27-multi-question-template-support/.openspec.yaml",
+      "hash": "0db77a840c2a2356d82ebc1671bdddcc1cf7e075820f3837796105c53dfb739a",
+      "size": 40,
+      "type": "file"
+    },
+    {
+      "path": "openspec/changes/archive/2026-07-27-multi-question-template-support/design.md",
+      "hash": "f724a22dd72dee84dc074dd616f456e3c9fa9134e5f4ae25fda0c2450ddb2121",
+      "size": 6117,
+      "type": "file"
+    },
+    {
+      "path": "openspec/changes/archive/2026-07-27-multi-question-template-support/proposal.md",
+      "hash": "287b0ee3f1472211cbff1a054e4cbf9f74e2a326e3a45028e04bf856f1a0ff2a",
+      "size": 2270,
+      "type": "file"
+    },
+    {
+      "path": "openspec/changes/archive/2026-07-27-multi-question-template-support/specs/question-template-configuration/spec.md",
+      "hash": "2e5dbf9379d84320f5dc781f8c8532b0e0bdeb57fd688405f0f7eb111b45ab41",
+      "size": 5273,
+      "type": "file"
+    },
+    {
+      "path": "openspec/changes/archive/2026-07-27-multi-question-template-support/tasks.md",
+      "hash": "e5d5fe80e59d5e28a4dda7f02f6da72e23909e60e0aafd7806f2496389a0531d",
+      "size": 2470,
+      "type": "file"
+    },
+    {
+      "path": "openspec/changes/archive/2026-07-27-template-guide-documentation/.comet.yaml",
+      "hash": "2019fc8dfc47ed20a10b78105a8b6aaada49d002f4b1fe4555755b10a8735ac4",
+      "size": 678,
+      "type": "file"
+    },
+    {
+      "path": "openspec/changes/archive/2026-07-27-template-guide-documentation/.comet/artifacts.json",
+      "hash": "f907abd94012dcc228c849f98e7048002ea467daf8a3a3027cd1a282be8849f5",
+      "size": 336,
+      "type": "file"
+    },
+    {
+      "path": "openspec/changes/archive/2026-07-27-template-guide-documentation/.comet/checkpoint.json",
+      "hash": "8eb8dd107ee631194706c470e3c896594405a64480247bd203fb94fefa703d1c",
+      "size": 253,
+      "type": "file"
+    },
+    {
+      "path": "openspec/changes/archive/2026-07-27-template-guide-documentation/.comet/run-state.json",
+      "hash": "2022359b1812a191edecb8967028f063a55178f78a0a275f1ceede34f2838919",
+      "size": 549,
+      "type": "file"
+    },
+    {
+      "path": "openspec/changes/archive/2026-07-27-template-guide-documentation/.comet/skill-snapshots/9bd4ffab011ae18aef91dc0db336ffc12d454b513229178c15b8b75d50930ba1/package.json",
+      "hash": "44cfc9cee00c3ddcd065d241d6e0f017f26cbaafd82b2915b67309291a90d268",
+      "size": 7851,
+      "type": "file"
+    },
+    {
+      "path": "openspec/changes/archive/2026-07-27-template-guide-documentation/.comet/skill-snapshots/9bd4ffab011ae18aef91dc0db336ffc12d454b513229178c15b8b75d50930ba1/sha256",
+      "hash": "0472daf14db10eede85a433b44e3edb64aeac278179db2bf7fadf60d23c8baad",
+      "size": 65,
+      "type": "file"
+    },
+    {
+      "path": "openspec/changes/archive/2026-07-27-template-guide-documentation/.comet/state-events.jsonl",
+      "hash": "ae0019c2f4e12b7d405dbae0e4a4491d66f2e14f5b48c5b2238d94f7eb13f9a1",
+      "size": 6397,
+      "type": "file"
+    },
+    {
+      "path": "openspec/changes/archive/2026-07-27-template-guide-documentation/.comet/trajectory.jsonl",
+      "hash": "1747484e9ba6a60157e1dd663e8366549d782f426783fcf490238dae9d019075",
+      "size": 2164,
+      "type": "file"
+    },
+    {
+      "path": "openspec/changes/archive/2026-07-27-template-guide-documentation/.openspec.yaml",
+      "hash": "0db77a840c2a2356d82ebc1671bdddcc1cf7e075820f3837796105c53dfb739a",
+      "size": 40,
+      "type": "file"
+    },
+    {
+      "path": "openspec/changes/archive/2026-07-27-template-guide-documentation/design.md",
+      "hash": "ce3c4bad0d45f3f2702025b66f567432d580eebd325474c5a6faa2d5a950045c",
+      "size": 1359,
+      "type": "file"
+    },
+    {
+      "path": "openspec/changes/archive/2026-07-27-template-guide-documentation/proposal.md",
+      "hash": "b07e52f985ce5c24a50d1298e03fc25bae5b13bb95c4d55bea1eaf2f213dc8f6",
+      "size": 766,
+      "type": "file"
+    },
+    {
+      "path": "openspec/changes/archive/2026-07-27-template-guide-documentation/tasks.md",
+      "hash": "d2ae8df5061859a9e43da7292626859d9dee02461181789d643d23c4a4c533ca",
+      "size": 420,
+      "type": "file"
+    },
+    {
+      "path": "openspec/changes/archive/2026-07-29-fix-local-install-plugin-path/.comet.yaml",
+      "hash": "3212b343a4227ad28f6d10d3fd3d45fe66ebf39a1cdf20fb3a3b3df668c30ed6",
+      "size": 783,
+      "type": "file"
+    },
+    {
+      "path": "openspec/changes/archive/2026-07-29-fix-local-install-plugin-path/.comet/artifacts.json",
+      "hash": "903f60b1efda6794f8bef69cd666f0f15e31465b859f2113bd25690ca0a1476e",
+      "size": 340,
+      "type": "file"
+    },
+    {
+      "path": "openspec/changes/archive/2026-07-29-fix-local-install-plugin-path/.comet/checkpoint.json",
+      "hash": "69d006ef9841e9709eb07618e78be9c5ea83ed759d3d00728fd24348e35a61e1",
+      "size": 253,
+      "type": "file"
+    },
+    {
+      "path": "openspec/changes/archive/2026-07-29-fix-local-install-plugin-path/.comet/run-state.json",
+      "hash": "dc95543e46d582831ccb9e08c6bfa8ea9188836a3f14a4ca08945549d6791a00",
+      "size": 549,
+      "type": "file"
+    },
+    {
+      "path": "openspec/changes/archive/2026-07-29-fix-local-install-plugin-path/.comet/skill-snapshots/9bd4ffab011ae18aef91dc0db336ffc12d454b513229178c15b8b75d50930ba1/package.json",
+      "hash": "44cfc9cee00c3ddcd065d241d6e0f017f26cbaafd82b2915b67309291a90d268",
+      "size": 7851,
+      "type": "file"
+    },
+    {
+      "path": "openspec/changes/archive/2026-07-29-fix-local-install-plugin-path/.comet/skill-snapshots/9bd4ffab011ae18aef91dc0db336ffc12d454b513229178c15b8b75d50930ba1/sha256",
+      "hash": "0472daf14db10eede85a433b44e3edb64aeac278179db2bf7fadf60d23c8baad",
+      "size": 65,
+      "type": "file"
+    },
+    {
+      "path": "openspec/changes/archive/2026-07-29-fix-local-install-plugin-path/.comet/state-events.jsonl",
+      "hash": "e1a52d92295495e750f64583ec079879dc10e2db3b94af42b0a7e96767ca728e",
+      "size": 8749,
+      "type": "file"
+    },
+    {
+      "path": "openspec/changes/archive/2026-07-29-fix-local-install-plugin-path/.comet/trajectory.jsonl",
+      "hash": "490e5e57bc6551253270e3d220acfc8d903b319181dd9c3cd5955d02dc43d4ed",
+      "size": 2394,
+      "type": "file"
+    },
+    {
+      "path": "openspec/changes/archive/2026-07-29-fix-local-install-plugin-path/.openspec.yaml",
+      "hash": "2976103ed6b60190e61a51c305fd25386db116adc384fffd02652f6b68266be6",
+      "size": 40,
+      "type": "file"
+    },
+    {
+      "path": "openspec/changes/archive/2026-07-29-fix-local-install-plugin-path/design.md",
+      "hash": "18337ec318e867b01a4ad31ab9a273778456597c2200d1d9cf29daa9ead7b2b1",
+      "size": 1385,
+      "type": "file"
+    },
+    {
+      "path": "openspec/changes/archive/2026-07-29-fix-local-install-plugin-path/proposal.md",
+      "hash": "3036e4f92eda5b9da7b560e791e20caf77c4d834d53e82e163b8e703d4651bc5",
+      "size": 1668,
+      "type": "file"
+    },
+    {
+      "path": "openspec/changes/archive/2026-07-29-fix-local-install-plugin-path/tasks.md",
+      "hash": "d280c8597b917bc2063275600649f4ed19d7e829d33f8cd0f9e28f622535a609",
+      "size": 448,
+      "type": "file"
+    },
+    {
+      "path": "openspec/changes/archive/2026-07-29-fix-plugin-path-and-notification-format/.comet.yaml",
+      "hash": "0b95773537faff3bc0c1c959f80c41af918fe8aba8be578535ed5d8ad7084bf5",
+      "size": 792,
+      "type": "file"
+    },
+    {
+      "path": "openspec/changes/archive/2026-07-29-fix-plugin-path-and-notification-format/.comet/artifacts.json",
+      "hash": "f4d227569daae7f87eafd845d4260b73a5d42568a5790561089d7550f4cc9355",
+      "size": 380,
+      "type": "file"
+    },
+    {
+      "path": "openspec/changes/archive/2026-07-29-fix-plugin-path-and-notification-format/.comet/checkpoint.json",
+      "hash": "4cb22f4e37d21c6ea979c54602d477b785885aae348852428ba415b24d0ed68f",
+      "size": 253,
+      "type": "file"
+    },
+    {
+      "path": "openspec/changes/archive/2026-07-29-fix-plugin-path-and-notification-format/.comet/run-state.json",
+      "hash": "3d2aacd290a5565696d0a06db27b9706ac6993b61ab1553563de83628cde03c8",
+      "size": 549,
+      "type": "file"
+    },
+    {
+      "path": "openspec/changes/archive/2026-07-29-fix-plugin-path-and-notification-format/.comet/skill-snapshots/9bd4ffab011ae18aef91dc0db336ffc12d454b513229178c15b8b75d50930ba1/package.json",
+      "hash": "44cfc9cee00c3ddcd065d241d6e0f017f26cbaafd82b2915b67309291a90d268",
+      "size": 7851,
+      "type": "file"
+    },
+    {
+      "path": "openspec/changes/archive/2026-07-29-fix-plugin-path-and-notification-format/.comet/skill-snapshots/9bd4ffab011ae18aef91dc0db336ffc12d454b513229178c15b8b75d50930ba1/sha256",
+      "hash": "0472daf14db10eede85a433b44e3edb64aeac278179db2bf7fadf60d23c8baad",
+      "size": 65,
+      "type": "file"
+    },
+    {
+      "path": "openspec/changes/archive/2026-07-29-fix-plugin-path-and-notification-format/.comet/state-events.jsonl",
+      "hash": "bc5e9227f3f8175a3bc1f5e89eb3bd2485f4a2d5b5c67b1d4f33c158d323dcb7",
+      "size": 8849,
+      "type": "file"
+    },
+    {
+      "path": "openspec/changes/archive/2026-07-29-fix-plugin-path-and-notification-format/.comet/trajectory.jsonl",
+      "hash": "a8b12b9af880afaaaf6e90957aa3142b89a766cb28e3691973166bfc907831ba",
+      "size": 2206,
+      "type": "file"
+    },
+    {
+      "path": "openspec/changes/archive/2026-07-29-fix-plugin-path-and-notification-format/.openspec.yaml",
+      "hash": "2976103ed6b60190e61a51c305fd25386db116adc384fffd02652f6b68266be6",
+      "size": 40,
+      "type": "file"
+    },
+    {
+      "path": "openspec/changes/archive/2026-07-29-fix-plugin-path-and-notification-format/design.md",
+      "hash": "869a65f2250cfb136b5f317e9ae3e3b7ac2171ecb666adcce0bf1ef2e31b31a6",
+      "size": 3178,
+      "type": "file"
+    },
+    {
+      "path": "openspec/changes/archive/2026-07-29-fix-plugin-path-and-notification-format/proposal.md",
+      "hash": "8cd0dfc6c152d488535c5d89210d784f6241754be4a991f2f166dd221783f5ff",
+      "size": 1744,
+      "type": "file"
+    },
+    {
+      "path": "openspec/changes/archive/2026-07-29-fix-plugin-path-and-notification-format/tasks.md",
+      "hash": "ee165f2184293df983b0fa6baf32c8ad969eb0a42451f49dfd2052ca6e3812cb",
+      "size": 1659,
+      "type": "file"
+    },
+    {
+      "path": "openspec/changes/archive/2026-07-29-install-local-config-registration/.comet.yaml",
+      "hash": "b74050658b01a56afb794a42b95eed54e03af1be6119756a819386f123370fe9",
+      "size": 1102,
+      "type": "file"
+    },
+    {
+      "path": "openspec/changes/archive/2026-07-29-install-local-config-registration/.comet/artifacts.json",
+      "hash": "eea5a0335ed70e1b141afd9937edec8f1ba800d1359810ff887ee3e53b3c4428",
+      "size": 692,
+      "type": "file"
+    },
+    {
+      "path": "openspec/changes/archive/2026-07-29-install-local-config-registration/.comet/checkpoint.json",
+      "hash": "bd6f8876fea6caca718fbb1d82ae7285202c1673554c5e3c1c645dd93c9bf4f9",
+      "size": 316,
+      "type": "file"
+    },
+    {
+      "path": "openspec/changes/archive/2026-07-29-install-local-config-registration/.comet/context.md",
+      "hash": "046828bf93b5c4a785bc6978d7b7a49a3d57a9c0b575a116ae212d9de8fb4f2b",
+      "size": 5563,
+      "type": "file"
+    },
+    {
+      "path": "openspec/changes/archive/2026-07-29-install-local-config-registration/.comet/handoff/brainstorm-summary.md",
+      "hash": "a5762ba3cced6e09748e3bcdc489745810e6af8013f77026011d23693a577b13",
+      "size": 1893,
+      "type": "file"
+    },
+    {
+      "path": "openspec/changes/archive/2026-07-29-install-local-config-registration/.comet/handoff/spec-context.json",
+      "hash": "3ca55359648dbef9d7cded21e4f1c8c4b47c4b8e9b647eaedaba6b9a2c8dcb7e",
+      "size": 1099,
+      "type": "file"
+    },
+    {
+      "path": "openspec/changes/archive/2026-07-29-install-local-config-registration/.comet/handoff/spec-context.md",
+      "hash": "046828bf93b5c4a785bc6978d7b7a49a3d57a9c0b575a116ae212d9de8fb4f2b",
+      "size": 5563,
+      "type": "file"
+    },
+    {
+      "path": "openspec/changes/archive/2026-07-29-install-local-config-registration/.comet/run-state.json",
+      "hash": "f0e4b622e0ec081a4d0cc63f59607782b40a2b248393bcfecf13d06d8dd3fff7",
+      "size": 549,
+      "type": "file"
+    },
+    {
+      "path": "openspec/changes/archive/2026-07-29-install-local-config-registration/.comet/skill-snapshots/9bd4ffab011ae18aef91dc0db336ffc12d454b513229178c15b8b75d50930ba1/package.json",
+      "hash": "44cfc9cee00c3ddcd065d241d6e0f017f26cbaafd82b2915b67309291a90d268",
+      "size": 7851,
+      "type": "file"
+    },
+    {
+      "path": "openspec/changes/archive/2026-07-29-install-local-config-registration/.comet/skill-snapshots/9bd4ffab011ae18aef91dc0db336ffc12d454b513229178c15b8b75d50930ba1/sha256",
+      "hash": "0472daf14db10eede85a433b44e3edb64aeac278179db2bf7fadf60d23c8baad",
+      "size": 65,
+      "type": "file"
+    },
+    {
+      "path": "openspec/changes/archive/2026-07-29-install-local-config-registration/.comet/state-events.jsonl",
+      "hash": "eebc52b61b7625c61b85e325a212ef83a977e9b4758ae6024e04662efbe5b6d7",
+      "size": 13020,
+      "type": "file"
+    },
+    {
+      "path": "openspec/changes/archive/2026-07-29-install-local-config-registration/.comet/subagent-progress.md",
+      "hash": "834d36de6573c8e3efa05df7c5ac28798ea7eb5c044f4eb344ede40f42070827",
+      "size": 492,
+      "type": "file"
+    },
+    {
+      "path": "openspec/changes/archive/2026-07-29-install-local-config-registration/.comet/trajectory.jsonl",
+      "hash": "a9ef471163e2968c92b560b20d304c1438e9b3ad98b0892041684033ea40fe3f",
+      "size": 3045,
+      "type": "file"
+    },
+    {
+      "path": "openspec/changes/archive/2026-07-29-install-local-config-registration/.openspec.yaml",
+      "hash": "9357bfc976ad88909257cc067cd03eee328d124cbd6609be68c31ca286bfee50",
+      "size": 40,
+      "type": "file"
+    },
+    {
+      "path": "openspec/changes/archive/2026-07-29-install-local-config-registration/design.md",
+      "hash": "84acc655dc295a570fbeda4b6544365df4a6cafb555f271509961d494bdf5d74",
+      "size": 4270,
+      "type": "file"
+    },
+    {
+      "path": "openspec/changes/archive/2026-07-29-install-local-config-registration/proposal.md",
+      "hash": "f17e77a0a0e26cb4f826d5841907b58a938548b87301e4f47b23bb40877b2ccc",
+      "size": 1948,
+      "type": "file"
+    },
+    {
+      "path": "openspec/changes/archive/2026-07-29-install-local-config-registration/specs/install-config-registration/spec.md",
+      "hash": "23a204ccf1d4ad16b043c40640653f226855ebd22771ef0b42a4180301319fe7",
+      "size": 3994,
+      "type": "file"
+    },
+    {
+      "path": "openspec/changes/archive/2026-07-29-install-local-config-registration/tasks.md",
+      "hash": "ed54612f8e8accf76ffb2f6d3ce0171846e43000c550949fa8ef8c6f0cbc1cdc",
+      "size": 2211,
+      "type": "file"
+    },
+    {
+      "path": "openspec/changes/archive/2026-07-30-debug-plugin-discovery/.comet.yaml",
+      "hash": "c6a8b93a76784f19702290490b2e870253d99b59de416aae9a93708fe39b9501",
+      "size": 777,
+      "type": "file"
+    },
+    {
+      "path": "openspec/changes/archive/2026-07-30-debug-plugin-discovery/.comet/artifacts.json",
+      "hash": "898e504178ce4dc921263dff08bcedb6fdc99e741c615906ea77bada8216d8f1",
+      "size": 312,
+      "type": "file"
+    },
+    {
+      "path": "openspec/changes/archive/2026-07-30-debug-plugin-discovery/.comet/checkpoint.json",
+      "hash": "420697e194ee3c865235c493c2b7c15409409a1bcf12d02d482ac5f88fd3d79b",
+      "size": 253,
+      "type": "file"
+    },
+    {
+      "path": "openspec/changes/archive/2026-07-30-debug-plugin-discovery/.comet/run-state.json",
+      "hash": "dae9d9a85575196bc317beeae9768f6043a6cb88e65757752c80210c3486e12a",
+      "size": 549,
+      "type": "file"
+    },
+    {
+      "path": "openspec/changes/archive/2026-07-30-debug-plugin-discovery/.comet/skill-snapshots/9bd4ffab011ae18aef91dc0db336ffc12d454b513229178c15b8b75d50930ba1/package.json",
+      "hash": "44cfc9cee00c3ddcd065d241d6e0f017f26cbaafd82b2915b67309291a90d268",
+      "size": 7851,
+      "type": "file"
+    },
+    {
+      "path": "openspec/changes/archive/2026-07-30-debug-plugin-discovery/.comet/skill-snapshots/9bd4ffab011ae18aef91dc0db336ffc12d454b513229178c15b8b75d50930ba1/sha256",
+      "hash": "0472daf14db10eede85a433b44e3edb64aeac278179db2bf7fadf60d23c8baad",
+      "size": 65,
+      "type": "file"
+    },
+    {
+      "path": "openspec/changes/archive/2026-07-30-debug-plugin-discovery/.comet/state-events.jsonl",
+      "hash": "16a10255e0f122483f6ec06afad7b2da5b5fc881aadc0851b93cf8e928d9b720",
+      "size": 8621,
+      "type": "file"
+    },
+    {
+      "path": "openspec/changes/archive/2026-07-30-debug-plugin-discovery/.comet/trajectory.jsonl",
+      "hash": "27850c1603b175e36ee2f48f4cf6c97378f2a4aa021661b292c6acad05b10a20",
+      "size": 2466,
+      "type": "file"
+    },
+    {
+      "path": "openspec/changes/archive/2026-07-30-debug-plugin-discovery/.openspec.yaml",
+      "hash": "46743547a51210977cb12349f84df7de7b6953bdec3acbd5659b8a9759c2198b",
+      "size": 57,
+      "type": "file"
+    },
+    {
+      "path": "openspec/changes/archive/2026-07-30-debug-plugin-discovery/design.md",
+      "hash": "06493669909db44f3ef91ccb6199623280d2a8539c77625125fa17597c5caa44",
+      "size": 1784,
+      "type": "file"
+    },
+    {
+      "path": "openspec/changes/archive/2026-07-30-debug-plugin-discovery/proposal.md",
+      "hash": "f13f43b2e0503a399013d7d6fd577f3c5cfd7a5a9daff2af4cc89bbfec23b74d",
+      "size": 941,
+      "type": "file"
+    },
+    {
+      "path": "openspec/changes/archive/2026-07-30-debug-plugin-discovery/tasks.md",
+      "hash": "7179528ffdb1ebe59ab9fe901d0959ceeca127bffeaeb602f5999197cfbfb97f",
+      "size": 993,
+      "type": "file"
+    },
+    {
+      "path": "openspec/changes/archive/2026-07-30-fix-plugin-default-export/.comet.yaml",
+      "hash": "211418200205ef7dddc9cadf3822d0aa511458410eb8e604e6493f0212a851cc",
+      "size": 779,
+      "type": "file"
+    },
+    {
+      "path": "openspec/changes/archive/2026-07-30-fix-plugin-default-export/.comet/artifacts.json",
+      "hash": "0e254409d87f61f451de1f4c83a3807c5b1d5cded2655e0917c9f0954b3bbc57",
+      "size": 324,
+      "type": "file"
+    },
+    {
+      "path": "openspec/changes/archive/2026-07-30-fix-plugin-default-export/.comet/checkpoint.json",
+      "hash": "029e171f59d619e25b4f9cb6cbbe87d40fe803aef27f577830c754aa7f0793a7",
+      "size": 253,
+      "type": "file"
+    },
+    {
+      "path": "openspec/changes/archive/2026-07-30-fix-plugin-default-export/.comet/run-state.json",
+      "hash": "d0ba688ab6a4d26ae0f15011eaf5f02efbbecd0fcefd8c3b17cadb4a67bbd56b",
+      "size": 549,
+      "type": "file"
+    },
+    {
+      "path": "openspec/changes/archive/2026-07-30-fix-plugin-default-export/.comet/skill-snapshots/9bd4ffab011ae18aef91dc0db336ffc12d454b513229178c15b8b75d50930ba1/package.json",
+      "hash": "44cfc9cee00c3ddcd065d241d6e0f017f26cbaafd82b2915b67309291a90d268",
+      "size": 7851,
+      "type": "file"
+    },
+    {
+      "path": "openspec/changes/archive/2026-07-30-fix-plugin-default-export/.comet/skill-snapshots/9bd4ffab011ae18aef91dc0db336ffc12d454b513229178c15b8b75d50930ba1/sha256",
+      "hash": "0472daf14db10eede85a433b44e3edb64aeac278179db2bf7fadf60d23c8baad",
+      "size": 65,
+      "type": "file"
+    },
+    {
+      "path": "openspec/changes/archive/2026-07-30-fix-plugin-default-export/.comet/state-events.jsonl",
+      "hash": "c366baa20afa486e27f8820518560b24f12521b949b5f0e833792349b4412956",
+      "size": 8705,
+      "type": "file"
+    },
+    {
+      "path": "openspec/changes/archive/2026-07-30-fix-plugin-default-export/.comet/trajectory.jsonl",
+      "hash": "ae498351496437a3384d38f04b0b06a5b949a6b83fe8618b9073d316b46f8c4f",
+      "size": 2386,
+      "type": "file"
+    },
+    {
+      "path": "openspec/changes/archive/2026-07-30-fix-plugin-default-export/.openspec.yaml",
+      "hash": "2976103ed6b60190e61a51c305fd25386db116adc384fffd02652f6b68266be6",
+      "size": 40,
+      "type": "file"
+    },
+    {
+      "path": "openspec/changes/archive/2026-07-30-fix-plugin-default-export/design.md",
+      "hash": "bf8ae337d05b17a4e5c0a81186081d5aa86dacf4e3dbeee33f1694b31149e207",
+      "size": 1405,
+      "type": "file"
+    },
+    {
+      "path": "openspec/changes/archive/2026-07-30-fix-plugin-default-export/proposal.md",
+      "hash": "7fcf9f24db8fc5122aa340d9c5e92eee44b0f27c9e3c9eb2f0b022bb204dea08",
+      "size": 1478,
+      "type": "file"
+    },
+    {
+      "path": "openspec/changes/archive/2026-07-30-fix-plugin-default-export/tasks.md",
+      "hash": "4744112f95c08668cca11cc996a8fcff489596bc8aabe88ece9331e18fd60405",
+      "size": 376,
+      "type": "file"
+    },
+    {
+      "path": "openspec/changes/archive/2026-07-31-npm-install-full-deployment/.comet.yaml",
+      "hash": "b28c34ce910308f4dc14bea580fbd353308cd4d57e104ef1784c89163bcbb1eb",
+      "size": 903,
+      "type": "file"
+    },
+    {
+      "path": "openspec/changes/archive/2026-07-31-npm-install-full-deployment/.comet/artifacts.json",
+      "hash": "7501f36252b25e674911dd16165a7d02906bfb195b3d2c73ade8b7052ff9b199",
+      "size": 650,
+      "type": "file"
+    },
+    {
+      "path": "openspec/changes/archive/2026-07-31-npm-install-full-deployment/.comet/checkpoint.json",
+      "hash": "2a0673da51d91f19b29b8319c0411e523f21b353a7d0c8f02bf02a47c793612f",
+      "size": 316,
+      "type": "file"
+    },
+    {
+      "path": "openspec/changes/archive/2026-07-31-npm-install-full-deployment/.comet/context.md",
+      "hash": "e36856a596acc122e6902d82d4a98d83042bae84630c319b49ad24ce6c3b42c6",
+      "size": 11659,
+      "type": "file"
+    },
+    {
+      "path": "openspec/changes/archive/2026-07-31-npm-install-full-deployment/.comet/handoff/brainstorm-summary.md",
+      "hash": "d393e248752ff29a7df29ff82c060b911e82a8c3200f719675e07d0bf6c8fda5",
+      "size": 2357,
+      "type": "file"
+    },
+    {
+      "path": "openspec/changes/archive/2026-07-31-npm-install-full-deployment/.comet/handoff/spec-context.json",
+      "hash": "64f66c032e2373b6395da61cc780ff7d725554522338bdad30324103ffd8e1f2",
+      "size": 1501,
+      "type": "file"
+    },
+    {
+      "path": "openspec/changes/archive/2026-07-31-npm-install-full-deployment/.comet/handoff/spec-context.md",
+      "hash": "e36856a596acc122e6902d82d4a98d83042bae84630c319b49ad24ce6c3b42c6",
+      "size": 11659,
+      "type": "file"
+    },
+    {
+      "path": "openspec/changes/archive/2026-07-31-npm-install-full-deployment/.comet/run-state.json",
+      "hash": "bd7afe7a3914421f249fc649502735d778852e78365a65b7e42c7823e9fb85e7",
+      "size": 549,
+      "type": "file"
+    },
+    {
+      "path": "openspec/changes/archive/2026-07-31-npm-install-full-deployment/.comet/skill-snapshots/9bd4ffab011ae18aef91dc0db336ffc12d454b513229178c15b8b75d50930ba1/package.json",
+      "hash": "44cfc9cee00c3ddcd065d241d6e0f017f26cbaafd82b2915b67309291a90d268",
+      "size": 7851,
+      "type": "file"
+    },
+    {
+      "path": "openspec/changes/archive/2026-07-31-npm-install-full-deployment/.comet/skill-snapshots/9bd4ffab011ae18aef91dc0db336ffc12d454b513229178c15b8b75d50930ba1/sha256",
+      "hash": "0472daf14db10eede85a433b44e3edb64aeac278179db2bf7fadf60d23c8baad",
+      "size": 65,
+      "type": "file"
+    },
+    {
+      "path": "openspec/changes/archive/2026-07-31-npm-install-full-deployment/.comet/state-events.jsonl",
+      "hash": "6315a868b460095bf008817021eb9defeb3f847b4e91ca59e2b7566839296ba4",
+      "size": 12580,
+      "type": "file"
+    },
+    {
+      "path": "openspec/changes/archive/2026-07-31-npm-install-full-deployment/.comet/trajectory.jsonl",
+      "hash": "58d321aedc93324a1db28add2e0eef4b98ea7f728dd2a3dc4016656d7aac2120",
+      "size": 3440,
+      "type": "file"
+    },
+    {
+      "path": "openspec/changes/archive/2026-07-31-npm-install-full-deployment/.openspec.yaml",
+      "hash": "aaab1efc65ce3b56fbc0b9d37a5389df7eca4b46c3ac11725c22c732283a16d9",
+      "size": 40,
+      "type": "file"
+    },
+    {
+      "path": "openspec/changes/archive/2026-07-31-npm-install-full-deployment/design.md",
+      "hash": "25db0ce43758fd3896165718348ab2ba0e3cde06ea460c1b13d5fe65f4a2867f",
+      "size": 6629,
+      "type": "file"
+    },
+    {
+      "path": "openspec/changes/archive/2026-07-31-npm-install-full-deployment/proposal.md",
+      "hash": "fa3239bcd90d0698ce67c3f272cb8dfe172dd20106440ad5e52b31cec955c299",
+      "size": 3438,
+      "type": "file"
+    },
+    {
+      "path": "openspec/changes/archive/2026-07-31-npm-install-full-deployment/specs/install-config-registration/spec.md",
+      "hash": "7fd9c0b5c2b3fc8c7d049a3d92036876ca5317ba26f1f72780e7d9288d9ba6d1",
+      "size": 1069,
+      "type": "file"
+    },
+    {
+      "path": "openspec/changes/archive/2026-07-31-npm-install-full-deployment/specs/npm-package-install/spec.md",
+      "hash": "989f8995b7586fb963da5c8ac6933809e77a94f2a92b152bf1920e879e1214ef",
+      "size": 5050,
+      "type": "file"
+    },
+    {
+      "path": "openspec/changes/archive/2026-07-31-npm-install-full-deployment/specs/npm-publish-preparation/spec.md",
+      "hash": "a7a491f6412741b1edf1b5c087a287ea18debe1a888da80384886d5d4f06a6ef",
+      "size": 3109,
+      "type": "file"
+    },
+    {
+      "path": "openspec/changes/archive/2026-07-31-npm-install-full-deployment/tasks.md",
+      "hash": "ffa89568459843d0e923fa66dd1776819a45c7a7d1a8acc25925d6af3975e114",
+      "size": 3263,
+      "type": "file"
+    },
+    {
+      "path": "openspec/changes/fix-test-install-verify/.comet.yaml",
+      "hash": "bb50194fda0bb84a3accadfc14c08e78e1f98aaa28f522c022ebe4c1940359c8",
+      "size": 766,
+      "type": "file"
+    },
+    {
+      "path": "openspec/changes/fix-test-install-verify/.comet/artifacts.json",
+      "hash": "cfb833f032b4903dd0dbeae00711c305243a3ff5dcf30bd71da871f544f22df1",
+      "size": 230,
+      "type": "file"
+    },
+    {
+      "path": "openspec/changes/fix-test-install-verify/.comet/checkpoint.json",
+      "hash": "94ef71ef7db18baf30c8f76af3bebfbcee96c65efab6bcece6163335a5151b77",
+      "size": 253,
+      "type": "file"
+    },
+    {
+      "path": "openspec/changes/fix-test-install-verify/.comet/run-state.json",
+      "hash": "f58618256ebeb9b9bc8f08a98df0c5ca41f89e965a2dc591163a5333c11ba529",
+      "size": 560,
+      "type": "file"
+    },
+    {
+      "path": "openspec/changes/fix-test-install-verify/.comet/skill-snapshots/9bd4ffab011ae18aef91dc0db336ffc12d454b513229178c15b8b75d50930ba1/package.json",
+      "hash": "44cfc9cee00c3ddcd065d241d6e0f017f26cbaafd82b2915b67309291a90d268",
+      "size": 7851,
+      "type": "file"
+    },
+    {
+      "path": "openspec/changes/fix-test-install-verify/.comet/skill-snapshots/9bd4ffab011ae18aef91dc0db336ffc12d454b513229178c15b8b75d50930ba1/sha256",
+      "hash": "0472daf14db10eede85a433b44e3edb64aeac278179db2bf7fadf60d23c8baad",
+      "size": 65,
+      "type": "file"
+    },
+    {
+      "path": "openspec/changes/fix-test-install-verify/.comet/state-events.jsonl",
+      "hash": "5662d7be5056af7f50ea28aed24ec472e97e790768ba5e51e848c9a54d720638",
+      "size": 5064,
+      "type": "file"
+    },
+    {
+      "path": "openspec/changes/fix-test-install-verify/.comet/trajectory.jsonl",
+      "hash": "209eac53449ca25686468b94b0568eedc961d0c5339b07b946b0794384bd922a",
+      "size": 1742,
+      "type": "file"
+    },
+    {
+      "path": "openspec/changes/fix-test-install-verify/.openspec.yaml",
+      "hash": "b119b105317d193bebcdb8337e8fd44be5d371b38eb0b054ec607c1c654125e5",
+      "size": 40,
+      "type": "file"
+    },
+    {
+      "path": "openspec/changes/fix-test-install-verify/design.md",
+      "hash": "e1b5de069432e63c6464d2c9a6a079df1d61d5b8a23f8cc0e741a9a456dae4a1",
+      "size": 1431,
+      "type": "file"
+    },
+    {
+      "path": "openspec/changes/fix-test-install-verify/proposal.md",
+      "hash": "41a3e0614ec8d3a13d740c1e9a32939dc4c8dbcb485d8474f2f734d9c0d31cd4",
+      "size": 1991,
+      "type": "file"
+    },
+    {
+      "path": "openspec/changes/fix-test-install-verify/tasks.md",
+      "hash": "42dcc75454da2f5628830be5a190aaa746990b61d12f155eeaba532385ad0f42",
+      "size": 304,
+      "type": "file"
+    },
+    {
+      "path": "openspec/config.yaml",
+      "hash": "7f64d2448e1c83ffa6f2f3398b742fb5f2d4d3ea47b2c540a9076484977026b4",
+      "size": 573,
+      "type": "file"
+    },
+    {
+      "path": "openspec/specs/error-notification/spec.md",
+      "hash": "c9c49b8158ea234507c5185d2f6e11104b2f912b9c7b3956d04c3e85c1f24ab6",
+      "size": 4845,
+      "type": "file"
+    },
+    {
+      "path": "openspec/specs/install-config-registration/spec.md",
+      "hash": "17ea4e360812c9dbf4bcc926b6b6bc5cb42218c6ad8c4d304e78ab5379cad514",
+      "size": 4858,
+      "type": "file"
+    },
+    {
+      "path": "openspec/specs/npm-package-install/spec.md",
+      "hash": "f3d925de2a1ea11d6e32b7411fa1481463eded9921267d10173d983e0f8808a6",
+      "size": 5079,
+      "type": "file"
+    },
+    {
+      "path": "openspec/specs/npm-publish-preparation/spec.md",
+      "hash": "1d5563c7003108318c572afec02c489152ca489c4a087c98be2f0f4fff846e60",
+      "size": 3142,
+      "type": "file"
+    },
+    {
+      "path": "openspec/specs/question-template-configuration/spec.md",
+      "hash": "0a8b98a160a35ce35cc79474bf7def645bf2167ff703fca76ce6cf8edc281a9f",
+      "size": 5424,
+      "type": "file"
+    },
+    {
+      "path": "package.json",
+      "hash": "2ed76b74f0521dc29702c8791e6b0b885e2f5061cb52e61e4679e08f3c22f0b8",
+      "size": 1548,
+      "type": "file"
+    },
+    {
+      "path": "scripts/install-global.sh",
+      "hash": "00da7f0c6d04c8456fd49c92800933b61abfe55b4c94bba6448abe2eda93e272",
+      "size": 1247,
+      "type": "file"
+    },
+    {
+      "path": "scripts/install-local.sh",
+      "hash": "3e8477d3432c7af1dde1ed2ca418d0faf28b1d3c784a021f1ee7b151669488f8",
+      "size": 1296,
+      "type": "file"
+    },
+    {
+      "path": "scripts/lib/config-register.sh",
+      "hash": "7d386f58a38d4696fb25d645c89d0b7a0a9011c2b2f623582230c74ba1196d47",
+      "size": 7018,
+      "type": "file"
+    },
+    {
+      "path": "scripts/test-install.sh",
+      "hash": "60ac8e9e011d1ac1ce6e6db6a13db885c07e3ad207c9d4949d600a68b9161991",
+      "size": 3124,
+      "type": "file"
+    },
+    {
+      "path": "skills-lock.json",
+      "hash": "9418ff9dc572be50735deb4d915ee9534d3fd0e908bddc7379f47ed30794115e",
+      "size": 3573,
+      "type": "file"
+    },
+    {
+      "path": "src/cli.ts",
+      "hash": "c1dffa9416764d4cad56ffaf90745bfe03bc76187c7e3416223394a80d1cd59a",
+      "size": 2404,
+      "type": "file"
+    },
+    {
+      "path": "src/config-register.ts",
+      "hash": "8b17f41bd47bac53ed90397bd80e2e4425c2bdd5c9f456bc42a5d77a300aeca8",
+      "size": 7946,
+      "type": "file"
+    },
+    {
+      "path": "src/config.ts",
+      "hash": "3af5e6208abd72e4ce501aeaf7dea2a1859fda43d8a0a24336df797b9dfd30cf",
+      "size": 1134,
+      "type": "file"
+    },
+    {
+      "path": "src/events/AGENTS.md",
+      "hash": "5d800ddb394f9a4ef6eabc3f480634c9bae4dff09912206859d2383b6fb61a19",
+      "size": 3137,
+      "type": "file"
+    },
+    {
+      "path": "src/events/completion-mapper.ts",
+      "hash": "afbf330b8df65f37e5e3b8d0a33fb9c23358ea4a7dfbf302db2217dfa249fd1a",
+      "size": 688,
+      "type": "file"
+    },
+    {
+      "path": "src/events/error-mapper.ts",
+      "hash": "b030d4f09791950553c0e5e035b20d89976b9d9882e71089fc36a3a5cd3f3583",
+      "size": 1130,
+      "type": "file"
+    },
+    {
+      "path": "src/events/event-handler.ts",
+      "hash": "cd746d768b5ebe6e264f46ba7adc53aba539a984237b51c80b7ec4db6046ba07",
+      "size": 8416,
+      "type": "file"
+    },
+    {
+      "path": "src/events/permission-mapper.ts",
+      "hash": "9c8faf62f90a460ade4bcb13cfab0802e0d78b1e23220142e4c83b3c9678d369",
+      "size": 4604,
+      "type": "file"
+    },
+    {
+      "path": "src/events/question-mapper.ts",
+      "hash": "8a60dae896ba9af7d9c42667bd814f562dd11db4d4d25a91e8f3d3c633f371a6",
+      "size": 7997,
+      "type": "file"
+    },
+    {
+      "path": "src/index.ts",
+      "hash": "0644e4b4e31cee0f59c78f8bed17acd9a71852de7e942e39ba4a75f429e25f46",
+      "size": 6613,
+      "type": "file"
+    },
+    {
+      "path": "src/installer.ts",
+      "hash": "74b5bb69c2973f9a348064d1760e6a56c064f2fd905ebabfee13c01200db7c64",
+      "size": 4650,
+      "type": "file"
+    },
+    {
+      "path": "src/logger.ts",
+      "hash": "5b67fc6af75829fae07374e714ef9abe89c31a56df8331a125323c004134a3eb",
+      "size": 1243,
+      "type": "file"
+    },
+    {
+      "path": "src/notifier/lark-notifier.ts",
+      "hash": "149162bb9a7285d54264eab8cff528efe4f6f40e9dce505fbe5d26e1e7736239",
+      "size": 1073,
+      "type": "file"
+    },
+    {
+      "path": "src/postinstall.ts",
+      "hash": "2880745fd802ac0a8c4d76c444f81159b086ee5da6a3471866a3a5ceb0cd5e02",
+      "size": 3395,
+      "type": "file"
+    },
+    {
+      "path": "src/types.ts",
+      "hash": "0b58cc8f89b396d56a1b9488d465bfc6236aa9ce6c8a5c7c3c446dcbb1452cfe",
+      "size": 899,
+      "type": "file"
+    },
+    {
+      "path": "tests/cli.test.ts",
+      "hash": "aa2180dcb4b72b02d7f1336730b12188cd757cad368e6a7daa0390dce58f6abb",
+      "size": 3470,
+      "type": "file"
+    },
+    {
+      "path": "tests/completion-mapper.test.ts",
+      "hash": "7c12982ac6d74a5693b80a0a7621539c29764004691ff849d754e7de05ba4bab",
+      "size": 1365,
+      "type": "file"
+    },
+    {
+      "path": "tests/config-register.test.ts",
+      "hash": "9b4ccb3e4fe17bb14a79e0efe31601b28134bf0a245d6ee2b00d085044385639",
+      "size": 13320,
+      "type": "file"
+    },
+    {
+      "path": "tests/config.test.ts",
+      "hash": "5dfaedaba315583fc7a2a1d83b1c158713a8ff27acfaf3aec22437872d4355a7",
+      "size": 1432,
+      "type": "file"
+    },
+    {
+      "path": "tests/e2e-event-trigger-prompt.md",
+      "hash": "52cebf98e8794ae0f0836e603c50cca0676e3268bb2431871d782aa38086faf5",
+      "size": 6161,
+      "type": "file"
+    },
+    {
+      "path": "tests/error-mapper.test.ts",
+      "hash": "0b00f0fd4f8165b290c911a0cfaa5569ecfceaf4b32ac1624bb399ed8b492f99",
+      "size": 2610,
+      "type": "file"
+    },
+    {
+      "path": "tests/event-handler.test.ts",
+      "hash": "ac26fcf075abc9559c2c63546b44a01e6251a70076ca4b43b8d9b606c900f013",
+      "size": 14316,
+      "type": "file"
+    },
+    {
+      "path": "tests/fixtures/my-node-app/README.md",
+      "hash": "c3d01125f3501f1aca5f5615a0448961806c32b9713c2ce5277e8e7433ebd674",
+      "size": 727,
+      "type": "file"
+    },
+    {
+      "path": "tests/fixtures/my-node-app/package.json",
+      "hash": "48c0a8c6e8f7d9d78b7c7d4e5e5ea819d993cae59022317cb359dd556baf7d50",
+      "size": 500,
+      "type": "file"
+    },
+    {
+      "path": "tests/index.test.ts",
+      "hash": "b6c64660493b2f48c480374167adb0c5c0cd976b0b1cac52684f684c0461e2ff",
+      "size": 14480,
+      "type": "file"
+    },
+    {
+      "path": "tests/install-local.test.sh",
+      "hash": "e06b3eff050b0c653a79f5295574921b4bf4a912143a13ab93915e1e51bd72ce",
+      "size": 16564,
+      "type": "file"
+    },
+    {
+      "path": "tests/installer.test.ts",
+      "hash": "8292fc3ff5210487e8838605b2b136a9b7062ec01bc9b972d8e8cfadd2588753",
+      "size": 8007,
+      "type": "file"
+    },
+    {
+      "path": "tests/integration.test.ts",
+      "hash": "16a48e15638bfa6bc4d120d0abf4969dd652a370d2230b0d375116b7c5237a90",
+      "size": 1445,
+      "type": "file"
+    },
+    {
+      "path": "tests/lark-notifier.test.ts",
+      "hash": "ba4093014dfc7b26bca585280897622e9ae75cfb5cf8594c4e00b631a1bafef0",
+      "size": 1087,
+      "type": "file"
+    },
+    {
+      "path": "tests/logger.test.ts",
+      "hash": "c1624011a7cbac99e338bf6846abf91510c00ec363ff5b1ba3920872d83f53f7",
+      "size": 1208,
+      "type": "file"
+    },
+    {
+      "path": "tests/permission-mapper.test.ts",
+      "hash": "51545e3e05d1a1ce6bd9e8cdecf4adb550003295fecaaabe7faee8ca04d4f165",
+      "size": 6796,
+      "type": "file"
+    },
+    {
+      "path": "tests/postinstall.test.ts",
+      "hash": "fbbf3d20ec523d7b5ab68ab9a3c912759b4ee0edfae2886d2a83b6327e9306ef",
+      "size": 3036,
+      "type": "file"
+    },
+    {
+      "path": "tests/prompt-for-permission-question-tests.md",
+      "hash": "1093922db78fdc5e16f4f934c216cfdba663e65c9614ac133631ec6e6589adfc",
+      "size": 9054,
+      "type": "file"
+    },
+    {
+      "path": "tests/question-mapper.test.ts",
+      "hash": "0bd3c1007c6dfd04cf6cae5ab3371e073a844173583dd52a46c231a2efc07abb",
+      "size": 21458,
+      "type": "file"
+    },
+    {
+      "path": "tsconfig.json",
+      "hash": "ccdcb593dd6bccbc4bc6ee942c3b6966c6a3ec8051f2a4773b81482c8bd57713",
+      "size": 410,
+      "type": "file"
+    }
+  ],
+  "omitted": [],
+  "omittedCount": 0
+}

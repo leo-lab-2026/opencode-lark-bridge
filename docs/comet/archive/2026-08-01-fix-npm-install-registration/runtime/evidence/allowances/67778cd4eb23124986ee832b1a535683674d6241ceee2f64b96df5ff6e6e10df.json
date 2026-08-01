@@ -1,0 +1,13 @@
+{
+  "schema": "comet.native.partial-allowance.v1",
+  "change": "fix-npm-install-registration",
+  "scopeHash": "7557c913fe39b596b3a65add5aae218a62103d0dfff96f08d9f34f7effbdbfea",
+  "scopeIds": [
+    "scope:1ed0e82ac8ccafafa9e5f0d417fc1d0bb7ccfb51b0740e91ad6ec59061025e6b"
+  ],
+  "reason": "opencode-lark-bridge-0.1.0.tgz 是 npm pack 构建产物被误提交 git（7467db7），本次从 git 移除并加入 .gitignore 属于构建产物卫生清理，与 change 目标无关；用户已确认接受 partial scope",
+  "confirmedSummary": "已实现：config-register.ts 重写（INIT_CWD 项目根定位 + 文本级注册/注销 + 优先级修复）；installer.ts 新增 uninstallPlugin 及自我复制跳过；cli.ts 新增 uninstall [--global]；test-install.sh 增加 opencode.jsonc 验证与 node_modules 泄漏检查；README/PUBLISH 增加 allow-scripts 说明；tgz 构建产物从 git 移除并 ignore。验证：bun test 149 pass，npm run test:install 全流程通过，端到端全部通过",
+  "sourceRevision": 2,
+  "confirmedAt": "2026-08-01T13:51:57.589Z",
+  "allowanceHash": "67778cd4eb23124986ee832b1a535683674d6241ceee2f64b96df5ff6e6e10df"
+}

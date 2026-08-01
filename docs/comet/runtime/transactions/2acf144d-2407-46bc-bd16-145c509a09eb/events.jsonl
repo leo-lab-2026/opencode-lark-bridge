@@ -1,0 +1,8 @@
+{"sequence":1,"timestamp":"2026-08-01T13:53:29.079Z","type":"prepared"}
+{"sequence":2,"timestamp":"2026-08-01T13:53:30.139Z","type":"operation-started","operationId":"spec-1-npm-install-registration"}
+{"sequence":3,"timestamp":"2026-08-01T13:53:30.349Z","type":"operation-completed","operationId":"spec-1-npm-install-registration"}
+{"sequence":4,"timestamp":"2026-08-01T13:53:30.380Z","type":"operation-started","operationId":"archive-change"}
+{"sequence":5,"timestamp":"2026-08-01T13:53:30.887Z","type":"operation-completed","operationId":"archive-change"}
+{"sequence":6,"timestamp":"2026-08-01T13:53:31.190Z","type":"archive-finalization-started"}
+{"sequence":7,"timestamp":"2026-08-01T13:53:31.301Z","type":"archive-finalized"}
+{"sequence":8,"timestamp":"2026-08-01T13:53:31.383Z","type":"commit"}
