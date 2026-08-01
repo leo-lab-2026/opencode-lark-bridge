@@ -1,5 +1,6 @@
 {
   "openspec_proposal": "openspec/changes/fix-test-install-verify/proposal.md",
   "openspec_design": "openspec/changes/fix-test-install-verify/design.md",
-  "openspec_tasks": "openspec/changes/fix-test-install-verify/tasks.md"
+  "openspec_tasks": "openspec/changes/fix-test-install-verify/tasks.md",
+  "archive_directory": "openspec/changes/archive/2026-08-01-fix-test-install-verify"
 }
