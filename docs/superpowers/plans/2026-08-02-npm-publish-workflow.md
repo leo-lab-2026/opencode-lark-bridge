@@ -5,7 +5,7 @@ base-ref: c1a3dadd91e04a8d596b8540d845cab3fd32a45d
 ---
 # npm-publish-workflow Implementation Plan
 
-> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
+> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [x]`) syntax for tracking.
 
 **Goal:** 为 opencode-lark-bridge 建立完善且可执行的 npm 发布工作流，包含三子命令发布脚本（verify/prepare/release）、双方案发布文档（手动 + 自动化 SOP）与认证安全管理。
 
@@ -48,12 +48,12 @@ base-ref: c1a3dadd91e04a8d596b8540d845cab3fd32a45d
 **Interfaces:**
 - Produces: `.npmrc` 文件，内容为 `//registry.npmjs.org/:_authToken=${NPM_TOKEN}`，供 `scripts/publish.sh` 的 `check_auth` 函数和 `npm publish` 使用
 
-- [ ] **Step 1: 确认 .gitignore 不忽略 .npmrc**
+- [x] **Step 1: 确认 .gitignore 不忽略 .npmrc**
 
 运行：`grep -n "npmrc" .gitignore`
 预期：无输出（.gitignore 中无 .npmrc 条目，.npmrc 会被 git 跟踪）
 
-- [ ] **Step 2: 创建 .npmrc 文件**
+- [x] **Step 2: 创建 .npmrc 文件**
 
 写入以下内容（仅占位符，不含明文 token）：
 
@@ -61,17 +61,17 @@ base-ref: c1a3dadd91e04a8d596b8540d845cab3fd32a45d
 //registry.npmjs.org/:_authToken=${NPM_TOKEN}
 ```
 
-- [ ] **Step 3: 验证 .npmrc 不含明文 token**
+- [x] **Step 3: 验证 .npmrc 不含明文 token**
 
 运行：`cat .npmrc`
 预期输出：`//registry.npmjs.org/:_authToken=${NPM_TOKEN}`（必须看到 `${NPM_TOKEN}` 占位符，而非真实 token 值）
 
-- [ ] **Step 4: 验证 npm 识别占位符**
+- [x] **Step 4: 验证 npm 识别占位符**
 
 运行：`NPM_TOKEN=test-placeholder npm config get //registry.npmjs.org/:_authToken`
 预期输出：`test-placeholder`（npm 成功从环境变量替换占位符）
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```bash
 git add .npmrc
@@ -89,7 +89,7 @@ git commit -m "chore: add project-level .npmrc with NPM_TOKEN placeholder"
 - Consumes: Task 1 的 `.npmrc`、现有 `~/.npmrc` 明文 token
 - Produces: 确认认证可用，后续任务的前提条件
 
-- [ ] **Step 1: 设置 NPM_TOKEN 环境变量**
+- [x] **Step 1: 设置 NPM_TOKEN 环境变量**
 
 从 `~/.npmrc` 读取现有 authToken 值（**禁止写入任何文件**），设置为环境变量：
 
@@ -99,17 +99,17 @@ export NPM_TOKEN=$(grep '_authToken' ~/.npmrc | head -1 | cut -d= -f2 | tr -d ' 
 
 > **安全警告**：此命令仅在当前 shell 会话设置环境变量，不写入任何文件。`~/.npmrc` 中的明文 token 不得出现在 git 提交、计划文档或任何持久化存储中。
 
-- [ ] **Step 2: 验证 npm whoami 通过**
+- [x] **Step 2: 验证 npm whoami 通过**
 
 运行：`npm whoami`
 预期输出：`leo-lab-2026`
 
-- [ ] **Step 3: 验证项目级 .npmrc 与 NPM_TOKEN 配合工作**
+- [x] **Step 3: 验证项目级 .npmrc 与 NPM_TOKEN 配合工作**
 
 运行：`npm whoami`（在项目根目录，使用项目级 .npmrc + NPM_TOKEN 环境变量）
 预期输出：`leo-lab-2026`
 
-- [ ] **Step 4: 无需 commit（验证任务）**
+- [x] **Step 4: 无需 commit（验证任务）**
 
 ---
 
@@ -122,7 +122,7 @@ export NPM_TOKEN=$(grep '_authToken' ~/.npmrc | head -1 | cut -d= -f2 | tr -d ' 
 - Consumes: Task 1 的 `.npmrc`、package.json 现有脚本（`build`/`test`/`pack:dry`/`test:install`）
 - Produces: `scripts/publish.sh` 提供 `verify` 子命令和 `--help`，供 Task 4-6 扩展
 
-- [ ] **Step 1: 创建 scripts/publish.sh**
+- [x] **Step 1: 创建 scripts/publish.sh**
 
 写入以下完整内容：
 
@@ -241,31 +241,31 @@ case "${1:-}" in
 esac
 ```
 
-- [ ] **Step 2: 设置可执行权限**
+- [x] **Step 2: 设置可执行权限**
 
 运行：`chmod +x scripts/publish.sh`
 
-- [ ] **Step 3: 语法检查**
+- [x] **Step 3: 语法检查**
 
 运行：`bash -n scripts/publish.sh`
 预期：无输出（语法正确）
 
-- [ ] **Step 4: 验证 --help 输出**
+- [x] **Step 4: 验证 --help 输出**
 
 运行：`bash scripts/publish.sh --help`
 预期：显示用法说明，包含所有子命令（verify/prepare/release/--dry-run/--help）
 
-- [ ] **Step 5: 验证未设置 NPM_TOKEN 时 verify 失败**
+- [x] **Step 5: 验证未设置 NPM_TOKEN 时 verify 失败**
 
 运行：`env -u NPM_TOKEN bash scripts/publish.sh verify`
 预期：输出 `[ERROR] NPM_TOKEN 环境变量未设置` + granular token 创建指引，退出码非零
 
-- [ ] **Step 6: 验证 verify 子命令完整执行**
+- [x] **Step 6: 验证 verify 子命令完整执行**
 
 运行：`NPM_TOKEN=$NPM_TOKEN bash scripts/publish.sh verify`
 预期：依次执行 build -> test -> pack:dry -> test:install，全部通过后输出 `发布前验证通过`
 
-- [ ] **Step 7: Commit**
+- [x] **Step 7: Commit**
 
 ```bash
 git add scripts/publish.sh
@@ -283,7 +283,7 @@ git commit -m "feat: add publish.sh skeleton with verify subcommand"
 - Consumes: Task 3 的 `check_auth`、`run_verify`、`show_help`、`trap cleanup_on_failure ERR`
 - Produces: `prepare --bump <type>` 子命令，执行 verify + `npm version` + tag 创建；`cleanup_on_failure` 在版本写入后失败时回退 package.json 并删除本地 tag
 
-- [ ] **Step 1: 替换 cleanup_on_failure 为完整实现**
+- [x] **Step 1: 替换 cleanup_on_failure 为完整实现**
 
 将 `scripts/publish.sh` 中的 `cleanup_on_failure` 函数（Task 3 创建的空壳）：
 
@@ -318,7 +318,7 @@ cleanup_on_failure() {
 }
 ```
 
-- [ ] **Step 2: 添加 run_prepare 函数**
+- [x] **Step 2: 添加 run_prepare 函数**
 
 在 `run_verify` 函数之后、`cleanup_on_failure` 之前，添加：
 
@@ -351,7 +351,7 @@ run_prepare() {
 }
 ```
 
-- [ ] **Step 3: 添加 prepare 参数路由**
+- [x] **Step 3: 添加 prepare 参数路由**
 
 在 `case "${1:-}" in` 块中，在 `verify)` 分支之后、`--help|-h)` 之前，添加：
 
@@ -386,22 +386,22 @@ run_prepare() {
         ;;
 ```
 
-- [ ] **Step 4: 语法检查**
+- [x] **Step 4: 语法检查**
 
 运行：`bash -n scripts/publish.sh`
 预期：无输出
 
-- [ ] **Step 5: 验证无效 bump type 报错**
+- [x] **Step 5: 验证无效 bump type 报错**
 
 运行：`bash scripts/publish.sh prepare --bump invalid`
 预期：输出 `[ERROR] 无效的版本递增类型: invalid（应为 patch|minor|major）`，退出码非零
 
-- [ ] **Step 6: 验证缺少 --bump 参数报错**
+- [x] **Step 6: 验证缺少 --bump 参数报错**
 
 运行：`bash scripts/publish.sh prepare`
 预期：输出 `[ERROR] prepare 需要 --bump <type> 参数` + 用法说明，退出码非零
 
-- [ ] **Step 7: 验证 prepare 在临时分支上工作（需要 NPM_TOKEN）**
+- [x] **Step 7: 验证 prepare 在临时分支上工作（需要 NPM_TOKEN）**
 
 > 此步骤在临时分支执行，完成后清理，不污染主分支。
 
@@ -418,7 +418,7 @@ NPM_TOKEN=$NPM_TOKEN bash scripts/publish.sh prepare --bump patch
 验证 package.json 已更新：`node -p "require('./package.json').version"`
 验证 tag 已创建：`git tag | grep v0.1.2`（使用实际新版本号）
 
-- [ ] **Step 8: 清理临时分支**
+- [x] **Step 8: 清理临时分支**
 
 ```bash
 git tag -d v<new_version>    # 使用 Step 7 实际生成的版本号
@@ -429,7 +429,7 @@ git checkout -- package.json
 
 验证清理完成：`git status`（working tree clean）、`git tag | grep v<new_version>`（无输出）
 
-- [ ] **Step 9: Commit**
+- [x] **Step 9: Commit**
 
 ```bash
 git add scripts/publish.sh
@@ -447,7 +447,7 @@ git commit -m "feat: add prepare subcommand and failure rollback cleanup to publ
 - Consumes: Task 4 的 `PUBLISH_DONE` 变量、`cleanup_on_failure`（release 的 npm publish 成功后 `PUBLISH_DONE=true` 阻止回滚）
 - Produces: `release` 子命令，执行 `npm publish` + `git push --follow-tags` + `gh release create`
 
-- [ ] **Step 1: 添加 run_release 函数**
+- [x] **Step 1: 添加 run_release 函数**
 
 在 `run_prepare` 函数之后、`cleanup_on_failure` 之前，添加：
 
@@ -479,7 +479,7 @@ run_release() {
 }
 ```
 
-- [ ] **Step 2: 添加 release 参数路由**
+- [x] **Step 2: 添加 release 参数路由**
 
 在 `case "${1:-}" in` 块中，在 `prepare)` 分支之后、`--help|-h)` 之前，添加：
 
@@ -490,24 +490,24 @@ run_release() {
         ;;
 ```
 
-- [ ] **Step 3: 语法检查**
+- [x] **Step 3: 语法检查**
 
 运行：`bash -n scripts/publish.sh`
 预期：无输出
 
-- [ ] **Step 4: 验证 --help 包含 release 说明**
+- [x] **Step 4: 验证 --help 包含 release 说明**
 
 运行：`bash scripts/publish.sh --help`
 预期：输出中包含 `release               npm publish + git push --follow-tags + GitHub Release`
 
-- [ ] **Step 5: 验证 release 路由可达（不实际发布）**
+- [x] **Step 5: 验证 release 路由可达（不实际发布）**
 
 运行：`env -u NPM_TOKEN bash scripts/publish.sh release`
 预期：输出 `[ERROR] NPM_TOKEN 环境变量未设置` + 创建指引，退出码非零（证明路由到达 check_auth）
 
 > release 子命令的完整端到端验证在 Task 10 进行（需要真实发布场景）。
 
-- [ ] **Step 6: Commit**
+- [x] **Step 6: Commit**
 
 ```bash
 git add scripts/publish.sh
@@ -525,7 +525,7 @@ git commit -m "feat: add release subcommand to publish.sh"
 - Consumes: Task 3 的 `check_auth`、`run_verify`
 - Produces: `--dry-run` 模式，执行 verify + 预览包内容与版本号，不发布/不 tag/不推送
 
-- [ ] **Step 1: 添加 run_dry_run 函数**
+- [x] **Step 1: 添加 run_dry_run 函数**
 
 在 `run_release` 函数之后、`cleanup_on_failure` 之前，添加：
 
@@ -547,7 +547,7 @@ run_dry_run() {
 }
 ```
 
-- [ ] **Step 2: 添加 --dry-run 参数路由**
+- [x] **Step 2: 添加 --dry-run 参数路由**
 
 在 `case "${1:-}" in` 块中，在 `release)` 分支之后、`--help|-h)` 之前，添加：
 
@@ -557,12 +557,12 @@ run_dry_run() {
         ;;
 ```
 
-- [ ] **Step 3: 语法检查**
+- [x] **Step 3: 语法检查**
 
 运行：`bash -n scripts/publish.sh`
 预期：无输出
 
-- [ ] **Step 4: 验证 --dry-run 不产生副作用（需要 NPM_TOKEN）**
+- [x] **Step 4: 验证 --dry-run 不产生副作用（需要 NPM_TOKEN）**
 
 运行：`NPM_TOKEN=$NPM_TOKEN bash scripts/publish.sh --dry-run`
 预期：
@@ -572,7 +572,7 @@ run_dry_run() {
 - **不创建 git tag**：`git tag --list 'v*' | tail -5` 无新增
 - **不修改 package.json**：`git diff package.json` 无输出
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```bash
 git add scripts/publish.sh
@@ -590,7 +590,7 @@ git commit -m "feat: add --dry-run mode to publish.sh"
 - Consumes: Task 3-6 的 `scripts/publish.sh` 完整实现
 - Produces: `npm run publish:dry` 和 `npm run publish:auto` 两个 npm 脚本入口
 
-- [ ] **Step 1: 在 package.json scripts 中添加 publish:dry 和 publish:auto**
+- [x] **Step 1: 在 package.json scripts 中添加 publish:dry 和 publish:auto**
 
 在 `package.json` 的 `scripts` 对象中，在 `"test:install"` 之后添加两个新脚本：
 
@@ -610,22 +610,22 @@ git commit -m "feat: add --dry-run mode to publish.sh"
 
 > **说明**：`publish:auto` 调用 `scripts/publish.sh`（无参数），需配合 `--bump <type>` 参数由 agent 在暂停确认后传入。`npm run publish:auto` 不带参数会输出用法说明。
 
-- [ ] **Step 2: 验证 package.json JSON 合法**
+- [x] **Step 2: 验证 package.json JSON 合法**
 
 运行：`node -e "require('./package.json'); console.log('JSON valid')"`
 预期输出：`JSON valid`
 
-- [ ] **Step 3: 验证 npm run publish:dry 可调用**
+- [x] **Step 3: 验证 npm run publish:dry 可调用**
 
 运行：`NPM_TOKEN=$NPM_TOKEN npm run publish:dry`
 预期：与 Task 6 Step 4 相同的输出（verify + 预览包内容）
 
-- [ ] **Step 4: 验证 npm run publish:auto 无参数时输出用法**
+- [x] **Step 4: 验证 npm run publish:auto 无参数时输出用法**
 
 运行：`npm run publish:auto`
 预期：输出 `[ERROR] 未指定命令` + 用法说明，退出码非零
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```bash
 git add package.json
@@ -643,7 +643,7 @@ git commit -m "feat: add publish:dry and publish:auto npm scripts"
 - Consumes: Task 1-7 的完整实现（.npmrc、publish.sh、package.json 脚本）
 - Produces: 双方案发布 SOP 文档，覆盖手动方案、自动化方案、认证管理、版本管理、回滚策略、provenance、npm 官方流程依据
 
-- [ ] **Step 1: 重写 docs/PUBLISH.md**
+- [x] **Step 1: 重写 docs/PUBLISH.md**
 
 用以下完整内容覆盖 `docs/PUBLISH.md`：
 
@@ -665,12 +665,12 @@ git commit -m "feat: add publish:dry and publish:auto npm scripts"
 
 以下检查在两种方案中均需通过（`scripts/publish.sh verify` 自动执行）：
 
-- [ ] `NPM_TOKEN` 环境变量已设置
-- [ ] `npm whoami` 验证认证身份通过
-- [ ] `npm run build` 编译无错误
-- [ ] `bun test` 全部测试通过
-- [ ] `npm run pack:dry` 包内容只含 `files` 声明的文件
-- [ ] `npm run test:install` 本地安装验证通过
+- [x] `NPM_TOKEN` 环境变量已设置
+- [x] `npm whoami` 验证认证身份通过
+- [x] `npm run build` 编译无错误
+- [x] `bun test` 全部测试通过
+- [x] `npm run pack:dry` 包内容只含 `files` 声明的文件
+- [x] `npm run test:install` 本地安装验证通过
 
 ## 手动发布方案
 
@@ -934,7 +934,7 @@ npm provenance（SLSA 供应链来源声明）提供包的构建来源证明，�
 | `--provenance` | 生成供应链来源声明 | [npm provenance](https://docs.npmjs.com/generating-provenance-statements) |
 ````
 
-- [ ] **Step 2: 验证文档章节完整性**
+- [x] **Step 2: 验证文档章节完整性**
 
 对照以下章节清单逐项确认 `docs/PUBLISH.md` 包含：
 1. 概述（双方案并存说明）
@@ -947,7 +947,7 @@ npm provenance（SLSA 供应链来源声明）提供包的构建来源证明，�
 8. 供应链安全 provenance（当前状态/未来路径）
 9. npm 官方流程依据（命令表 + 官方文档链接）
 
-- [ ] **Step 3: Commit**
+- [x] **Step 3: Commit**
 
 ```bash
 git add docs/PUBLISH.md
@@ -965,7 +965,7 @@ git commit -m "docs: rewrite PUBLISH.md with dual-track publish workflow (manual
 - Consumes: Task 8 的 `docs/PUBLISH.md` 双方案文档
 - Produces: README 发布章节增加自动化方案说明与 `publish:dry` 引用
 
-- [ ] **Step 1: 更新 README 发布章节**
+- [x] **Step 1: 更新 README 发布章节**
 
 将 `README.md` 中的：
 
@@ -992,12 +992,12 @@ npm run publish:dry  # 验证 + 预览包内容，不发布
 ```
 ```
 
-- [ ] **Step 2: 验证 README 渲染正确**
+- [x] **Step 2: 验证 README 渲染正确**
 
 运行：`grep -A 10 "## 发布" README.md`
 预期：输出包含 `docs/PUBLISH.md` 链接、手动/自动化方案说明、`publish:dry` 命令
 
-- [ ] **Step 3: Commit**
+- [x] **Step 3: Commit**
 
 ```bash
 git add README.md
@@ -1015,12 +1015,12 @@ git commit -m "docs: update README with dual-track publish workflow reference"
 - Consumes: Task 1-7 的完整实现（.npmrc、publish.sh、package.json 脚本）
 - Produces: 确认 `npm run publish:dry` 端到端正常执行
 
-- [ ] **Step 1: 确认 NPM_TOKEN 已设置**
+- [x] **Step 1: 确认 NPM_TOKEN 已设置**
 
 运行：`echo ${NPM_TOKEN:+set}`
 预期输出：`set`
 
-- [ ] **Step 2: 运行 npm run publish:dry**
+- [x] **Step 2: 运行 npm run publish:dry**
 
 运行：`npm run publish:dry`
 预期：
@@ -1032,7 +1032,7 @@ git commit -m "docs: update README with dual-track publish workflow reference"
 - 输出 `=== 预览 ===` + 当前版本号 + 包名
 - 输出 `npm pack --dry-run` 的包内容列表
 
-- [ ] **Step 3: 验证无副作用**
+- [x] **Step 3: 验证无副作用**
 
 运行：`git status`
 预期：working tree clean（dry-run 不产生任何副作用）
@@ -1040,7 +1040,7 @@ git commit -m "docs: update README with dual-track publish workflow reference"
 运行：`git tag --list 'v*' | tail -3`
 预期：无新增 tag
 
-- [ ] **Step 4: 无需 commit（验证任务）**
+- [x] **Step 4: 无需 commit（验证任务）**
 
 ---
 
@@ -1053,7 +1053,7 @@ git commit -m "docs: update README with dual-track publish workflow reference"
 - Consumes: Task 8 的 `docs/PUBLISH.md`、delta spec 验收场景
 - Produces: 确认文档章节完整，对照 spec 验收场景逐项确认
 
-- [ ] **Step 1: 校验 npm-publish-workflow spec 验收场景**
+- [x] **Step 1: 校验 npm-publish-workflow spec 验收场景**
 
 对照 `openspec/changes/npm-publish-workflow/specs/npm-publish-workflow/spec.md` 的以下场景：
 
@@ -1078,7 +1078,7 @@ git commit -m "docs: update README with dual-track publish workflow reference"
 | 72 小时后回滚 | 确认 PUBLISH.md 回滚策略包含 git revert + patch |
 | provenance 状态说明 | 确认 PUBLISH.md 说明 provenance 需 GitHub Actions OIDC，暂不启用 |
 
-- [ ] **Step 2: 校验 npm-publish-preparation spec 验收场景**
+- [x] **Step 2: 校验 npm-publish-preparation spec 验收场景**
 
 对照 `openspec/changes/npm-publish-workflow/specs/npm-publish-preparation/spec.md` 的以下场景：
 
@@ -1089,7 +1089,7 @@ git commit -m "docs: update README with dual-track publish workflow reference"
 | 认证管理章节存在 | 确认 PUBLISH.md 认证管理章节说明 granular token 创建、NPM_TOKEN 注入、npm whoami 验证、禁止明文存储 |
 | README 链接发布文档 | 确认 README.md 包含指向 docs/PUBLISH.md 的链接 |
 
-- [ ] **Step 3: 无需 commit（验证任务）**
+- [x] **Step 3: 无需 commit（验证任务）**
 
 ---
 
@@ -1102,17 +1102,17 @@ git commit -m "docs: update README with dual-track publish workflow reference"
 - Consumes: Task 7 的 package.json 改动
 - Produces: 确认 package.json 改动后无类型错误，现有功能不受影响
 
-- [ ] **Step 1: 运行 tsc 类型检查**
+- [x] **Step 1: 运行 tsc 类型检查**
 
 运行：`npm run build`
 预期：编译成功，无类型错误，无输出（tsc 静默成功）
 
-- [ ] **Step 2: 运行 bun test 全量测试**
+- [x] **Step 2: 运行 bun test 全量测试**
 
 运行：`bun test`
 预期：所有测试通过，无失败
 
-- [ ] **Step 3: 无需 commit（验证任务）**
+- [x] **Step 3: 无需 commit（验证任务）**
 
 ---
 
