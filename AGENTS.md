@@ -101,6 +101,7 @@ opencode-lark-bridge/
 - **子代理识别靠 `session.created` 的 `properties.info.parentID`**：加入父会话 pendingChildren 集合，idle 时移除
 - **配置初始化不覆盖**：`initConfig` 检测目标存在则保留用户修改
 - **postinstall 条件执行**：package.json `postinstall` 仅在 `dist/postinstall.js` 存在时调用，源码运行不触发
+- **`installDependencies` 使用 `--ignore-scripts`**（src/installer.ts:68,73）：pluginDir 内依赖安装禁用所有 lifecycle 脚本，消除 postinstall 递归根因（见归档 change `2026-08-01-fix-test-install-verify`，根因：复制到 pluginDir 的 package.json 带 postinstall，`bun install` 触发递归 `installPlugin` -> `copyPluginFiles(from==to)` 删除 dist）。权衡：传递依赖的 pre/postinstall 脚本（如 native module 构建、二进制下载如 `esbuild`/`node-gyp`）也会被静默跳过。新增 dependencies 时须确认无 postinstall 依赖，否则 pluginDir 内运行时可能故障
 - **全局安装三重探测**：`npm_config_global` env → `INIT_CWD` 路径 → 当前文件路径
 
 ## COMMANDS

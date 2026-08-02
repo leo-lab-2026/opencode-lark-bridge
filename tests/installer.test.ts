@@ -2,7 +2,7 @@ import { describe, it, expect, beforeEach, afterEach, mock } from "bun:test"
 import { mkdtempSync, rmSync, existsSync, mkdirSync, writeFileSync, readFileSync } from "node:fs"
 import { tmpdir } from "node:os"
 import path from "node:path"
-import type { ExecSyncOptions } from "node:child_process"
+import { execSync, type ExecSyncOptions } from "node:child_process"
 
 type ExecFn = (cmd: string, opts?: ExecSyncOptions) => string
 
@@ -83,9 +83,10 @@ describe("installDependencies", () => {
     const { installDependencies } = await import("../src/installer")
     installDependencies("/fake/path", mockExec)
 
-    expect(calls.some((c) => c.includes("bun install"))).toBe(true)
-    expect(calls.some((c) => c.includes("npm install"))).toBe(true)
-    expect(calls.some((c) => c.includes("--ignore-scripts"))).toBe(true)
+    const bunCmd = calls.find((c) => c.includes("bun install"))
+    const npmCmd = calls.find((c) => c.includes("npm install"))
+    expect(bunCmd).toContain("--ignore-scripts")
+    expect(npmCmd).toContain("--ignore-scripts")
   })
 
   it("warns when both bun and npm fail", async () => {
@@ -102,6 +103,60 @@ describe("installDependencies", () => {
 
     console.warn = originalWarn
     expect(warnSpy).toHaveBeenCalled()
+  })
+})
+
+describe("installDependencies recursion guard (integration)", () => {
+  let pluginDir: string
+
+  beforeEach(() => {
+    pluginDir = mkdtempSync(path.join(tmpdir(), "recur-"))
+    writeFileSync(
+      path.join(pluginDir, "package.json"),
+      JSON.stringify({
+        name: "recursion-test-plugin",
+        version: "1.0.0",
+        scripts: { postinstall: "touch postinstall-ran.marker" },
+        dependencies: {},
+      })
+    )
+  })
+
+  afterEach(() => {
+    rmSync(pluginDir, { recursive: true, force: true })
+  })
+
+  it("does not execute postinstall (--ignore-scripts prevents the recursion trigger)", async () => {
+    const logs: string[] = []
+    const originalLog = console.log
+    console.log = (...args: any[]) => { logs.push(args.join(" ")) }
+    try {
+      const { installDependencies } = await import("../src/installer")
+      installDependencies(pluginDir)
+    } finally {
+      console.log = originalLog
+    }
+
+    const installed = logs.some((l) => l.includes("Dependencies installed via"))
+    expect(installed).toBe(true)
+    expect(existsSync(path.join(pluginDir, "postinstall-ran.marker"))).toBe(false)
+  })
+
+  it("control: postinstall runs when --ignore-scripts is absent", () => {
+    let ran = false
+    try {
+      execSync("bun install --production", { cwd: pluginDir, stdio: "pipe", encoding: "utf-8" })
+      ran = true
+    } catch {
+      try {
+        execSync("npm install --production", { cwd: pluginDir, stdio: "pipe", encoding: "utf-8" })
+        ran = true
+      } catch {
+      }
+    }
+    if (!ran) return
+
+    expect(existsSync(path.join(pluginDir, "postinstall-ran.marker"))).toBe(true)
   })
 })
 
