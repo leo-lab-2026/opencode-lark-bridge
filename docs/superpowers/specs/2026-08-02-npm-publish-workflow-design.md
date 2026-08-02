@@ -2,6 +2,8 @@
 comet_change: npm-publish-workflow
 role: technical-design
 canonical_spec: openspec
+archived-with: 2026-08-02-npm-publish-workflow
+status: final
 ---
 
 # Design Doc: npm-publish-workflow

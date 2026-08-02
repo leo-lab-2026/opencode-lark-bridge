@@ -2,6 +2,7 @@
 change: npm-publish-workflow
 design-doc: docs/superpowers/specs/2026-08-02-npm-publish-workflow-design.md
 base-ref: c1a3dadd91e04a8d596b8540d845cab3fd32a45d
+archived-with: 2026-08-02-npm-publish-workflow
 ---
 # npm-publish-workflow Implementation Plan
 

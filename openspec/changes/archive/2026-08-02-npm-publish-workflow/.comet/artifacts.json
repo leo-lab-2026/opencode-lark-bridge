@@ -4,5 +4,6 @@
   "openspec_tasks": "openspec/changes/npm-publish-workflow/tasks.md",
   "openspec_delta_spec": "openspec/changes/npm-publish-workflow/specs/npm-publish-preparation/spec.md",
   "handoff_context": "openspec/changes/npm-publish-workflow/.comet/handoff/spec-context.json",
-  "handoff_markdown": "openspec/changes/npm-publish-workflow/.comet/handoff/spec-context.md"
+  "handoff_markdown": "openspec/changes/npm-publish-workflow/.comet/handoff/spec-context.md",
+  "archive_directory": "openspec/changes/archive/2026-08-02-npm-publish-workflow"
 }
