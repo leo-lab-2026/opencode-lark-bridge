@@ -110,6 +110,22 @@ run_release() {
     echo "  GitHub: https://github.com/$GITHUB_REPO/releases/tag/$tag"
 }
 
+# --- dry-run 预览模式 ---
+run_dry_run() {
+    check_auth
+    run_verify
+
+    local version
+    version=$(node -p "require('./package.json').version")
+    echo ""
+    echo "=== 预览 ==="
+    echo "当前版本: $version"
+    echo "包名: $PACKAGE_NAME"
+    echo ""
+    info "包内容（npm pack --dry-run）："
+    npm pack --dry-run
+}
+
 # --- 回滚清理 ---
 cleanup_on_failure() {
     local exit_code=$?
@@ -204,6 +220,9 @@ case "${1:-}" in
     release)
         check_auth
         run_release
+        ;;
+    --dry-run)
+        run_dry_run
         ;;
     --help|-h)
         show_help
