@@ -35,3 +35,6 @@ logs/
 
 # npm pack artifacts
 *.tgz
+
+# Comet runtime selection state (machine-local, not shared)
+.comet/current-change.json

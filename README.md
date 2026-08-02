@@ -311,7 +311,16 @@ OpenCode session.created / session.idle 事件
 
 ## 发布
 
-若要自行发布此包，请参考 [docs/PUBLISH.md](./docs/PUBLISH.md)。
+本项目支持手动与自动化两种发布方案。详细流程参见 [docs/PUBLISH.md](./docs/PUBLISH.md)。
+
+- **手动发布**：按 `docs/PUBLISH.md` 手动发布方案章节执行
+- **自动化发布**：在 OpenCode agent 会话中输入"按流程文档自动发布到 npm"，agent 按 SOP 自动执行
+
+发布前预演验证：
+
+```bash
+npm run publish:dry  # 验证 + 预览包内容，不发布
+```
 
 ## 本地测试安装
 

@@ -1,0 +1,35 @@
+{
+  "change": "npm-publish-workflow",
+  "phase": "design",
+  "mode": "beta",
+  "canonical_spec": "openspec",
+  "generated_by": "comet-handoff.sh",
+  "context_hash": "d84c335d4e7203e9660bbab2c465479fad651d5e6969ba3f9f77155394b27aea",
+  "files": [
+    {
+      "path": "openspec/changes/npm-publish-workflow/proposal.md",
+      "sha256": "b2e032b176e1f01f6d95e61ac437507d50f119211d898b9bf57f4918afb879c6",
+      "role": "supporting"
+    },
+    {
+      "path": "openspec/changes/npm-publish-workflow/design.md",
+      "sha256": "1041ba2bf4a34879c1cdfaf10d83004624c9ccbc9ada4ffd145a9fbf4d1e5b06",
+      "role": "supporting"
+    },
+    {
+      "path": "openspec/changes/npm-publish-workflow/tasks.md",
+      "sha256": "30226aa2093c68fd374937e6de651c77fb14d8bd4b7ac3a82be46ff84dbec0b0",
+      "role": "supporting"
+    },
+    {
+      "path": "openspec/changes/npm-publish-workflow/specs/npm-publish-preparation/spec.md",
+      "sha256": "f897393fb09584fa23b84519ef471f41c9921034c82c642eb2da068d16a2cdb5",
+      "role": "spec"
+    },
+    {
+      "path": "openspec/changes/npm-publish-workflow/specs/npm-publish-workflow/spec.md",
+      "sha256": "11ea66bc9db00491dc236ae2d9e302b03b1e54eb10d6a380079c0c965a0712b5",
+      "role": "spec"
+    }
+  ]
+}
