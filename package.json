@@ -7,7 +7,7 @@
   "homepage": "https://github.com/leo-lab-2026/opencode-lark-bridge",
   "repository": {
     "type": "git",
-    "url": "https://github.com/leo-lab-2026/opencode-lark-bridge.git"
+    "url": "git+https://github.com/leo-lab-2026/opencode-lark-bridge.git"
   },
   "bugs": {
     "url": "https://github.com/leo-lab-2026/opencode-lark-bridge/issues"
@@ -23,7 +23,7 @@
   "type": "module",
   "main": "./index.js",
   "bin": {
-    "opencode-lark-bridge": "./dist/cli.js"
+    "opencode-lark-bridge": "dist/cli.js"
   },
   "engines": {
     "node": ">=18"
