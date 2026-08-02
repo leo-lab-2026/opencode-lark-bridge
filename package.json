@@ -43,6 +43,8 @@
     "prepublishOnly": "npm run build && bun test",
     "pack:dry": "npm pack --dry-run",
     "test:install": "bash scripts/test-install.sh",
+    "publish:dry": "bash scripts/publish.sh --dry-run",
+    "publish:auto": "bash scripts/publish.sh",
     "postinstall": "node -e \"if (require('fs').existsSync('./dist/postinstall.js')) require('child_process').execFileSync(process.execPath, ['./dist/postinstall.js'], {stdio: 'inherit'})\""
   },
   "dependencies": {
