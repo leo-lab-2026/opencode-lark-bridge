@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
+# errtrace: 让函数内命令失败也触发 ERR trap（否则函数不继承 ERR trap）
+set -E
 
 PROJECT_ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 PACKAGE_NAME="opencode-lark-bridge"
@@ -7,6 +9,7 @@ GITHUB_REPO="leo-lab-2026/opencode-lark-bridge"
 
 # 回滚状态跟踪
 PREPARED_TAG=""
+TAG_CREATED=false
 PUBLISH_DONE=false
 
 # --- 工具函数 ---
@@ -96,6 +99,7 @@ run_prepare() {
     git add package.json
     git commit -m "$PREPARED_TAG"
     git tag "$PREPARED_TAG"
+    TAG_CREATED=true
 
     info "版本写入完成: $old_version -> $new_version (tag: $PREPARED_TAG)"
 }
@@ -158,7 +162,9 @@ cleanup_on_failure() {
     if [ -n "$PREPARED_TAG" ]; then
         warn "检测到未发布的版本写入，执行回滚..."
         git checkout -- package.json
-        git tag -d "$PREPARED_TAG" 2>/dev/null || true
+        if [ "$TAG_CREATED" = "true" ]; then
+            git tag -d "$PREPARED_TAG" 2>/dev/null || true
+        fi
         local head_msg
         head_msg=$(git log -1 --format=%s 2>/dev/null || echo "")
         if [ "$head_msg" = "$PREPARED_TAG" ]; then
