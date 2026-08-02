@@ -202,3 +202,14 @@ canonical_spec: openspec
 - **[权衡] dry-run 包含 test:install 较慢** -> 保证发布前安装可用性，优于快速但遗漏安装验证。
 - **[权衡] 不做 commit 推断版本** -> SemVer 安全性优先，版本号由用户显式确认。
 - **[权衡] 不引入 CI/CD** -> 本次聚焦本地/agent 自动发布，provenance 留待未来。
+
+## Implementation Divergence
+
+代码审查后对 `prepare` 实现做了一处改进，行为结果与设计一致，仅实现路径优化：
+
+- **原设计**（Decision 4 / 子命令接口表）：`prepare` 执行 `npm version <type>` 一次性完成版本写入 + commit + tag。
+- **实际实现**：`npm version --no-git-tag-version <type>`（仅写版本号）+ 手动 `git commit` + 手动 `git tag`，三步独立可控。
+
+**原因**：`npm version` 在 tag 冲突等部分失败场景会残留"package.json 已更新 + commit 已创建"的半完成状态，且函数内 ERR trap 因未启用 `errtrace` 不触发，无法可靠回滚。拆分为三步后每步可精确回滚（版本号/commit/tag 各自独立撤销），通过 `set -E` 启用函数内 ERR trap。
+
+**验证**：冲突 tag 场景实测完整回滚（版本号回退、commit 撤销、预先存在的 tag 保留）。对外行为不变：spec 的"版本号写入与 tag"场景仍满足（版本号由 npm version 写入、tag 格式 `v<version>`）。
