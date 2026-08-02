@@ -84,6 +84,32 @@ run_prepare() {
     info "版本写入完成: $old_version -> $new_version (tag: $PREPARED_TAG)"
 }
 
+# --- 发布与推送 ---
+run_release() {
+    local version
+    version=$(node -p "require('./package.json').version")
+    local tag="v$version"
+
+    info "发布 $PACKAGE_NAME@$version 到 npm..."
+    npm publish
+    PUBLISH_DONE=true
+
+    info "推送代码与标签..."
+    git push --follow-tags
+
+    info "创建 GitHub Release..."
+    if command -v gh &>/dev/null; then
+        gh release create "$tag" --title "$tag" --notes "Release $version"
+    else
+        warn "gh 命令不可用，跳过 GitHub Release 创建"
+        warn "手动执行: gh release create $tag --title $tag --notes 'Release $version'"
+    fi
+
+    info "发布完成: $PACKAGE_NAME@$version"
+    echo "  npm: https://www.npmjs.com/package/$PACKAGE_NAME/v/$version"
+    echo "  GitHub: https://github.com/$GITHUB_REPO/releases/tag/$tag"
+}
+
 # --- 回滚清理 ---
 cleanup_on_failure() {
     local exit_code=$?
@@ -174,6 +200,10 @@ case "${1:-}" in
         esac
         check_auth
         run_prepare "$BUMP_TYPE"
+        ;;
+    release)
+        check_auth
+        run_release
         ;;
     --help|-h)
         show_help
