@@ -57,9 +57,53 @@ run_verify() {
     info "发布前验证通过"
 }
 
-# --- 回滚清理（Task 4 扩展为完整实现）---
+# --- 版本写入与 tag ---
+run_prepare() {
+    local bump_type="$1"
+
+    case "$bump_type" in
+        patch|minor|major) ;;
+        *)
+            error "无效的版本递增类型: $bump_type（应为 patch|minor|major）"
+            return 1
+            ;;
+    esac
+
+    # 幂等重跑验证
+    run_verify
+
+    info "执行 npm version $bump_type..."
+    local old_version
+    old_version=$(node -p "require('./package.json').version")
+    npm version "$bump_type"
+    local new_version
+    new_version=$(node -p "require('./package.json').version")
+
+    PREPARED_TAG="v$new_version"
+
+    info "版本写入完成: $old_version -> $new_version (tag: $PREPARED_TAG)"
+}
+
+# --- 回滚清理 ---
 cleanup_on_failure() {
-    exit $?
+    local exit_code=$?
+    if [ "$PUBLISH_DONE" = "true" ]; then
+        local version
+        version=$(node -p "require('./package.json').version" 2>/dev/null || echo "unknown")
+        error "发布后失败（npm 已发布，不可回滚）"
+        warn "npm 包已发布: $PACKAGE_NAME@$version"
+        warn "手动处理："
+        warn "  - 重试失败步骤（git push 或 gh release）"
+        warn "  - 或 72h 内执行: npm unpublish $PACKAGE_NAME@$version"
+        exit "$exit_code"
+    fi
+    if [ -n "$PREPARED_TAG" ]; then
+        warn "检测到未发布的版本写入，执行回滚..."
+        git checkout -- package.json
+        git tag -d "$PREPARED_TAG" 2>/dev/null || true
+        warn "已回退版本号并删除本地 tag: $PREPARED_TAG"
+    fi
+    exit "$exit_code"
 }
 
 # --- 帮助 ---
@@ -95,6 +139,41 @@ case "${1:-}" in
     verify)
         check_auth
         run_verify
+        ;;
+    prepare)
+        shift
+        BUMP_TYPE=""
+        while [ $# -gt 0 ]; do
+            case "$1" in
+                --bump)
+                    BUMP_TYPE="${2:-}"
+                    if [ -z "$BUMP_TYPE" ]; then
+                        error "--bump 需要参数: patch|minor|major"
+                        exit 1
+                    fi
+                    shift 2
+                    ;;
+                *)
+                    error "未知参数: $1"
+                    show_help
+                    exit 1
+                    ;;
+            esac
+        done
+        if [ -z "$BUMP_TYPE" ]; then
+            error "prepare 需要 --bump <type> 参数"
+            show_help
+            exit 1
+        fi
+        case "$BUMP_TYPE" in
+            patch|minor|major) ;;
+            *)
+                error "无效的版本递增类型: $BUMP_TYPE（应为 patch|minor|major）"
+                exit 1
+                ;;
+        esac
+        check_auth
+        run_prepare "$BUMP_TYPE"
         ;;
     --help|-h)
         show_help
