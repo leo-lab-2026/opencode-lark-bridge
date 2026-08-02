@@ -14,7 +14,7 @@ npm run build
 
 rm -rf "$PLUGIN_DIR"
 mkdir -p "$PLUGIN_DIR"
-cp -r dist/* "$PLUGIN_DIR/"
+cp -r dist "$PLUGIN_DIR/"
 cp package.json bun.lock opencode-lark-bridge.config.example.jsonc "$PLUGIN_DIR/"
 
 (

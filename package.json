@@ -21,7 +21,7 @@
     "bot"
   ],
   "type": "module",
-  "main": "./index.js",
+  "main": "./dist/index.js",
   "bin": {
     "opencode-lark-bridge": "dist/cli.js"
   },

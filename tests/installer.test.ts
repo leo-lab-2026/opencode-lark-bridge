@@ -3,8 +3,33 @@ import { mkdtempSync, rmSync, existsSync, mkdirSync, writeFileSync, readFileSync
 import { tmpdir } from "node:os"
 import path from "node:path"
 import { execSync, type ExecSyncOptions } from "node:child_process"
+import { fileURLToPath } from "node:url"
 
 type ExecFn = (cmd: string, opts?: ExecSyncOptions) => string
+
+describe("package.json main field resolves to existing entry", () => {
+  it("main field points to a file that exists in the published package structure", () => {
+    const repoRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..")
+    const pkg = JSON.parse(readFileSync(path.join(repoRoot, "package.json"), "utf-8"))
+    const entryPath = path.resolve(repoRoot, pkg.main)
+    expect(existsSync(entryPath)).toBe(true)
+  })
+
+  it("main field resolves to existing file after copyPluginFiles (npm install structure)", async () => {
+    const repoRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..")
+    const target = mkdtempSync(path.join(tmpdir(), "main-check-"))
+    try {
+      const { copyPluginFiles } = await import("../src/installer")
+      copyPluginFiles(target, repoRoot)
+
+      const pkg = JSON.parse(readFileSync(path.join(target, "package.json"), "utf-8"))
+      const entryPath = path.resolve(target, pkg.main)
+      expect(existsSync(entryPath)).toBe(true)
+    } finally {
+      rmSync(target, { recursive: true, force: true })
+    }
+  })
+})
 
 describe("copyPluginFiles", () => {
   let sourceDir: string
