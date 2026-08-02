@@ -14,6 +14,17 @@ info() { echo "[INFO] $1"; }
 error() { echo "[ERROR] $1" >&2; }
 warn() { echo "[WARN] $1"; }
 
+# --- 工作区干净检查 ---
+check_clean_worktree() {
+    if git status --porcelain | grep -q .; then
+        error "工作区不干净（存在未提交或未跟踪文件）"
+        git status --short
+        warn "请先提交或清理工作区，再执行发布流程"
+        return 1
+    fi
+    info "工作区干净"
+}
+
 # --- 认证检查 ---
 check_auth() {
     if [ -z "${NPM_TOKEN:-}" ]; then
@@ -28,13 +39,14 @@ check_auth() {
         return 1
     fi
 
-    if ! npm whoami &>/dev/null; then
+    local user
+    if ! user=$(npm whoami 2>/dev/null); then
         error "npm whoami 失败，认证无效"
         echo "请检查 NPM_TOKEN 是否有效，或重新创建 granular automation token"
         return 1
     fi
 
-    info "认证通过：$(npm whoami)"
+    info "认证通过：$user"
 }
 
 # --- 发布前验证 ---
@@ -72,14 +84,18 @@ run_prepare() {
     # 幂等重跑验证
     run_verify
 
-    info "执行 npm version $bump_type..."
-    local old_version
+    local old_version new_version
     old_version=$(node -p "require('./package.json').version")
-    npm version "$bump_type"
-    local new_version
-    new_version=$(node -p "require('./package.json').version")
 
+    info "执行 npm version --no-git-tag-version $bump_type..."
+    npm version --no-git-tag-version "$bump_type"
+    new_version=$(node -p "require('./package.json').version")
     PREPARED_TAG="v$new_version"
+
+    info "创建版本 commit 与 tag: $PREPARED_TAG"
+    git add package.json
+    git commit -m "$PREPARED_TAG"
+    git tag "$PREPARED_TAG"
 
     info "版本写入完成: $old_version -> $new_version (tag: $PREPARED_TAG)"
 }
@@ -95,7 +111,7 @@ run_release() {
     PUBLISH_DONE=true
 
     info "推送代码与标签..."
-    git push --follow-tags
+    git push origin HEAD "$tag"
 
     info "创建 GitHub Release..."
     if command -v gh &>/dev/null; then
@@ -122,8 +138,8 @@ run_dry_run() {
     echo "当前版本: $version"
     echo "包名: $PACKAGE_NAME"
     echo ""
-    info "包内容（npm pack --dry-run）："
-    npm pack --dry-run
+    info "包内容见上方 pack:dry 输出（仅包含 files 声明的文件）"
+    info "dry-run 已完成，无任何发布副作用"
 }
 
 # --- 回滚清理 ---
@@ -143,6 +159,12 @@ cleanup_on_failure() {
         warn "检测到未发布的版本写入，执行回滚..."
         git checkout -- package.json
         git tag -d "$PREPARED_TAG" 2>/dev/null || true
+        local head_msg
+        head_msg=$(git log -1 --format=%s 2>/dev/null || echo "")
+        if [ "$head_msg" = "$PREPARED_TAG" ]; then
+            git reset --hard HEAD~1
+            warn "已撤销版本 commit: $PREPARED_TAG"
+        fi
         warn "已回退版本号并删除本地 tag: $PREPARED_TAG"
     fi
     exit "$exit_code"
@@ -156,7 +178,7 @@ show_help() {
 命令:
   verify                认证检查 + 发布前验证（build + test + pack:dry + test:install）
   prepare --bump <type> verify + 版本写入 + tag 创建（不发布）
-  release               npm publish + git push --follow-tags + GitHub Release
+  release               npm publish + git push + GitHub Release
   --dry-run             verify + 预览包内容与当前版本号（不发布/不 tag/不推送）
   --help                显示此帮助信息
 
@@ -175,7 +197,7 @@ EOF
 }
 
 # --- 主入口 ---
-trap cleanup_on_failure ERR
+trap cleanup_on_failure ERR INT TERM
 
 case "${1:-}" in
     verify)
@@ -214,10 +236,12 @@ case "${1:-}" in
                 exit 1
                 ;;
         esac
+        check_clean_worktree
         check_auth
         run_prepare "$BUMP_TYPE"
         ;;
     release)
+        check_clean_worktree
         check_auth
         run_release
         ;;
