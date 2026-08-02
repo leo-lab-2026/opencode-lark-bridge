@@ -144,6 +144,14 @@ agent 读取本章节后，按以下步骤执行：
 
    用户确认后继续。
 
+   **若用户拒绝发布或流程在此中止**，agent 必须执行清理，恢复干净工作区：
+   ```bash
+   git checkout -- package.json       # 回退版本号
+   git tag -d v<version>               # 删除本地版本 tag
+   git reset --hard HEAD~1             # 撤销版本 commit（prepare 的 commit 为最新提交，安全回退）
+   ```
+   清理后确认 `git status` 干净，再处理其他事项。
+
 5. **调用 release**：执行 `bash scripts/publish.sh release`
    - 脚本自动执行 `npm publish` + `git push --follow-tags` + `gh release create`
    - `npm publish` 成功后不回滚（不可逆操作）
@@ -159,6 +167,7 @@ agent 读取本章节后，按以下步骤执行：
 - 交互步骤（版本选择、最终确认）在 SOP 暂停点由 agent 向用户询问
 - `scripts/publish.sh` 的 `--help` 可查看所有子命令
 - `npm run publish:dry` 可用于预演（等价于 `scripts/publish.sh --dry-run`）
+- `npm run publish:auto -- <subcommand>` 可通过 npm 入口调用脚本（如 `npm run publish:auto -- verify`）；agent 也可直接调用 `bash scripts/publish.sh <subcommand>`
 
 ## 认证管理
 
@@ -203,7 +212,8 @@ npm whoami
 - **禁止**在 `.npmrc`、文档或任何文件中写入明文 token
 - **禁止**将 `NPM_TOKEN` 的值提交到 git
 - `.npmrc` 只能包含 `${NPM_TOKEN}` 占位符
-- 现有 `~/.npmrc` 的明文 token 可继续用于不使用项目级 `.npmrc` 的场景，建议迁移到 granular token + 环境变量方式
+- **项目目录内发布必须设置 `NPM_TOKEN`**：项目级 `.npmrc` 优先于 `~/.npmrc`，`NPM_TOKEN` 未设置时占位符展开为空，认证必然失败
+- 现有 `~/.npmrc` 的明文 token 建议迁移到 granular token + 环境变量方式，避免明文凭证长期存储
 
 ### 2FA 说明
 
