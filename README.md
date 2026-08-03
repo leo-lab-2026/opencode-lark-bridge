@@ -83,6 +83,104 @@ npm run build
 npm run install:global
 ```
 
+### 通过 opencode.jsonc 声明（免手动安装）
+
+OpenCode 原生支持在配置文件中直接声明 npm 包名，启动时自动安装插件，**无需手动执行 `npm install`**。适合不想把插件加入 `package.json`、或想让 OpenCode 自管理插件生命周期的场景。
+
+#### 基本写法
+
+在项目级 `.opencode/opencode.jsonc`（或 `./opencode.jsonc`）或全局 `~/.config/opencode/opencode.json` 中：
+
+```jsonc
+{
+  "$schema": "https://opencode.ai/config.json",
+  "plugin": ["opencode-lark-bridge"]
+}
+```
+
+- 包名必须是 **`opencode-lark-bridge`**（无 scope）。注意 `@leo-lab-2026/opencode-lark-bridge` 这类 scoped 名在 npm 上不存在，会导致 404。
+- 不带版本时 OpenCode 自动解析为 `@latest`；也可指定版本如 `"opencode-lark-bridge@0.2.2"`。
+
+#### 自动安装机制
+
+OpenCode 启动时通过 `@npmcli/arborist` 把插件安装到缓存目录 `~/.cache/opencode/packages/<spec>/node_modules/`，并设置 `ignoreScripts: true`：
+
+| 行为          | 说明                                                                  |
+| ----------- | ------------------------------------------------------------------- |
+| 安装位置        | `~/.cache/opencode/packages/opencode-lark-bridge@latest/node_modules/opencode-lark-bridge/` |
+| 依赖          | 插件 `dependencies`（如 `comment-json`）一并安装到同目录                          |
+| postinstall | **不执行**（`ignoreScripts: true`）                                      |
+| 版本兼容检查      | 插件未声明 `engines.opencode`，跳过                                         |
+| 升级          | 改版本号或删除缓存目录后重启 OpenCode 触发重装                                        |
+
+> ⚠️ **与 `npm install` 方式的关键差异**：`npm install opencode-lark-bridge`（或 `npx opencode-lark-bridge init`）会执行 `postinstall`，自动把插件复制到 `.opencode/plugins/` 并注册到 `opencode.jsonc`；而本方式 postinstall 被跳过，**配置文件需手动创建**（见下文）。
+
+#### 手动创建配置文件
+
+由于 postinstall 不执行，需手动把示例配置放到 OpenCode 会查找的位置。配置查找顺序（命中即停）：
+
+1. `<项目目录>/.opencode/opencode-lark-bridge.config.jsonc`
+2. `~/.config/opencode/opencode-lark-bridge.config.jsonc`（仅当项目目录不是 `~/.config/opencode` 时）
+
+若本地已 `npm install opencode-lark-bridge`，可从 `node_modules` 复制示例配置：
+
+```bash
+# 项目级配置
+mkdir -p .opencode
+cp node_modules/opencode-lark-bridge/opencode-lark-bridge.config.example.jsonc \
+   .opencode/opencode-lark-bridge.config.jsonc
+
+# 或全局配置
+mkdir -p ~/.config/opencode
+cp node_modules/opencode-lark-bridge/opencode-lark-bridge.config.example.jsonc \
+   ~/.config/opencode/opencode-lark-bridge.config.jsonc
+```
+
+> 若未 `npm install`，也可从 [GitHub 示例](https://github.com/leo-lab-2026/opencode-lark-bridge/blob/main/opencode-lark-bridge.config.example.jsonc) 复制内容。配置字段说明见下方 [配置](#配置) 章节。
+
+编辑配置文件填入飞书 `app_id` / `app_secret` / `default_target` 等凭证，并确保 `lark-cli` 已安装并登录（`lark-cli auth status`）。
+
+#### 避免双重注册
+
+OpenCode 会分别加载 local plugin 和 npm plugin，**同名也会分别加载**。如果之前用过 `npm run install:local` 或 `install:global`，改用本方式前请清理旧注册：
+
+- 删除 `.opencode/plugins/opencode-lark-bridge/` 目录（项目级）或 `~/.config/opencode/plugins/opencode-lark-bridge/`（全局）
+- 从 `opencode.jsonc` 中移除 `"./plugins/opencode-lark-bridge"` 本地路径条目，只保留 `"opencode-lark-bridge"` npm 包名条目
+
+否则每次事件会收到**两条通知**。
+
+### OpenCode agent 自动安装提示词
+
+把下面提示词粘贴给 OpenCode agent，让它自动完成安装与配置。提示词区分全局与项目级。两种方式都基于「在 `opencode.jsonc` 声明 npm 包名」，OpenCode 启动时自动安装，无需手动 `npm install`。
+
+#### 项目级安装提示词
+
+```
+请帮我配置 opencode-lark-bridge 插件（项目级，通过 opencode.jsonc 声明 npm 包名方式）。
+
+步骤：
+1. 检查 lark-cli 是否已安装并登录：运行 `lark-cli auth status`。若未登录，提示我先执行 `lark-cli auth login` 完成登录。
+2. 检查项目级 opencode 配置文件（优先级 .opencode/opencode.jsonc > .opencode/opencode.json > ./opencode.jsonc > ./opencode.json），找到已存在的文件；都不存在则在 .opencode/opencode.jsonc 新建。
+3. 在配置文件的 plugin 数组中加入 "opencode-lark-bridge"（无 scope；不要写成 @leo-lab-2026/opencode-lark-bridge，该 scoped 名不存在）。若已有 "./plugins/opencode-lark-bridge" 本地路径条目，请删除该本地条目以避免双重通知。
+4. 创建插件运行时配置：把 opencode-lark-bridge.config.example.jsonc 内容复制到 .opencode/opencode-lark-bridge.config.jsonc。示例可从 https://github.com/leo-lab-2026/opencode-lark-bridge/blob/main/opencode-lark-bridge.config.example.jsonc 获取。
+5. 提示我编辑 .opencode/opencode-lark-bridge.config.jsonc，填入飞书 app_id / app_secret / default_target（chat_id 或 user_id）。
+6. 完成后告诉我重启 OpenCode 即可生效——OpenCode 启动时会自动从 npm 安装插件到缓存目录，无需手动 npm install。
+```
+
+#### 全局安装提示词
+
+```
+请帮我配置 opencode-lark-bridge 插件（全局，通过 opencode.jsonc 声明 npm 包名方式，所有项目共享）。
+
+步骤：
+1. 检查 lark-cli 是否已安装并登录：运行 `lark-cli auth status`。若未登录，提示我先执行 `lark-cli auth login` 完成登录。
+2. 检查全局 opencode 配置文件 ~/.config/opencode/opencode.json（或 ~/.config/opencode/opencode.jsonc），不存在则新建 ~/.config/opencode/opencode.json。
+3. 在配置文件的 plugin 数组中加入 "opencode-lark-bridge"（无 scope；不要写成 @leo-lab-2026/opencode-lark-bridge，该 scoped 名不存在）。若已有 "./plugins/opencode-lark-bridge" 本地路径条目，请删除该本地条目以避免双重通知。
+4. 创建插件运行时配置：把 opencode-lark-bridge.config.example.jsonc 内容复制到 ~/.config/opencode/opencode-lark-bridge.config.jsonc。示例可从 https://github.com/leo-lab-2026/opencode-lark-bridge/blob/main/opencode-lark-bridge.config.example.jsonc 获取。
+5. 提示我编辑 ~/.config/opencode/opencode-lark-bridge.config.jsonc，填入飞书 app_id / app_secret / default_target（chat_id 或 user_id）。
+6. 完成后告诉我重启 OpenCode 即可生效——OpenCode 启动时会自动从 npm 安装插件到缓存目录，无需手动 npm install。
+```
+
 ## 配置
 
 运行时按以下顺序查找 `opencode-lark-bridge.config.jsonc`，命中即返回：
