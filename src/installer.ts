@@ -21,6 +21,7 @@ const FILES_TO_COPY = [
   "package.json",
   "bun.lock",
   "opencode-lark-bridge.config.example.jsonc",
+  "node_modules",
 ]
 
 export function getPackageRoot(): string {
@@ -43,7 +44,7 @@ export function copyPluginFiles(pluginDir: string, sourceDir?: string): void {
     const to = path.join(pluginDir, item)
     if (path.resolve(from) === path.resolve(to)) continue
     if (!existsSync(from)) continue
-    if (item === "dist") {
+    if (item === "dist" || item === "node_modules") {
       rmSync(to, { recursive: true, force: true })
       cpSync(from, to, { recursive: true })
     } else {
@@ -60,7 +61,11 @@ export function installDependencies(pluginDir: string, execFn?: ExecFn): void {
     try {
       exec(cmd, { cwd: pluginDir, stdio: "pipe", encoding: "utf-8" })
       return true
-    } catch {
+    } catch (err) {
+      const e = err as { stdout?: string; stderr?: string; status?: number; message?: string }
+      console.warn(`Command failed: ${cmd} (exit ${e.status})`)
+      if (e.stderr) console.warn(`  stderr: ${e.stderr}`)
+      if (e.stdout) console.warn(`  stdout: ${e.stdout}`)
       return false
     }
   }
@@ -93,10 +98,15 @@ export function installPlugin(options?: InstallOptions): void {
       return
     }
 
-    try {
-      installDependencies(pluginDir, execFn)
-    } catch (err) {
-      console.warn(`Warning: Dependency installation failed: ${err}`)
+    const depsInstalled = existsSync(path.join(pluginDir, "node_modules", "comment-json"))
+    if (depsInstalled) {
+      console.log("Dependencies already present from copy, skipping installDependencies")
+    } else {
+      try {
+        installDependencies(pluginDir, execFn)
+      } catch (err) {
+        console.warn(`Warning: Dependency installation failed: ${err}`)
+      }
     }
 
     try {
