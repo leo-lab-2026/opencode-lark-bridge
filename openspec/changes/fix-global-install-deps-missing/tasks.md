@@ -6,6 +6,6 @@
 - [x] `src/installer.ts`: `installDependencies` 的 `tryCmd` 失败时打印 stdout/stderr/exitCode
 - [x] `src/index.ts`: 移除 `/tmp/opencode-lark-bridge-debug.log` 调试代码
 - [x] `tests/installer.test.ts`: 新增 `node_modules` 复制断言；新增跳过 `installDependencies` 的测试
-- [ ] 运行 `tsc` 确认类型检查通过
-- [ ] 运行 `bun test` 确认全部测试通过
+- [x] 运行 `tsc` 确认类型检查通过
+- [x] 运行 `bun test` 确认全部测试通过
 - [ ] 运行 `npm install -g` 端到端验证：全局插件目录有 node_modules，opencode 能加载插件并发通知
