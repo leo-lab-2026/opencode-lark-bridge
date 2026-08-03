@@ -5,11 +5,13 @@ description: "仅在用户明确调用 /comet-archive，或由 Comet 根 Skill/r
 
 # Comet 阶段 5：归档（Archive）
 
+开始或恢复前必须先读取并执行 `comet/reference/classic-layout.md`；本文件中的 OpenSpec CLI 调用必须使用 adapter，文件路径必须使用该协议绑定的 `<classic-*>` 逻辑根。
+
 ## 前置条件
 
 - 验证已通过（阶段 4 完成）
 - 归档提交和分支处理尚未完成（`branch_status: pending`）
-- `openspec/changes/<name>/.comet.yaml` 中 `verify_result: pass`
+- `<classic-change-dir>/.comet.yaml` 中 `verify_result: pass`
 
 ## 步骤
 
@@ -90,7 +92,7 @@ brainstorming → delta spec → 实施 → 验证 → 主 spec 合并 → desig
 ### 4. 精确提交归档改动
 
 归档脚本只移动文件和合并 spec，不会自动提交。归档完成后工作区会有以下未提交改动：
-- change 目录从 `openspec/changes/<name>/` 移动到 `openspec/changes/archive/YYYY-MM-DD-<name>/`
+- change 目录从 `<classic-change-dir>/` 移动到 `<classic-archive-root>/YYYY-MM-DD-<name>/`
 - 主 spec 按 delta 语义合并的内容
 - design doc / plan 的归档元数据标注
 
@@ -120,7 +122,7 @@ git commit -m "chore: archive <change-name>"
 归档提交成功后，只执行 Step 1 中用户已经确认的远端交付方式：
 
 - 「确认归档并立即推送」：推送当前绑定分支一次。
-- 「确认归档、立即推送并创建 PR」：先推送当前绑定分支一次，再使用当前平台可用的 GitHub 能力创建 PR；Step 1 的明确选择就是创建 PR 的授权，不得再次改成其他分支处置方式。
+- 「确认归档、立即推送并创建 PR」：先推送当前绑定分支一次，再通过已配置的 GitHub 集成创建 PR；Step 1 的明确选择就是创建 PR 的授权，不得再次改成其他分支处置方式。
 
 push 失败时报告错误，保留 current selection 记录，不得清除选择或宣告完成；当前任务中只重试同一个 push。PR 创建失败时分支已经包含完整归档提交，报告错误并保留 current selection 记录；当前任务中只重试创建 PR。不得在失败后自动切换、删除、变基或改写分支。
 
@@ -131,14 +133,14 @@ push 失败时报告错误，保留 current selection 记录，不得清除选�
 ## 退出条件
 
 - 归档脚本执行成功（退出码 0）
-- 归档目录 `openspec/changes/archive/YYYY-MM-DD-<change-name>/` 存在
+- 归档目录 `<classic-archive-root>/YYYY-MM-DD-<change-name>/` 存在
 - 归档后的 `.comet.yaml` 中 `archived: true`
 - 归档状态中的 `branch_status: handled` 已包含在唯一归档提交中
 - `comet guard <change-name> archive` 通过
 - 唯一归档提交已按用户在归档前确认的方式成功推送；若用户选择创建 PR，PR 已成功创建
 - current selection 已在远端交付成功后清除
 
-归档脚本会把 `openspec/changes/<name>/` 移动到 `openspec/changes/archive/YYYY-MM-DD-<name>/`。
+归档脚本会把 `<classic-change-dir>/` 移动到 `<classic-archive-root>/YYYY-MM-DD-<name>/`。
 
 `comet guard <change-name> archive` 会按原 change 名解析实际归档目录；不要手工拼接日期目录名。
 
