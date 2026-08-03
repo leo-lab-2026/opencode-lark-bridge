@@ -79,6 +79,23 @@ describe("copyPluginFiles", () => {
     expect(existsSync(path.join(targetDir, "dist", "index.js"))).toBe(true)
     expect(existsSync(path.join(targetDir, "bun.lock"))).toBe(false)
   })
+
+  it("copies node_modules when present in source", async () => {
+    mkdirSync(path.join(sourceDir, "node_modules", "comment-json"), { recursive: true })
+    writeFileSync(path.join(sourceDir, "node_modules", "comment-json", "index.js"), "module.exports = {}")
+
+    const { copyPluginFiles } = await import("../src/installer")
+    copyPluginFiles(targetDir, sourceDir)
+
+    expect(existsSync(path.join(targetDir, "node_modules", "comment-json", "index.js"))).toBe(true)
+  })
+
+  it("skips node_modules when not present in source", async () => {
+    const { copyPluginFiles } = await import("../src/installer")
+    copyPluginFiles(targetDir, sourceDir)
+
+    expect(existsSync(path.join(targetDir, "node_modules"))).toBe(false)
+  })
 })
 
 describe("installDependencies", () => {
@@ -229,6 +246,36 @@ describe("installPlugin", () => {
 
     const { installPlugin } = await import("../src/installer")
     expect(() => installPlugin({ global: false, execFn: mockExec, sourceDir: "/nonexistent/path/that/does/not/exist" })).not.toThrow()
+  })
+
+  it("skips installDependencies when node_modules already copied", async () => {
+    mkdirSync(path.join(sourceDir, "node_modules", "comment-json"), { recursive: true })
+    writeFileSync(path.join(sourceDir, "node_modules", "comment-json", "index.js"), "module.exports = {}")
+
+    const calls: string[] = []
+    const mockExec: ExecFn = (cmd: string) => {
+      calls.push(cmd)
+      return ""
+    }
+
+    const { installPlugin } = await import("../src/installer")
+    installPlugin({ global: false, execFn: mockExec, sourceDir })
+
+    expect(existsSync(path.join(tempDir, ".opencode", "plugins", "opencode-lark-bridge", "node_modules", "comment-json", "index.js"))).toBe(true)
+    expect(calls.filter((c) => c.includes("install"))).toHaveLength(0)
+  })
+
+  it("calls installDependencies when node_modules not present", async () => {
+    const calls: string[] = []
+    const mockExec: ExecFn = (cmd: string) => {
+      calls.push(cmd)
+      return ""
+    }
+
+    const { installPlugin } = await import("../src/installer")
+    installPlugin({ global: false, execFn: mockExec, sourceDir })
+
+    expect(calls.some((c) => c.includes("bun install"))).toBe(true)
   })
 })
 
