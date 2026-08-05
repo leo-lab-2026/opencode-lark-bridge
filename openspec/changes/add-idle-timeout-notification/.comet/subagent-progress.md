@@ -59,7 +59,15 @@
 - review_mode: standard — 未命中风险信号（28 行单文件测试），无 task reviewer
 - task-checkoff: PASS（plan Step 1 + openspec 3.3）
 
-## Task 7: README 文档
+## Task 7: README 文档（DONE）
+
+- plan: Task 7（Step 1-5 全勾选）；openspec: 4.1 已勾选
+- 阶段: checkoff
+- 提交: b07ea0d（docs: document stalled session notification feature）
+- review_mode: standard — 未命中风险信号（22 行纯文档），无 task reviewer
+- task-checkoff: PASS（plan Step 1 + openspec 4.1）
+
+## Task 8: 全量验证 + 勾选 tasks.md
 
 - 阶段: 待派发 implementer
-- 风险信号: 预期无（纯文档，review_mode: off 等价低风险，仍按 standard 走）
+- 风险信号: 预期无（只运行验证 + 勾选，无代码改动）

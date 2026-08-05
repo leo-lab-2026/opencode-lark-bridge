@@ -13,12 +13,12 @@
 
 ## 3. 测试
 
-- [ ] 3.1 新增 `tests/stall-mapper.test.ts`：模板渲染、`idleDuration` 格式化、缺失字段降级
-- [ ] 3.2 `tests/event-handler.test.ts`：活动追踪（created/事件更新/idle 清理）、`scanStalledSessions` 超时触发、未超时跳过、节流窗口内不重复、恢复活动重置、retry 事件流不触发 stall、stall 不污染 erroredSessions
+- [x] 3.1 新增 `tests/stall-mapper.test.ts`：模板渲染、`idleDuration` 格式化、缺失字段降级
+- [x] 3.2 `tests/event-handler.test.ts`：活动追踪（created/事件更新/idle 清理）、`scanStalledSessions` 超时触发、未超时跳过、节流窗口内不重复、恢复活动重置、retry 事件流不触发 stall、stall 不污染 erroredSessions
 - [x] 3.3 `tests/integration.test.ts`：静默会话超时 → 飞书通知端到端链路
-- [ ] 3.4 `tests/index.test.ts`：定时器按 `stall_check_interval_ms` 创建（间隔注入可测）
+- [x] 3.4 `tests/index.test.ts`：定时器按 `stall_check_interval_ms` 创建（间隔注入可测）
 
 ## 4. 文档与验证
 
 - [x] 4.1 `README.md`：新增 stall 通知说明（配置项、默认行为、与 retry 通知分工、进程崩溃属能力边界）
-- [ ] 4.2 运行 `npm run build`（tsc strict 零错误）与 `bun test` 全绿
+- [x] 4.2 运行 `npm run build`（tsc strict 零错误）与 `bun test` 全绿
