@@ -13,6 +13,7 @@ OpenCode 插件：将权限申请、任务完成、问答与错误信息通知�
 - 通知内容包含工具名、操作类型和受影响资源（如文件路径）
 - 支持按事件类别配置通知目标与模板
 - 毫秒级去重窗口，防止通知轰炸
+- 监听会话活动，对无进展超过 `stall_timeout_ms`（默认 10 分钟）的会话发送停滞提醒（stall），并按 `stall_interval_ms`（默认 60 分钟）节流防刷屏；由内存定时器按 `stall_check_interval_ms`（默认 1 分钟）扫描
 - 所有日志写入文件，不干扰终端
 
 ## 安装
@@ -291,6 +292,11 @@ cp opencode-lark-bridge.config.example.jsonc opencode-lark-bridge.config.jsonc
 | `categories.retry.retry_interval_ms` | 同一会话重复提醒间隔 | `900000`（15 分钟）              |
 | `categories.retry.notify_subagent` | 子代理重试是否通知      | `false`                             |
 | `categories.retry.retry_detail`  | 是否包含尝试次数与下次重试时间 | `true`                       |
+| `categories.stall.target` | 停滞通知目标 | `{ "chat_id": "oc_xxxx" }` |
+| `categories.stall.template` | 停滞通知模板 | `⚠️ OpenCode 会话停滞\nProject: {projectName}\nSession: {sessionTitle}\n无进展时长: {idleDuration}` |
+| `categories.stall.stall_timeout_ms` | 无进展多久算停滞 | `600000`（10 分钟） |
+| `categories.stall.stall_interval_ms` | 同一会话重复提醒间隔 | `3600000`（60 分钟） |
+| `categories.stall.stall_check_interval_ms` | 定时器扫描间隔 | `60000`（1 分钟） |
 
 ### 权限类型覆盖
 
@@ -391,6 +397,22 @@ opencode 的错误对象形状为 `{ name, data: { message, statusCode } }`（�
 > **与模型 fallback 机制的关系**：社区 fallback 方案（如 omo/oms）在 429 时自动切换备选模型，减少重试发生频率；本功能是通知层兜底——无论是否配置 fallback，重试进行中用户都能及时知晓。二者互补：fallback 负责"让工作继续"，通知负责"让用户知情"。本插件不实现 fallback，模型切换属 opencode 侧配置。
 
 **注意**：`opencode-lark-bridge.config.jsonc` 已被 `.gitignore` 排除，不会提交到版本控制。
+
+### 停滞通知
+
+opencode 事件流是异步推送制：模型挂起、SSE 超时、网络黑洞等场景下，会话持续 busy 但不产生任何事件，纯事件驱动无法感知"没有事件发生"。插件维护会话活动追踪表，收到任意事件（含 `session.created`、`session.status`、消息增量等）都会刷新该会话的最后活动时间；子代理事件会级联刷新父会话。内存定时器按 `stall_check_interval_ms`（默认 1 分钟）扫描：距最后活动超过 `stall_timeout_ms`（默认 10 分钟）的活跃会话发送停滞提醒；同一会话提醒后 `stall_interval_ms`（默认 60 分钟）内不重复。会话 idle/error/deleted 时自动清理追踪。
+
+配置项为 `categories.stall`。模板变量如下：
+
+| 变量 | 说明 | 示例 |
+| --- | --- | --- |
+| `{projectName}` | 项目名（未缓存时降级 unknown） | `my-project` |
+| `{sessionTitle}` | 会话标题（未缓存时降级 unknown） | `Fix login bug` |
+| `{idleDuration}` | 无进展时长（中文可读） | `10 分钟` / `1 小时 30 分钟` |
+
+与重试通知的分工：重试期间 `session.status`（retry）事件持续发布，属于"有活动"，不会触发停滞提醒；停滞通知仅覆盖完全静默的场景（无任何事件）。停滞提醒不会改变会话语义——恢复后 `session.idle` 仍正常发送完成通知。
+
+> **能力边界**：停滞检测为插件进程内内存定时器，进程崩溃（如 OpenCode 崩溃）时插件随之消亡，无法自救发通知；子代理会话自身不单独提醒，其卡住由父会话超时覆盖。
 
 ## 编译与项目级安装（开发者）
 
