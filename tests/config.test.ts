@@ -47,4 +47,11 @@ describe("getEffectiveTarget", () => {
     const withRetry = { ...cfg, categories: { ...cfg.categories, retry: { target: { chat_id: "oc_retry" } } } }
     expect(getEffectiveTarget(withRetry, "retry").chat_id).toBe("oc_retry")
   })
+  it("falls back to default target for stall category when not configured", () => {
+    expect(getEffectiveTarget(cfg, "stall").chat_id).toBe("default")
+  })
+  it("uses stall category target when configured", () => {
+    const withStall = { ...cfg, categories: { ...cfg.categories, stall: { target: { chat_id: "oc_stall" } } } }
+    expect(getEffectiveTarget(withStall, "stall").chat_id).toBe("oc_stall")
+  })
 })

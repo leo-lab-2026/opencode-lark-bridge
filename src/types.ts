@@ -27,6 +27,10 @@ export interface CategoryConfig {
   retry_interval_ms?: number           // retry 类别：重复提醒节流窗口，默认 900_000（15 分钟）
   notify_subagent?: boolean            // retry 类别：子代理重试是否通知，默认 false
   retry_detail?: boolean               // retry 类别：是否包含 attempt/next 详情，默认 true
+  // stall 类别专用
+  stall_timeout_ms?: number            // 无进展超时阈值，默认 600_000（10 分钟）
+  stall_interval_ms?: number           // 重复提醒节流窗口，默认 3_600_000（60 分钟）
+  stall_check_interval_ms?: number     // 定时器扫描间隔，默认 60_000（1 分钟）
 }
 
 export interface PluginConfig {
