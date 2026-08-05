@@ -11,6 +11,8 @@ import type { Logger } from "./types.js"
 const CONFIG_FILE = "opencode-lark-bridge.config.jsonc"
 const GLOBAL_OPENCODE_DIR = path.join(os.homedir(), ".config", "opencode")
 
+let stallTimer: ReturnType<typeof setInterval> | null = null
+
 export function resolveConfigPath(
   ctx: { directory: string },
   globalOpencodeDir: string = GLOBAL_OPENCODE_DIR
@@ -63,7 +65,10 @@ export const OpenCodeLarkBridge = async (ctx: any) => {
   const handler = createEventHandler(config, notifier, logger)
 
   const stallCheckMs = config.categories.stall?.stall_check_interval_ms ?? 60_000
-  setInterval(() => { void handler.scanStalledSessions() }, stallCheckMs)
+  if (stallTimer !== null) {
+    clearInterval(stallTimer)
+  }
+  stallTimer = setInterval(() => { void handler.scanStalledSessions() }, stallCheckMs)
 
   function resolveProjectName(ctx: any): string {
     const explicitName = ctx?.project?.name

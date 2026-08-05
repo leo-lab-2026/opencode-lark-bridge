@@ -1,4 +1,4 @@
-import { describe, it, expect, beforeEach, afterEach } from "bun:test"
+import { describe, it, expect, beforeEach, afterEach, spyOn } from "bun:test"
 import { existsSync, mkdtempSync, writeFileSync, rmSync, readFileSync, mkdirSync } from "node:fs"
 import { tmpdir } from "node:os"
 import path from "node:path"
@@ -78,6 +78,27 @@ describe("plugin entry", () => {
       const hooks = await plugin({ directory: tempDir, worktree: tempDir } as any)
       expect(hooks["session.idle"]).toBeFunction()
     })
+
+    it("clears previous stall timer on plugin re-initialization", async () => {
+      writeFileSync(
+        path.join(tempDir, ".opencode", "opencode-lark-bridge.config.jsonc"),
+        JSON.stringify({
+          app_id: "test-app",
+          app_secret: "test-secret",
+          default_target: { chat_id: "test-chat" },
+          log_file: logFile,
+        })
+      )
+
+      const clearSpy = spyOn(globalThis, "clearInterval")
+      try {
+        await plugin({ directory: tempDir, worktree: tempDir } as any)
+        await plugin({ directory: tempDir, worktree: tempDir } as any)
+        expect(clearSpy).toHaveBeenCalled()
+      } finally {
+        clearSpy.mockRestore()
+      }
+    }, 30000)
 
     it("sends completion notification via session.idle hook", async () => {
       writeFileSync(
