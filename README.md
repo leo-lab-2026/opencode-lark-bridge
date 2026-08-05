@@ -281,7 +281,7 @@ cp opencode-lark-bridge.config.example.jsonc opencode-lark-bridge.config.jsonc
 | `default_target.user_id`         | 默认通知用户 ID       | `ou_xxxx`                          |
 | `debounce_ms`                    | 去重窗口（毫秒）        | `3000`                             |
 | `log_file`                       | 日志文件路径          | `./logs/app.log`                   |
-| `categories.permission.template` | 权限通知模板          | `🔔 {tool} {operation} {resource}` |
+| `categories.permission.template` | 权限通知模板          | `🔔 权限申请\nProject: {projectName}\n{tool} {operation} {resource}` |
 | `categories.completion.target`   | 完成通知目标          | `{ "chat_id": "oc_xxxx" }`         |
 | `categories.completion.template` | 完成通知模板          | `✅ {projectName}: {sessionTitle}`  |
 | `categories.error.target`        | 错误通知目标          | `{ "chat_id": "oc_xxxx" }`         |
@@ -300,7 +300,7 @@ cp opencode-lark-bridge.config.example.jsonc opencode-lark-bridge.config.jsonc
 
 ### 权限类型覆盖
 
-`{tool}` / `{operation}` / `{resource}` 三个模板变量对所有 OpenCode 权限类型都生效。`{resource}` 的取值规则：
+`{tool}` / `{operation}` / `{resource}` / `{projectName}` 四个模板变量对所有 OpenCode 权限类型都生效。`{resource}` 的取值规则：
 
 | 权限类型                 | `{resource}` 提取字段                       | 示例                        |
 | -------------------- | --------------------------------------- | ------------------------- |
@@ -316,6 +316,8 @@ cp opencode-lark-bridge.config.example.jsonc opencode-lark-bridge.config.jsonc
 | `lsp`                | 走 fallback chain（`metadata.filepath` 等） | 视 LSP 请求而定                |
 
 字段找不到时 `{resource}` 优雅降级为字符串 `unknown`，不会抛错。
+
+`{projectName}` 为当前项目名（`ctx.project.name` → worktree/directory basename），缺失或空白时降级为字符串 `unknown`；用户自定义模板未包含 `{projectName}` 时通知文本不含 Project 行。
 
 ### 任务完成通知
 

@@ -1,0 +1,9 @@
+{
+  "openspec_proposal": "openspec/changes/permission-notification-project-info/proposal.md",
+  "openspec_design": "openspec/changes/permission-notification-project-info/design.md",
+  "openspec_tasks": "openspec/changes/permission-notification-project-info/tasks.md",
+  "openspec_delta_spec": "openspec/changes/permission-notification-project-info/specs/permission-notification/spec.md",
+  "handoff_context": "openspec/changes/archive/2026-08-05-permission-notification-project-info/.comet/handoff/spec-context.json",
+  "handoff_markdown": "openspec/changes/archive/2026-08-05-permission-notification-project-info/.comet/handoff/spec-context.md",
+  "archive_directory": "openspec/changes/archive/2026-08-05-permission-notification-project-info"
+}

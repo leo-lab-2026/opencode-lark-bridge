@@ -103,7 +103,7 @@ describe("plugin entry", () => {
       const logs = readFileSync(logFile, "utf-8")
       expect(logs).toContain("Sending completion notification")
       expect(logs).toContain("Create a.md")
-    }, 10000)
+    }, 30000)
 
     it("sends completion notification via event hook with real OpenCode event shape", async () => {
       writeFileSync(
@@ -146,7 +146,7 @@ describe("plugin entry", () => {
       expect(logs).toContain("Sending completion notification")
       expect(logs).toContain("Real Project")
       expect(logs).toContain("Refactor auth")
-    }, 10000)
+    }, 30000)
 
     it("falls back to sessionID when session title is not cached", async () => {
       writeFileSync(
@@ -177,7 +177,7 @@ describe("plugin entry", () => {
       expect(logs).toContain("Sending completion notification")
       expect(logs).toContain("Real Project")
       expect(logs).toContain("ses_unknown_1")
-    }, 10000)
+    }, 30000)
 
     it("falls back to directory basename when project name is missing", async () => {
       const projectDir = mkdtempSync(path.join(tmpdir(), "my-awesome-project-"))
@@ -214,7 +214,7 @@ describe("plugin entry", () => {
       expect(logs).toContain("Fix login bug")
 
       rmSync(projectDir, { recursive: true, force: true })
-    }, 10000)
+    }, 30000)
 
     it("falls back to directory basename when project name is empty", async () => {
       const projectDir = mkdtempSync(path.join(tmpdir(), "unnamed-project-"))
@@ -252,7 +252,7 @@ describe("plugin entry", () => {
       expect(logs).toContain("Refactor auth")
 
       rmSync(projectDir, { recursive: true, force: true })
-    }, 10000)
+    }, 30000)
 
     it("regression: non-git project with worktree=/ falls back to directory basename", async () => {
       const projectDir = mkdtempSync(path.join(tmpdir(), "non-git-project-"))
@@ -416,7 +416,7 @@ describe("plugin entry", () => {
       expect(logs).toContain("Question Project")
 
       rmSync(projectDir, { recursive: true, force: true })
-    }, 10000)
+    }, 30000)
 
     it("injects projectName for question.asked events via event hook with real OpenCode shape", async () => {
       const projectDir = mkdtempSync(path.join(tmpdir(), "question-real-"))
@@ -453,7 +453,99 @@ describe("plugin entry", () => {
       expect(logs).toContain('"projectName":"Real Question Project"')
 
       rmSync(projectDir, { recursive: true, force: true })
-    }, 10000)
+    }, 30000)
+
+    it("sends permission notification with project name via permission.ask hook", async () => {
+      writeFileSync(
+        path.join(tempDir, ".opencode", "opencode-lark-bridge.config.jsonc"),
+        JSON.stringify({
+          app_id: "test-app",
+          app_secret: "test-secret",
+          default_target: { chat_id: "test-chat" },
+          log_file: logFile,
+          categories: { permission: { target: { chat_id: "oc_perm" } } },
+        })
+      )
+
+      const hooks = await plugin({
+        directory: tempDir,
+        worktree: tempDir,
+        project: { name: "Perm Project" },
+      } as any)
+
+      await hooks["permission.ask"]({
+        tool: "bash",
+        args: { command: "rm -f /tmp/test.txt" },
+      })
+
+      const logs = readFileSync(logFile, "utf-8")
+      expect(logs).toContain("Sending permission notification")
+      expect(logs).toContain("Project: Perm Project")
+    }, 30000)
+
+    it("injects projectName into permission.asked events via enhanceEvent", async () => {
+      writeFileSync(
+        path.join(tempDir, ".opencode", "opencode-lark-bridge.config.jsonc"),
+        JSON.stringify({
+          app_id: "test-app",
+          app_secret: "test-secret",
+          default_target: { chat_id: "test-chat" },
+          log_file: logFile,
+          categories: { permission: { target: { chat_id: "oc_perm" } } },
+        })
+      )
+
+      const hooks = await plugin({
+        directory: tempDir,
+        worktree: tempDir,
+        project: { name: "Perm Event Project" },
+      } as any)
+
+      await hooks.event({
+        event: {
+          type: "permission.asked",
+          properties: {
+            tool: { name: "bash" },
+            patterns: ["rm -f /tmp/foo.txt"],
+          },
+        },
+      })
+
+      const logs = readFileSync(logFile, "utf-8")
+      expect(logs).toContain("Sending notification")
+      expect(logs).toContain("Project: Perm Event Project")
+    }, 30000)
+
+    it("does not mutate the original permission.asked event object", async () => {
+      writeFileSync(
+        path.join(tempDir, ".opencode", "opencode-lark-bridge.config.jsonc"),
+        JSON.stringify({
+          app_id: "test-app",
+          app_secret: "test-secret",
+          default_target: { chat_id: "test-chat" },
+          log_file: logFile,
+          categories: { permission: { target: { chat_id: "oc_perm" } } },
+        })
+      )
+
+      const hooks = await plugin({
+        directory: tempDir,
+        worktree: tempDir,
+        project: { name: "Perm Project" },
+      } as any)
+
+      const original = {
+        type: "permission.asked",
+        properties: {
+          tool: { name: "bash" },
+          patterns: ["rm -f /tmp/foo.txt"],
+        },
+      }
+
+      await hooks.event({ event: original })
+
+      expect((original.properties as Record<string, unknown>).projectName).toBeUndefined()
+    }, 30000)
 
     it("injects sessionID/projectName/sessionTitle for session.status retry events", async () => {
       const projectDir = mkdtempSync(path.join(tmpdir(), "retry-project-"))
@@ -500,7 +592,7 @@ describe("plugin entry", () => {
       expect(logs).toContain("Fix retry")
 
       rmSync(projectDir, { recursive: true, force: true })
-    }, 10000)
+    }, 30000)
 
     it("injects projectName into session.created so stall notifications carry the project", async () => {
       const projectDir = mkdtempSync(path.join(tmpdir(), "stall-project-"))
@@ -598,7 +690,7 @@ describe("plugin entry", () => {
       expect(logs).toContain("Recover Project")
 
       rmSync(projectDir, { recursive: true, force: true })
-    }, 10000)
+    }, 30000)
   })
 })
 

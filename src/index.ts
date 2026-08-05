@@ -133,6 +133,16 @@ export const OpenCodeLarkBridge = async (ctx: any) => {
         },
       }
     }
+    if (type === "permission.asked") {
+      const props = event?.properties ?? event ?? {}
+      return {
+        ...event,
+        properties: {
+          ...props,
+          projectName: nonEmpty(props?.projectName) ?? projectName,
+        },
+      }
+    }
     if (type === "session.error") {
       const props = event?.properties ?? event ?? {}
       const sessionID = props?.sessionID ?? props?.id ?? "unknown"
@@ -188,7 +198,7 @@ export const OpenCodeLarkBridge = async (ctx: any) => {
       const category = "permission"
       const target = getEffectiveTarget(config, category)
       const categoryConfig = config.categories[category] || {}
-      const message = mapPermissionEvent(input, target, categoryConfig.template)
+      const message = mapPermissionEvent({ ...input, projectName }, target, categoryConfig.template)
       logger.info("Sending permission notification", { target, text: message.text })
       await notifier.send(message)
     },
