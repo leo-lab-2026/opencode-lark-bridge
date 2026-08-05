@@ -102,6 +102,56 @@ describe("EventHandler", () => {
     expect(sent[0].text).toContain("Refactor auth")
   })
 
+  it("skips completion notification when sessionID is unresolvable (unknown)", async () => {
+    const sent: any[] = []
+    const notifier: Notifier = { send: async (m) => { sent.push(m) } }
+    const config: PluginConfig = {
+      ...makeConfig(1000),
+      categories: { completion: { target: { chat_id: "oc_completion" } } },
+    }
+    const handler = createEventHandler(config, notifier, noopLogger)
+    await handler.handle({
+      type: "session.idle",
+      properties: { type: "session.idle", sessionID: "unknown", projectName: "tmp", sessionTitle: "unknown" },
+    })
+    expect(sent).toHaveLength(0)
+  })
+
+  it("skips completion notification when sessionID is missing entirely", async () => {
+    const sent: any[] = []
+    const notifier: Notifier = { send: async (m) => { sent.push(m) } }
+    const config: PluginConfig = {
+      ...makeConfig(1000),
+      categories: { completion: { target: { chat_id: "oc_completion" } } },
+    }
+    const handler = createEventHandler(config, notifier, noopLogger)
+    await handler.handle({
+      type: "session.idle",
+      properties: { type: "session.idle", projectName: "tmp", sessionTitle: "unknown" },
+    })
+    expect(sent).toHaveLength(0)
+  })
+
+  it("still sends completion for real sessionID after skipping unknown", async () => {
+    const sent: any[] = []
+    const notifier: Notifier = { send: async (m) => { sent.push(m) } }
+    const config: PluginConfig = {
+      ...makeConfig(0),
+      categories: { completion: { target: { chat_id: "oc_completion" } } },
+    }
+    const handler = createEventHandler(config, notifier, noopLogger)
+    await handler.handle({
+      type: "session.idle",
+      properties: { type: "session.idle", sessionID: "unknown", projectName: "tmp", sessionTitle: "unknown" },
+    })
+    await handler.handle({
+      type: "session.idle",
+      properties: { sessionID: "ses_real_1", projectName: "Real", sessionTitle: "Work" },
+    })
+    expect(sent).toHaveLength(1)
+    expect(sent[0].text).toContain("Real")
+  })
+
   it("skips notification for subagent session idle", async () => {
     const sent: any[] = []
     const notifier: Notifier = { send: async (m) => { sent.push(m) } }
