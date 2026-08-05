@@ -7,6 +7,7 @@ OpenCode 插件：将权限申请、任务完成、问答与错误信息通知�
 - 监听 OpenCode `permission.asked` 事件
 - 监听 OpenCode `session.idle` 事件，在主会话完成时发送通知
 - 监听 OpenCode `session.error` 事件，在致命错误（模型 API 400/429/500、额度耗尽、上下文溢出等）导致会话停止时发送通知
+- 监听 OpenCode `session.status` 事件的重试状态（429 限流、额度耗尽、5xx 服务器错误等可重试错误），达到配置阈值后按节流窗口发送重试提醒；支持子代理开关（`notify_subagent`）与内容详略开关（`retry_detail`）
 - 通过 `session.created` 的 `parentID` 自动识别并过滤子代理/子任务完成事件
 - 通过 `lark-cli` 以 bot 身份向指定飞书用户或群聊发送通知
 - 通知内容包含工具名、操作类型和受影响资源（如文件路径）
@@ -284,6 +285,12 @@ cp opencode-lark-bridge.config.example.jsonc opencode-lark-bridge.config.jsonc
 | `categories.completion.template` | 完成通知模板          | `✅ {projectName}: {sessionTitle}`  |
 | `categories.error.target`        | 错误通知目标          | `{ "chat_id": "oc_xxxx" }`         |
 | `categories.error.template`      | 错误通知模板          | `⚠️ {errorType}: {errorMessage}`   |
+| `categories.retry.target`        | 重试通知目标          | `{ "chat_id": "oc_xxxx" }`         |
+| `categories.retry.template`      | 重试通知模板          | `⚠️ 重试中：{message}（第 {attempt} 次）` |
+| `categories.retry.retry_threshold` | attempt 触发阈值（达到才通知） | `1`（首次即通知）            |
+| `categories.retry.retry_interval_ms` | 同一会话重复提醒间隔 | `900000`（15 分钟）              |
+| `categories.retry.notify_subagent` | 子代理重试是否通知      | `false`                             |
+| `categories.retry.retry_detail`  | 是否包含尝试次数与下次重试时间 | `true`                       |
 
 ### 权限类型覆盖
 
@@ -347,18 +354,40 @@ cp opencode-lark-bridge.config.example.jsonc opencode-lark-bridge.config.jsonc
 
 ### 错误通知
 
-插件监听 OpenCode `session.error` 事件。当致命错误（模型 API 错误 400/429/500、额度耗尽、上下文溢出等）导致会话停止时，会发送 `categories.error` 配置的通知。与完成通知不同，子代理产生的错误也会推送通知——子代理错误可能阻塞父会话，用户需及时知晓。
+插件监听 OpenCode `session.error` 事件。当致命错误（模型 API 错误 400/401/402/422/500、额度耗尽、上下文溢出等不可重试错误）导致会话停止时，会发送 `categories.error` 配置的通知。与完成通知不同，子代理产生的错误也会推送通知——子代理错误可能阻塞父会话，用户需及时知晓。
+
+opencode 的错误对象形状为 `{ name, data: { message, statusCode } }`（如 `APIError (429)`）；`{errorType}` 在存在 `statusCode` 时附加状态码显示。兼容旧形状 `{ type, message }`（存在时优先）。
 
 配置项为 `categories.error`（见下方模板变量节）。模板变量如下：
 
 | 变量               | 说明               | 示例                           |
 | ---------------- | ---------------- | ---------------------------- |
-| `{errorType}`    | 错误类型            | `ProviderError`              |
+| `{errorType}`    | 错误类型（opencode 实际形状下附加 HTTP 状态码，如 `APIError (429)`） | `ProviderError`              |
 | `{errorMessage}` | 错误消息（可能含 HTTP 状态码） | `429 Too Many Requests`       |
 | `{sessionID}`    | 会话 ID（缺失为 unknown） | `sess-123`                   |
 | `{projectName}`  | 项目名             | `My Project`                 |
 
 各字段缺失时降级为字符串 `unknown`。
+
+### 重试通知
+
+插件监听 OpenCode `session.status` 事件中 `status.type === "retry"` 的状态。模型 API 返回 429 限流、额度耗尽、5xx 服务器错误等可重试错误时，opencode 会**无限重试**且不触发 `session.error`——重试期间插件原先完全静默。现在首次达到 `retry_threshold`（默认 1，即首次重试）立即发送通知；重试持续期间，同一会话最多每 `retry_interval_ms`（默认 15 分钟）提醒一次，避免通知轰炸。
+
+与错误通知的边界：retry 通知仅在"重试进行中"发送；重试恢复（状态变回 busy/idle）后，会话的 `session.idle` 仍按 `categories.completion` 正常发送完成通知，且不会因曾发生重试而跳过（retry 不写入错误会话标记）。
+
+子代理会话的重试默认不通知（`notify_subagent: false`），可配置开启；开启后按子代理自身 sessionID 独立节流。`retry_detail: false` 时通知不包含尝试次数与下次重试时间。
+
+配置项为 `categories.retry`。模板变量如下：
+
+| 变量            | 说明                                       | 示例              |
+| --------------- | ------------------------------------------ | ----------------- |
+| `{projectName}` | 项目名                                     | `my-project`      |
+| `{sessionTitle}`| 会话标题（未缓存时回退会话 ID）              | `Fix login bug`   |
+| `{message}`     | 重试原因                                   | `Provider is overloaded` |
+| `{attempt}`     | 当前尝试次数（缺失或 `retry_detail=false` 时为空） | `3`         |
+| `{next}`        | 下次重试时间（北京时间 `MM-DD HH:mm`，缺失或 `retry_detail=false` 时为空） | `06-15 23:06` |
+
+> **与模型 fallback 机制的关系**：社区 fallback 方案（如 omo/oms）在 429 时自动切换备选模型，减少重试发生频率；本功能是通知层兜底——无论是否配置 fallback，重试进行中用户都能及时知晓。二者互补：fallback 负责"让工作继续"，通知负责"让用户知情"。本插件不实现 fallback，模型切换属 opencode 侧配置。
 
 **注意**：`opencode-lark-bridge.config.jsonc` 已被 `.gitignore` 排除，不会提交到版本控制。
 
