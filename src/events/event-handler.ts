@@ -24,6 +24,13 @@ export function createEventHandler(config: PluginConfig, notifier: Notifier, log
       ?? (typeof (props.data as Record<string, unknown>)?.sessionID === "string" ? (props.data as Record<string, unknown>).sessionID as string : undefined)
   }
 
+  function extractTrackedSessionID(props: Record<string, unknown>): string | undefined {
+    const info = props.info as Record<string, unknown> | undefined
+    return (typeof props.sessionID === "string" ? props.sessionID : undefined)
+      ?? (typeof (props.data as Record<string, unknown>)?.sessionID === "string" ? (props.data as Record<string, unknown>).sessionID as string : undefined)
+      ?? (typeof info?.id === "string" ? info.id : undefined)
+  }
+
   function extractToolNameFromProps(props: Record<string, unknown>): string {
     const t = props?.tool
     return extractToolName(t)
@@ -109,6 +116,7 @@ export function createEventHandler(config: PluginConfig, notifier: Notifier, log
       visited.add(current)
       const parentID = subagentParentMap.get(current)
       if (!parentID) break
+      if (!lastActive.has(parentID)) break
       lastActive.set(parentID, now)
       current = parentID
     }
@@ -127,7 +135,10 @@ export function createEventHandler(config: PluginConfig, notifier: Notifier, log
     const timeout = categoryConfig.stall_timeout_ms ?? 600_000
     for (const [sessionID, lastActiveAt] of lastActive) {
       if (subagentSessionIds.has(sessionID)) continue
-      if (now - lastActiveAt < timeout) continue
+      if (now - lastActiveAt < timeout) {
+        logger.debug("Skipping session, not stalled yet", { sessionID, idleMs: now - lastActiveAt })
+        continue
+      }
       const target = getEffectiveTarget(config, category)
       const meta = stallMeta.get(sessionID) ?? {}
       const idleDuration = formatDuration(now - lastActiveAt)
@@ -142,16 +153,17 @@ export function createEventHandler(config: PluginConfig, notifier: Notifier, log
       const eventType = event?.type ?? event?.name
 
       const props = (event?.properties ?? event) as Record<string, unknown>
-      const info = props.info as Record<string, unknown> | undefined
-      const entrySessionID = extractSessionID(props)
-        ?? (typeof info?.id === "string" ? info.id : undefined)
-        ?? "unknown"
+      const entrySessionID = extractTrackedSessionID(props) ?? "unknown"
       if (entrySessionID !== "unknown") {
         touchActivity(entrySessionID, event)
       }
 
       if (eventType === "session.created") {
         trackSubagent(event)
+        const createdID = extractTrackedSessionID((event?.properties ?? event) as Record<string, unknown>)
+        if (createdID && subagentParentMap.has(createdID)) {
+          touchActivity(createdID, event)
+        }
         return
       }
 

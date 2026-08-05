@@ -691,4 +691,28 @@ describe("stall tracking", () => {
     const completion = sent.filter((s) => typeof s.text === "string" && s.text.includes("Task Completed"))
     expect(completion).toHaveLength(1)
   })
+
+  it("does not track question ids as session activity", async () => {
+    const sent: any[] = []
+    const notifier: Notifier = { send: async (m) => { sent.push(m) } }
+    const handler = createEventHandler(makeStallConfig(50), notifier, noopLogger)
+    await handler.handle({
+      type: "question.asked",
+      properties: { id: "deploy-env-001", projectName: "P", questions: [{ question: "Q?", header: "H", options: [] }] }
+    })
+    await new Promise((r) => setTimeout(r, 150))
+    await handler.scanStalledSessions()
+    expect(stallOnly(sent)).toHaveLength(0)
+  })
+
+  it("cascades touch on subagent created immediately", async () => {
+    const sent: any[] = []
+    const notifier: Notifier = { send: async (m) => { sent.push(m) } }
+    const handler = createEventHandler(makeStallConfig(50), notifier, noopLogger)
+    await handler.handle({ type: "session.created", properties: { info: { id: "ses_parent", title: "Parent" } } })
+    await new Promise((r) => setTimeout(r, 80))
+    await handler.handle({ type: "session.created", properties: { info: { id: "ses_child", parentID: "ses_parent" } } })
+    await handler.scanStalledSessions()
+    expect(stallOnly(sent)).toHaveLength(0)
+  })
 })
