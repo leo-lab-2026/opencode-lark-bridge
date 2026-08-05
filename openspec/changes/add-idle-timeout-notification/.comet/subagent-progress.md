@@ -31,7 +31,17 @@
   - re-review: all findings addressed (3/3)，无新 breakage
 - task-checkoff: PASS（plan Step 1 + openspec 2.2）
 
-## Task 4: 扫描完整化（节流 + 失败容错）
+## Task 4: 扫描完整化（节流 + 失败容错）（DONE）
+
+- plan: Task 4（Step 1-5 全勾选）；openspec: 2.3 已勾选
+- 阶段: checkoff
+- 提交: 563750a（feat: throttle stall notifications and tolerate send failures）
+- RED/GREEN: RED 3 fail（节流连发/异常冒泡）→ GREEN 220 pass/0 fail；npm run build 零错误
+- review_mode: standard — 未命中风险信号（85 行，仅 scanStalledSessions 函数体 + 5 用例），无 task reviewer
+- 注: 2 个配对保护用例（re-sends after interval / categories.stall.target）在无节流骨架下天然通过，已在报告中注明
+- task-checkoff: PASS（plan Step 1 + openspec 2.3）
+
+## Task 5: index.ts 定时器接入
 
 - 阶段: 待派发 implementer
-- 风险信号: 预期无新信号（在 Task 3 已建的 scanStalledSessions 上补节流与 try/catch，~50 行）
+- 风险信号: 预期无（~10 行 + 2 测试，mock setInterval）

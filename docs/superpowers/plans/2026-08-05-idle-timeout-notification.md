@@ -691,7 +691,7 @@ git commit -m "feat: throttle stall notifications and tolerate send failures"
 - Consumes: Task 4 的 `handler.scanStalledSessions(): Promise<void>`；Task 1 的 `config.categories.stall?.stall_check_interval_ms`
 - Produces: 插件启动即建立定时扫描循环
 
-- [ ] **Step 1: 编写失败测试（追加到 `tests/index.test.ts` 顶部 describe 之后）**
+- [x] **Step 1: 编写失败测试（追加到 `tests/index.test.ts` 顶部 describe 之后）**
 
 ```typescript
 describe("stall scan timer", () => {
@@ -749,12 +749,12 @@ describe("stall scan timer", () => {
 })
 ```
 
-- [ ] **Step 2: 运行测试确认失败**
+- [x] **Step 2: 运行测试确认失败**
 
 Run: `bun test tests/index.test.ts`
 Expected: FAIL —— `intervals` 为空（`src/index.ts` 尚未创建定时器）
 
-- [ ] **Step 3: 在 `src/index.ts` 的 `const handler = createEventHandler(...)` 之后接入定时器**
+- [x] **Step 3: 在 `src/index.ts` 的 `const handler = createEventHandler(...)` 之后接入定时器**
 
 ```typescript
   const handler = createEventHandler(config, notifier, logger)
@@ -765,12 +765,12 @@ Expected: FAIL —— `intervals` 为空（`src/index.ts` 尚未创建定时器�
 
 注意：无配置文件分支（`return { event: async () => {} }`）在 `createEventHandler` 之前，定时器只在配置有效时创建。
 
-- [ ] **Step 4: 运行测试确认通过**
+- [x] **Step 4: 运行测试确认通过**
 
 Run: `bun test tests/index.test.ts`
 Expected: PASS（原有用例 + 2 个定时器用例全绿）
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```bash
 git add src/index.ts tests/index.test.ts
