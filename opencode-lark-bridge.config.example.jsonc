@@ -34,8 +34,20 @@
 // === 错误通知模板变量（error） ===
 //   {projectName}  项目名
 //   {sessionID}    会话 ID（缺失时为 unknown）
-//   {errorType}    错误类型（如 ProviderError、ContextOverflowError）
+//   {errorType}    错误类型（opencode 实际形状下附加 HTTP 状态码，如 APIError (429)）
 //   {errorMessage} 错误消息文本（可能包含 HTTP 状态码）
+//
+// === 重试通知模板变量（retry） ===
+//   {projectName}  项目名
+//   {sessionTitle} 会话标题（未缓存时回退会话 ID）
+//   {message}      重试原因（如 "Provider is overloaded"）
+//   {attempt}      当前尝试次数（缺失或 retry_detail=false 时为空）
+//   {next}         下次重试时间，北京时间 MM-DD HH:mm（缺失或 retry_detail=false 时为空）
+//
+// === 停滞通知模板变量（stall） ===
+//   {projectName}  项目名（未缓存时降级 unknown）
+//   {sessionTitle} 会话标题（未缓存时降级 unknown）
+//   {idleDuration} 无进展时长（如 "10 分钟"、"1 小时 30 分钟"）
 {
   "app_id": "cli_xxxxxxxxxxxxxxxx",
   "app_secret": "xxxxxxxxxxxxxxxx",
@@ -68,6 +80,21 @@
     "error": {
       // "target": { "chat_id": "oc_xxxx" },  // 可选：未设置则用 default_target
       "template": "⚠️ OpenCode Error\nProject: {projectName}\nSession: {sessionID}\nType: {errorType}\nMessage: {errorMessage}"
+    },
+    "retry": {
+      // "target": { "chat_id": "oc_xxxx" },  // 可选：未设置则用 default_target
+      "template": "⚠️ OpenCode 重试中\nProject: {projectName}\nSession: {sessionTitle}\n原因: {message}\n尝试: {attempt} 次\n下次重试: {next}",
+      // "retry_threshold": 1,          // 可选：attempt 达到该值才通知，默认 1（首次即通知）
+      // "retry_interval_ms": 900000,   // 可选：同一会话重复提醒间隔，默认 900000（15 分钟）
+      // "notify_subagent": false,      // 可选：子代理重试是否通知，默认 false
+      // "retry_detail": true           // 可选：是否包含尝试次数与下次重试时间，默认 true
+    },
+    "stall": {
+      // "target": { "chat_id": "oc_xxxx" },  // 可选：未设置则用 default_target
+      "template": "⚠️ OpenCode 会话停滞\nProject: {projectName}\nSession: {sessionTitle}\n无进展时长: {idleDuration}",
+      // "stall_timeout_ms": 600000,        // 可选：无进展多久算停滞，默认 600000（10 分钟）
+      // "stall_interval_ms": 3600000,      // 可选：同一会话重复提醒间隔，默认 3600000（60 分钟）
+      // "stall_check_interval_ms": 60000   // 可选：定时器扫描间隔，默认 60000（1 分钟）
     }
   }
 }

@@ -1,0 +1,30 @@
+{
+  "change": "add-idle-timeout-notification",
+  "phase": "design",
+  "mode": "beta",
+  "canonical_spec": "openspec",
+  "generated_by": "comet-handoff.sh",
+  "context_hash": "edef31370a0f1c776dca2370fad8272e2eb2341808bcd5b9e6b6b0a30ec7179d",
+  "files": [
+    {
+      "path": "openspec/changes/add-idle-timeout-notification/proposal.md",
+      "sha256": "9491ce9cf7d8d1c152f62a7b5b1c0e697922715161b3c658589fcaecbcbc56ed",
+      "role": "supporting"
+    },
+    {
+      "path": "openspec/changes/add-idle-timeout-notification/design.md",
+      "sha256": "ff5e279986e135a7cc85ae2aefc3f403b4c4418317aa5bd5338ee00473359856",
+      "role": "supporting"
+    },
+    {
+      "path": "openspec/changes/add-idle-timeout-notification/tasks.md",
+      "sha256": "bf51090f58bda19b6055109a509563d5ac8ccb9a25788318b6f4d845b41bf465",
+      "role": "supporting"
+    },
+    {
+      "path": "openspec/changes/add-idle-timeout-notification/specs/stall-notification/spec.md",
+      "sha256": "4848318bfc0873a7c023bbc79c20356e446b1864200c53d1a490ccab8501a7e6",
+      "role": "spec"
+    }
+  ]
+}

@@ -1,0 +1,44 @@
+{
+  "version": 1,
+  "batch_id": "session-stall-notifications",
+  "created_at": "2026-08-05",
+  "summary": "让 opencode 停止工作流程的所有情形都应飞书通知：429/5xx 无限重试（session.status retry）与模型挂起无进展（busy 静默）两类静默停滞补齐通知；进程崩溃属插件能力外不纳入。",
+  "changes": [
+    {
+      "name": "add-retry-notification",
+      "target": "监听 session.status 的 retry 状态（429/5xx/额度耗尽无限重试），按配置阈值发飞书通知；首次 + 定期提醒；子代理默认不通知（配置开关）；通知内容可配置化；补充 fallback 关联说明；修复 error-mapper 字段提取（opencode 错误对象 {name,data:{message}} 形状，原提取 type/message 恒为 unknown）",
+      "scope": "event-handler/session.status 分支、retry-mapper、error-mapper 字段提取修复、categories.retry 配置、enhanceEvent、测试、README/示例配置",
+      "non_goals": [
+        "不修改 opencode 重试行为",
+        "不实现模型 fallback（用户侧 opencode 配置，proposal 仅说明关联）",
+        "不改变现有 permission/completion/question/error 通知",
+        "不处理无事件信号的挂起（由 add-idle-timeout-notification 负责）"
+      ],
+      "acceptance_scenarios": [
+        "attempt >= retry_threshold（默认 1）触发通知",
+        "首次立即 + 超过 retry_interval_ms（默认 15 分钟）再次提醒",
+        "429 恢复后 completion 正常发送（不污染 erroredSessions）",
+        "子代理默认不通知，开启开关后按自身 sessionID 独立节流",
+        "通知内容字段（message/attempt/next/详情）可配置开关"
+      ],
+      "status": "selected"
+    },
+    {
+      "name": "add-idle-timeout-notification",
+      "target": "会话长时间无任何进展（busy 静默：模型挂起、SSE 超时、网络黑洞）超时提醒；定时器扫描活跃会话最后活动时间，超过阈值发飞书通知",
+      "scope": "会话活动追踪（事件更新 lastActive）、内存定时器、categories.stall_timeout 配置（或独立类别）、测试、README",
+      "non_goals": [
+        "不监听 retry 状态（由 add-retry-notification 负责，retry 期间有事件流）",
+        "不做进程外 watchdog（opencode 崩溃监控超出插件能力）",
+        "不改变现有通知行为"
+      ],
+      "acceptance_scenarios": [
+        "busy 会话超过 idle_timeout_ms 无任何事件 → 提醒",
+        "事件到达（delta/tool/permission/question）重置活动时间",
+        "session.idle/error 后停止追踪该会话",
+        "子代理会话策略与 retry 通知一致"
+      ],
+      "status": "pending"
+    }
+  ]
+}

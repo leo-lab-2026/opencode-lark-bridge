@@ -62,6 +62,9 @@ export const OpenCodeLarkBridge = async (ctx: any) => {
 
   const handler = createEventHandler(config, notifier, logger)
 
+  const stallCheckMs = config.categories.stall?.stall_check_interval_ms ?? 60_000
+  setInterval(() => { void handler.scanStalledSessions() }, stallCheckMs)
+
   function resolveProjectName(ctx: any): string {
     const explicitName = ctx?.project?.name
     if (typeof explicitName === "string" && explicitName.trim()) {
@@ -111,7 +114,14 @@ export const OpenCodeLarkBridge = async (ctx: any) => {
     const type = event?.type ?? event?.name
     if (type === "session.created" || type === "session.updated") {
       cacheSessionTitle(event)
-      return event
+      const props = event?.properties ?? event ?? {}
+      return {
+        ...event,
+        properties: {
+          ...props,
+          projectName: nonEmpty(props?.projectName) ?? projectName,
+        },
+      }
     }
     if (type === "question.asked") {
       const props = event?.properties ?? event ?? {}
@@ -132,6 +142,19 @@ export const OpenCodeLarkBridge = async (ctx: any) => {
           ...props,
           sessionID,
           projectName: nonEmpty(props?.projectName) ?? projectName,
+        },
+      }
+    }
+    if (type === "session.status") {
+      const props = event?.properties ?? event ?? {}
+      const sessionID = props?.sessionID ?? props?.id ?? "unknown"
+      return {
+        ...event,
+        properties: {
+          ...props,
+          sessionID,
+          projectName: nonEmpty(props?.projectName) ?? projectName,
+          sessionTitle: resolveSessionTitle(sessionID, event),
         },
       }
     }

@@ -78,4 +78,64 @@ describe("mapErrorEvent", () => {
     expect(result.text).toContain("s1")
     expect(result.text).toContain("T")
   })
+
+  it("extracts opencode namedError shape with statusCode appended", () => {
+    const event = {
+      type: "session.error",
+      properties: {
+        sessionID: "sess-123",
+        error: { name: "APIError", data: { message: "429 Too Many Requests", statusCode: 429, isRetryable: true } },
+        projectName: "My Project",
+      },
+    }
+    const result = mapErrorEvent(event, target)
+    expect(result.text).toContain("APIError (429)")
+    expect(result.text).toContain("429 Too Many Requests")
+    expect(result.text).toContain("sess-123")
+  })
+
+  it("extracts namedError shape without statusCode", () => {
+    const event = {
+      type: "session.error",
+      properties: {
+        sessionID: "s1",
+        error: { name: "ProviderAuthError", data: { message: "Invalid API key" } },
+      },
+    }
+    const result = mapErrorEvent(event, target)
+    expect(result.text).toContain("ProviderAuthError")
+    expect(result.text).toContain("Invalid API key")
+  })
+
+  it("prefers legacy type/message over name/data when both present", () => {
+    const event = {
+      type: "session.error",
+      properties: {
+        sessionID: "s1",
+        error: {
+          type: "LegacyType",
+          message: "legacy message",
+          name: "APIError",
+          data: { message: "data message" },
+        },
+      },
+    }
+    const result = mapErrorEvent(event, target)
+    expect(result.text).toContain("LegacyType")
+    expect(result.text).toContain("legacy message")
+    expect(result.text).not.toContain("APIError")
+    expect(result.text).not.toContain("data message")
+  })
+
+  it("supports {statusCode} placeholder in custom template", () => {
+    const event = {
+      type: "session.error",
+      properties: {
+        sessionID: "s1",
+        error: { name: "APIError", data: { message: "boom", statusCode: 500 } },
+      },
+    }
+    const result = mapErrorEvent(event, target, "SC={statusCode} TYPE={errorType}")
+    expect(result.text).toBe("SC=500 TYPE=APIError (500)")
+  })
 })

@@ -8,8 +8,15 @@ export function mapErrorEvent(event: any, target: NotificationTarget, template?:
     ?? (typeof props.id === "string" ? props.id : undefined)
     ?? "unknown"
   const error = props.error as Record<string, unknown> | undefined
-  const errorType = typeof error?.type === "string" ? error.type : "unknown"
-  const errorMessage = typeof error?.message === "string" ? error.message : "unknown"
+  const errorData = (error?.data as Record<string, unknown> | undefined) ?? {}
+  const rawType = typeof error?.type === "string" ? error.type
+    : typeof error?.name === "string" ? error.name
+    : "unknown"
+  const errorMessage = typeof error?.message === "string" ? error.message
+    : typeof errorData?.message === "string" ? errorData.message
+    : "unknown"
+  const statusCode = typeof errorData?.statusCode === "number" ? errorData.statusCode : undefined
+  const errorType = statusCode !== undefined ? `${rawType} (${statusCode})` : rawType
   const projectName = typeof props.projectName === "string" ? props.projectName : "unknown"
 
   const text = (template ?? DEFAULT_TEMPLATE)
@@ -17,6 +24,7 @@ export function mapErrorEvent(event: any, target: NotificationTarget, template?:
     .replace(/{errorType}/g, errorType)
     .replace(/{errorMessage}/g, errorMessage)
     .replace(/{projectName}/g, projectName)
+    .replace(/{statusCode}/g, statusCode !== undefined ? String(statusCode) : "")
 
   return { text, target }
 }
