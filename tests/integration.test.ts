@@ -29,4 +29,43 @@ describe("end-to-end flow", () => {
     expect(command).toContain("oc_target")
     expect(command).toContain("/tmp/a.txt")
   })
+
+  it("sends retry notification end-to-end with throttle and recovery completion", async () => {
+    const configPath = `${TEST_DIR}/config-retry.jsonc`
+    await writeFile(configPath, JSON.stringify({
+      app_id: "a", app_secret: "b",
+      default_target: { chat_id: "oc_target" },
+      debounce_ms: 0,
+      log_file: `${TEST_DIR}/app-retry.log`,
+      categories: { retry: { target: { chat_id: "oc_retry" }, retry_interval_ms: 60_000 } },
+    }))
+    const config = loadConfig(configPath)
+    const logger = createFileLogger(config.log_file)
+    let calls = 0
+    let command = ""
+    const notifier = createLarkNotifier(logger, async (cmd) => { calls++; command = cmd; return { exitCode: 0, stdout: "", stderr: "" } })
+    const handler = createEventHandler(config, notifier, logger)
+
+    const retryEvent = {
+      type: "session.status",
+      properties: {
+        sessionID: "sess-1",
+        status: { type: "retry", attempt: 1, message: "Provider is overloaded", next: 1750000000000 },
+        projectName: "P",
+        sessionTitle: "T",
+      },
+    }
+
+    await handler.handle(retryEvent)
+    expect(calls).toBe(1)
+    expect(command).toContain("oc_retry")
+    expect(command).toContain("Provider is overloaded")
+
+    await handler.handle(retryEvent)
+    expect(calls).toBe(1)
+
+    await handler.handle({ type: "session.idle", properties: { sessionID: "sess-1", projectName: "P", sessionTitle: "T" } })
+    expect(calls).toBe(2)
+    expect(command).toContain("Task Completed")
+  })
 })
