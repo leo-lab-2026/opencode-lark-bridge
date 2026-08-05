@@ -17,6 +17,23 @@ export function createEventHandler(config: PluginConfig, notifier: Notifier, log
   const lastActive = new Map<string, number>()
   const stallLastSent = new Map<string, number>()
   const stallMeta = new Map<string, { projectName?: string; sessionTitle?: string }>()
+  const finishedSessions = new Set<string>()
+
+  function isLifecycleEvent(event: any): boolean {
+    const eventType = event?.type ?? event?.name
+    if (
+      eventType === "session.created"
+      || eventType === "session.updated"
+      || eventType === "session.deleted"
+      || eventType === "session.idle"
+      || eventType === "session.error"
+    ) return true
+    if (eventType === "session.status") {
+      const status = (event?.properties ?? event)?.status
+      return typeof status === "object" && status?.type === "idle"
+    }
+    return false
+  }
 
   function extractSessionID(props: Record<string, unknown>): string | undefined {
     const info = props.info as Record<string, unknown> | undefined
@@ -118,6 +135,7 @@ export function createEventHandler(config: PluginConfig, notifier: Notifier, log
       visited.add(current)
       const parentID = subagentParentMap.get(current)
       if (!parentID) break
+      if (finishedSessions.has(parentID)) break
       if (!lastActive.has(parentID)) break
       lastActive.set(parentID, now)
       current = parentID
@@ -165,7 +183,14 @@ export function createEventHandler(config: PluginConfig, notifier: Notifier, log
       const props = (event?.properties ?? event) as Record<string, unknown>
       const entrySessionID = extractTrackedSessionID(props) ?? "unknown"
       if (entrySessionID !== "unknown") {
-        touchActivity(entrySessionID, event)
+        if (finishedSessions.has(entrySessionID)) {
+          if (!isLifecycleEvent(event)) {
+            finishedSessions.delete(entrySessionID)
+            touchActivity(entrySessionID, event)
+          }
+        } else {
+          touchActivity(entrySessionID, event)
+        }
       }
 
       if (eventType === "session.created") {
@@ -182,6 +207,7 @@ export function createEventHandler(config: PluginConfig, notifier: Notifier, log
         const sessionID = extractTrackedSessionID(props) ?? "unknown"
         if (sessionID !== "unknown") {
           clearStallTracking(sessionID)
+          finishedSessions.add(sessionID)
           logger.debug("Cleared stall tracking for deleted session", { sessionID })
         }
         return
@@ -199,6 +225,7 @@ export function createEventHandler(config: PluginConfig, notifier: Notifier, log
         clearStallTracking(sessionID)
 
         if (isSubagent(event)) {
+          finishedSessions.add(sessionID)
           const parentID = subagentParentMap.get(sessionID)
           if (parentID) {
             pendingChildren.get(parentID)?.delete(sessionID)
@@ -218,6 +245,7 @@ export function createEventHandler(config: PluginConfig, notifier: Notifier, log
           logger.debug("Skipping completion notification, children still pending", { sessionID, pending: Array.from(pending) })
           return
         }
+        finishedSessions.add(sessionID)
         const now = Date.now()
         const last = lastSent.get(sessionID)
         if (last && now - last < config.debounce_ms) {
