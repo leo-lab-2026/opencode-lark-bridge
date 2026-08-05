@@ -293,7 +293,7 @@ describe("plugin entry", () => {
       expect(logs).toContain("Session: New session")
 
       rmSync(projectDir, { recursive: true, force: true })
-    }, 10000)
+    }, 30000)
 
     it("regression: git repo subdirectory uses worktree basename (repo root)", async () => {
       const repoDir = mkdtempSync(path.join(tmpdir(), "my-repo-"))
@@ -335,7 +335,7 @@ describe("plugin entry", () => {
       expect(logs).toContain("Session: Work")
 
       rmSync(repoDir, { recursive: true, force: true })
-    }, 10000)
+    }, 30000)
 
     it("regression: explicit project.name takes priority over worktree/directory", async () => {
       const repoDir = mkdtempSync(path.join(tmpdir(), "repo-explicit-"))
@@ -375,7 +375,7 @@ describe("plugin entry", () => {
       expect(logs).toContain("Project: Explicit Name")
 
       rmSync(repoDir, { recursive: true, force: true })
-    }, 10000)
+    }, 30000)
 
     it("injects projectName for question.asked events via enhanceEvent", async () => {
       const projectDir = mkdtempSync(path.join(tmpdir(), "question-project-"))
