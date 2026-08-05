@@ -346,4 +346,21 @@ describe("EventHandler", () => {
     expect(errorNotifs).toHaveLength(1)
     expect(completionNotifs).toHaveLength(1)
   })
+
+  it("sends error notification for opencode namedError shape", async () => {
+    const sent: any[] = []
+    const notifier: Notifier = { send: async (m) => { sent.push(m) } }
+    const handler = createEventHandler(makeConfig(100), notifier, noopLogger)
+    await handler.handle({
+      type: "session.error",
+      properties: {
+        sessionID: "s1",
+        error: { name: "APIError", data: { message: "429 Too Many Requests", statusCode: 429 } },
+        projectName: "Proj",
+      },
+    })
+    expect(sent).toHaveLength(1)
+    expect(sent[0].text).toContain("APIError (429)")
+    expect(sent[0].text).toContain("429 Too Many Requests")
+  })
 })
