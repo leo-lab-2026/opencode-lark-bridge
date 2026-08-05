@@ -67,7 +67,15 @@
 - review_mode: standard — 未命中风险信号（22 行纯文档），无 task reviewer
 - task-checkoff: PASS（plan Step 1 + openspec 4.1）
 
-## Task 8: 全量验证 + 勾选 tasks.md
+## Task 8: 全量验证 + 勾选 tasks.md（DONE）
 
-- 阶段: 待派发 implementer
-- 风险信号: 预期无（只运行验证 + 勾选，无代码改动）
+- plan: Task 8（Step 1-4 全勾选）；openspec: 3.1/3.2/3.4/4.2 已勾选；13 项全部 [x]
+- 阶段: checkoff
+- 提交: cd0a22c（chore: complete add-idle-timeout-notification tasks，修正后不含 .opencode/opencode.jsonc 与 package-lock.json）
+- 证据: npm run build PASS（tsc 零错误，dist/events/stall-mapper.js 存在）；bun test 223 pass/0 fail/16 files（index.test.ts 既有 flaky 超时单独复跑通过）
+- review_mode: standard — 无代码改动，无 task reviewer
+- 注: Task 8 implementer 误提交了用户要求保留不处理的 .opencode/opencode.jsonc + package-lock.json，已 reset 撤出，恢复未跟踪状态
+
+## Final review（standard）
+
+- 阶段: 待派发最终轻量 code reviewer（正确性/安全/边界）
