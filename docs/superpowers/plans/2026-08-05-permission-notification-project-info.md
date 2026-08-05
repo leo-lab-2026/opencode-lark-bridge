@@ -2,6 +2,7 @@
 change: permission-notification-project-info
 design-doc: docs/superpowers/specs/2026-08-05-permission-notification-project-info-design.md
 base-ref: 2af2a09d86839c795d7f4e97f44afaa58f3e85e5
+archived-with: 2026-08-05-permission-notification-project-info
 ---
 
 # permission 通知携带项目信息 — 实施计划

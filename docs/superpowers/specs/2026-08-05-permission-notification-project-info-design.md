@@ -2,6 +2,8 @@
 comet_change: permission-notification-project-info
 role: technical-design
 canonical_spec: openspec
+archived-with: 2026-08-05-permission-notification-project-info
+status: final
 ---
 
 # 深度设计：permission 通知携带项目信息
