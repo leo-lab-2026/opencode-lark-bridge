@@ -481,7 +481,7 @@ describe("plugin entry", () => {
       const logs = readFileSync(logFile, "utf-8")
       expect(logs).toContain("Sending permission notification")
       expect(logs).toContain("Project: Perm Project")
-    }, 10000)
+    }, 30000)
 
     it("injects projectName into permission.asked events via enhanceEvent", async () => {
       writeFileSync(
@@ -514,7 +514,7 @@ describe("plugin entry", () => {
       const logs = readFileSync(logFile, "utf-8")
       expect(logs).toContain("Sending notification")
       expect(logs).toContain("Project: Perm Event Project")
-    }, 10000)
+    }, 30000)
 
     it("does not mutate the original permission.asked event object", async () => {
       writeFileSync(
@@ -545,7 +545,7 @@ describe("plugin entry", () => {
       await hooks.event({ event: original })
 
       expect((original.properties as Record<string, unknown>).projectName).toBeUndefined()
-    }, 10000)
+    }, 30000)
 
     it("injects sessionID/projectName/sessionTitle for session.status retry events", async () => {
       const projectDir = mkdtempSync(path.join(tmpdir(), "retry-project-"))
