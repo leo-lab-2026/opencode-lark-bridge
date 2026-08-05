@@ -76,6 +76,20 @@
 - review_mode: standard — 无代码改动，无 task reviewer
 - 注: Task 8 implementer 误提交了用户要求保留不处理的 .opencode/opencode.jsonc + package-lock.json，已 reset 撤出，恢复未跟踪状态
 
-## Final review（standard）
+## Final review（standard）（DONE）
 
-- 阶段: 待派发最终轻量 code reviewer（正确性/安全/边界）
+- 阶段: final-fix
+- 提交: 7320226（fix: inject projectName on session.created and align deleted cleanup）
+- final reviewer（轻量）发现: 【Important】I-1 created 未注入 projectName → 静默场景 stall 通知 Project 恒为 unknown；【Minor】M-1 deleted 分支提取器不对称
+- fix wave 1: 7320226 修复（enhanceEvent created/updated 注入 projectName + deleted 改用 extractTrackedSessionID + 2 新测试）
+- re-review: all findings addressed (2/2)，无新 breakage；Verdict 通过
+- M-2~M-5（deferred minors，final reviewer triage 可 defer）:
+  - M-2: question.asked 无 sessionID 不 touch（"等用户"与"模型卡死"无法区分，合理取舍；真实事件带 sessionID 则自动满足 spec）
+  - M-3: 发送失败后重试需等满节流窗口（与 retry 先例一致，注释性权衡）
+  - M-4: 定时器回调无 rejection 兜底（scan 内无实际抛错路径，低风险）
+  - M-5: 未超时 debug 日志无测试断言（可 defer）
+
+## 收尾
+
+- build 证据: npm run build 零错误（Task 8 + 修复轮）；bun test 225 pass/0 fail
+- 待办: 运行 comet guard build --apply 推进 phase
