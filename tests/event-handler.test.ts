@@ -14,6 +14,13 @@ function makeConfig(debounce_ms: number): PluginConfig {
   }
 }
 
+function makeStallConfig(timeout_ms: number, interval_ms = 60_000): PluginConfig {
+  return {
+    ...makeConfig(100),
+    categories: { stall: { stall_timeout_ms: timeout_ms, stall_interval_ms: interval_ms } }
+  }
+}
+
 describe("EventHandler", () => {
   it("sends permission event", async () => {
     const sent: any[] = []
@@ -568,5 +575,120 @@ describe("EventHandler", () => {
     expect(sent).toHaveLength(1)
     expect(sent[0].target.user_id).toBe("ou_retry")
     expect(sent[0].text).not.toContain("尝试")
+  })
+})
+
+describe("stall tracking", () => {
+  const stallOnly = (sent: any[]) => sent.filter((s) => typeof s.text === "string" && s.text.includes("会话停滞"))
+
+  it("tracks created session and sends stall notification after timeout", async () => {
+    const sent: any[] = []
+    const notifier: Notifier = { send: async (m) => { sent.push(m) } }
+    const handler = createEventHandler(makeStallConfig(50), notifier, noopLogger)
+    await handler.handle({ type: "session.created", properties: { info: { id: "ses_1", title: "Long task" } } })
+    await new Promise((r) => setTimeout(r, 150))
+    await handler.scanStalledSessions()
+    expect(stallOnly(sent)).toHaveLength(1)
+    expect(stallOnly(sent)[0].text).toContain("Long task")
+    expect(stallOnly(sent)[0].text).toContain("无进展时长")
+  })
+
+  it("resets stall timer on activity events", async () => {
+    const sent: any[] = []
+    const notifier: Notifier = { send: async (m) => { sent.push(m) } }
+    const handler = createEventHandler(makeStallConfig(50), notifier, noopLogger)
+    await handler.handle({ type: "session.created", properties: { info: { id: "ses_1", title: "T" } } })
+    await new Promise((r) => setTimeout(r, 100))
+    await handler.handle({ type: "session.status", properties: { sessionID: "ses_1", status: { type: "busy" } } })
+    await handler.scanStalledSessions()
+    expect(stallOnly(sent)).toHaveLength(0)
+    await new Promise((r) => setTimeout(r, 100))
+    await handler.scanStalledSessions()
+    expect(stallOnly(sent)).toHaveLength(1)
+  })
+
+  it("retry event flow updates activity and does not trigger stall", async () => {
+    const sent: any[] = []
+    const notifier: Notifier = { send: async (m) => { sent.push(m) } }
+    const handler = createEventHandler(makeStallConfig(50), notifier, noopLogger)
+    await handler.handle({ type: "session.created", properties: { info: { id: "ses_1", title: "T" } } })
+    await new Promise((r) => setTimeout(r, 100))
+    await handler.handle({
+      type: "session.status",
+      properties: { sessionID: "ses_1", status: { type: "retry", attempt: 1, message: "m" }, projectName: "P" },
+    })
+    await handler.scanStalledSessions()
+    expect(stallOnly(sent)).toHaveLength(0)
+    await new Promise((r) => setTimeout(r, 100))
+    await handler.scanStalledSessions()
+    expect(stallOnly(sent)).toHaveLength(1)
+  })
+
+  it("clears tracking on session.idle", async () => {
+    const sent: any[] = []
+    const notifier: Notifier = { send: async (m) => { sent.push(m) } }
+    const handler = createEventHandler(makeStallConfig(50), notifier, noopLogger)
+    await handler.handle({ type: "session.created", properties: { info: { id: "ses_1", title: "T" } } })
+    await handler.handle({ type: "session.idle", properties: { sessionID: "ses_1", projectName: "P", sessionTitle: "T" } })
+    await new Promise((r) => setTimeout(r, 150))
+    await handler.scanStalledSessions()
+    expect(stallOnly(sent)).toHaveLength(0)
+  })
+
+  it("clears tracking on session.error", async () => {
+    const sent: any[] = []
+    const notifier: Notifier = { send: async (m) => { sent.push(m) } }
+    const handler = createEventHandler(makeStallConfig(50), notifier, noopLogger)
+    await handler.handle({ type: "session.created", properties: { info: { id: "ses_1", title: "T" } } })
+    await handler.handle({ type: "session.error", properties: { sessionID: "ses_1", error: { type: "T", message: "M" } } })
+    await new Promise((r) => setTimeout(r, 150))
+    await handler.scanStalledSessions()
+    expect(stallOnly(sent)).toHaveLength(0)
+  })
+
+  it("clears tracking on session.deleted", async () => {
+    const sent: any[] = []
+    const notifier: Notifier = { send: async (m) => { sent.push(m) } }
+    const handler = createEventHandler(makeStallConfig(50), notifier, noopLogger)
+    await handler.handle({ type: "session.created", properties: { info: { id: "ses_1", title: "T" } } })
+    await handler.handle({ type: "session.deleted", properties: { sessionID: "ses_1" } })
+    await new Promise((r) => setTimeout(r, 150))
+    await handler.scanStalledSessions()
+    expect(sent).toHaveLength(0)
+  })
+
+  it("does not notify for stalled subagent sessions", async () => {
+    const sent: any[] = []
+    const notifier: Notifier = { send: async (m) => { sent.push(m) } }
+    const handler = createEventHandler(makeStallConfig(50), notifier, noopLogger)
+    await handler.handle({ type: "session.created", properties: { info: { id: "ses_child", parentID: "ses_parent" } } })
+    await new Promise((r) => setTimeout(r, 150))
+    await handler.scanStalledSessions()
+    expect(stallOnly(sent)).toHaveLength(0)
+  })
+
+  it("cascades touch from subagent to parent session", async () => {
+    const sent: any[] = []
+    const notifier: Notifier = { send: async (m) => { sent.push(m) } }
+    const handler = createEventHandler(makeStallConfig(50), notifier, noopLogger)
+    await handler.handle({ type: "session.created", properties: { info: { id: "ses_parent", title: "Parent" } } })
+    await handler.handle({ type: "session.created", properties: { info: { id: "ses_child", parentID: "ses_parent" } } })
+    await new Promise((r) => setTimeout(r, 80))
+    await handler.handle({ type: "session.status", properties: { sessionID: "ses_child", status: { type: "busy" } } })
+    await handler.scanStalledSessions()
+    expect(stallOnly(sent)).toHaveLength(0)
+  })
+
+  it("stall notification does not pollute erroredSessions, completion still sent", async () => {
+    const sent: any[] = []
+    const notifier: Notifier = { send: async (m) => { sent.push(m) } }
+    const handler = createEventHandler(makeStallConfig(50), notifier, noopLogger)
+    await handler.handle({ type: "session.created", properties: { info: { id: "ses_1", title: "T" } } })
+    await new Promise((r) => setTimeout(r, 150))
+    await handler.scanStalledSessions()
+    expect(stallOnly(sent)).toHaveLength(1)
+    await handler.handle({ type: "session.idle", properties: { sessionID: "ses_1", projectName: "P", sessionTitle: "T" } })
+    const completion = sent.filter((s) => typeof s.text === "string" && s.text.includes("Task Completed"))
+    expect(completion).toHaveLength(1)
   })
 })

@@ -4,6 +4,7 @@ import { mapCompletionEvent } from "./completion-mapper.js"
 import { mapQuestionEvent } from "./question-mapper.js"
 import { mapErrorEvent } from "./error-mapper.js"
 import { mapRetryEvent } from "./retry-mapper.js"
+import { mapStallEvent, formatDuration } from "./stall-mapper.js"
 import { getEffectiveTarget } from "../config.js"
 
 export function createEventHandler(config: PluginConfig, notifier: Notifier, logger: Logger) {
@@ -13,6 +14,9 @@ export function createEventHandler(config: PluginConfig, notifier: Notifier, log
   const pendingChildren = new Map<string, Set<string>>()
   const erroredSessions = new Set<string>()
   const lastRetrySent = new Map<string, number>()
+  const lastActive = new Map<string, number>()
+  const stallLastSent = new Map<string, number>()
+  const stallMeta = new Map<string, { projectName?: string; sessionTitle?: string }>()
 
   function extractSessionID(props: Record<string, unknown>): string | undefined {
     return (typeof props.sessionID === "string" ? props.sessionID : undefined)
@@ -74,18 +78,90 @@ export function createEventHandler(config: PluginConfig, notifier: Notifier, log
     }
   }
 
+  function clearStallTracking(sessionID: string) {
+    lastActive.delete(sessionID)
+    stallLastSent.delete(sessionID)
+    stallMeta.delete(sessionID)
+  }
+
+  function touchActivity(sessionID: string, event: any) {
+    const now = Date.now()
+    lastActive.set(sessionID, now)
+
+    const props = (event?.properties ?? event) as Record<string, unknown>
+    const info = props.info as Record<string, unknown> | undefined
+    const title = info?.title ?? info?.sessionTitle ?? props.sessionTitle
+    const projectName = props.projectName
+    if (
+      (typeof title === "string" && title.trim())
+      || (typeof projectName === "string" && projectName.trim())
+    ) {
+      const prev = stallMeta.get(sessionID) ?? {}
+      stallMeta.set(sessionID, {
+        projectName: typeof projectName === "string" && projectName.trim() ? projectName.trim() : prev.projectName,
+        sessionTitle: typeof title === "string" && title.trim() ? title.trim() : prev.sessionTitle,
+      })
+    }
+
+    let current = sessionID
+    const visited = new Set<string>()
+    while (current && !visited.has(current)) {
+      visited.add(current)
+      const parentID = subagentParentMap.get(current)
+      if (!parentID) break
+      lastActive.set(parentID, now)
+      current = parentID
+    }
+  }
+
   function isSubagent(event: any): boolean {
     const props = (event?.properties ?? event) as Record<string, unknown>
     const sessionID = extractSessionID(props)
     return typeof sessionID === "string" && subagentSessionIds.has(sessionID)
   }
 
+  async function scanStalledSessions() {
+    const now = Date.now()
+    const category = "stall"
+    const categoryConfig = config.categories[category] || {}
+    const timeout = categoryConfig.stall_timeout_ms ?? 600_000
+    for (const [sessionID, lastActiveAt] of lastActive) {
+      if (subagentSessionIds.has(sessionID)) continue
+      if (now - lastActiveAt < timeout) continue
+      const target = getEffectiveTarget(config, category)
+      const meta = stallMeta.get(sessionID) ?? {}
+      const idleDuration = formatDuration(now - lastActiveAt)
+      const message = mapStallEvent({ ...meta, idleDuration }, target, categoryConfig.template)
+      logger.info("Sending stall notification", { sessionID, text: message.text })
+      await notifier.send(message)
+    }
+  }
+
   return {
     async handle(event: any) {
       const eventType = event?.type ?? event?.name
 
+      const props = (event?.properties ?? event) as Record<string, unknown>
+      const info = props.info as Record<string, unknown> | undefined
+      const entrySessionID = extractSessionID(props)
+        ?? (typeof info?.id === "string" ? info.id : undefined)
+        ?? "unknown"
+      if (entrySessionID !== "unknown") {
+        touchActivity(entrySessionID, event)
+      }
+
       if (eventType === "session.created") {
         trackSubagent(event)
+        return
+      }
+
+      if (eventType === "session.deleted") {
+        const props = (event?.properties ?? event) as Record<string, unknown>
+        const sessionID = extractSessionID(props) ?? "unknown"
+        if (sessionID !== "unknown") {
+          clearStallTracking(sessionID)
+          logger.debug("Cleared stall tracking for deleted session", { sessionID })
+        }
         return
       }
 
@@ -93,6 +169,10 @@ export function createEventHandler(config: PluginConfig, notifier: Notifier, log
         logger.debug("Received session.idle event", { eventType, event })
         const props = (event?.properties ?? event) as Record<string, unknown>
         const sessionID = extractSessionID(props) ?? "unknown"
+
+        if (sessionID !== "unknown") {
+          clearStallTracking(sessionID)
+        }
 
         if (isSubagent(event)) {
           const parentID = subagentParentMap.get(sessionID)
@@ -164,6 +244,10 @@ export function createEventHandler(config: PluginConfig, notifier: Notifier, log
         logger.debug("Received session.error event", { eventType, event })
         const props = (event?.properties ?? event) as Record<string, unknown>
         const sessionID = extractSessionID(props) ?? "unknown"
+
+        if (sessionID !== "unknown") {
+          clearStallTracking(sessionID)
+        }
 
         if (isSubagent(event)) {
           const parentID = subagentParentMap.get(sessionID)
@@ -259,6 +343,7 @@ export function createEventHandler(config: PluginConfig, notifier: Notifier, log
       const message = mapPermissionEvent(event, target, categoryConfig.template)
       logger.info("Sending notification", { target, text: message.text })
       await notifier.send(message)
-    }
+    },
+    scanStalledSessions,
   }
 }
