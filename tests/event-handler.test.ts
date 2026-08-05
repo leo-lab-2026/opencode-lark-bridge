@@ -715,4 +715,80 @@ describe("stall tracking", () => {
     await handler.scanStalledSessions()
     expect(stallOnly(sent)).toHaveLength(0)
   })
+
+  it("throttles repeated stall notifications within interval", async () => {
+    const sent: any[] = []
+    const notifier: Notifier = { send: async (m) => { sent.push(m) } }
+    const handler = createEventHandler(makeStallConfig(50), notifier, noopLogger)
+    await handler.handle({ type: "session.created", properties: { info: { id: "ses_1", title: "T" } } })
+    await new Promise((r) => setTimeout(r, 150))
+    await handler.scanStalledSessions()
+    await handler.scanStalledSessions()
+    await handler.scanStalledSessions()
+    expect(stallOnly(sent)).toHaveLength(1)
+  })
+
+  it("re-sends after throttle interval elapses", async () => {
+    const sent: any[] = []
+    const notifier: Notifier = { send: async (m) => { sent.push(m) } }
+    const handler = createEventHandler(makeStallConfig(50, 50), notifier, noopLogger)
+    await handler.handle({ type: "session.created", properties: { info: { id: "ses_1", title: "T" } } })
+    await new Promise((r) => setTimeout(r, 150))
+    await handler.scanStalledSessions()
+    expect(stallOnly(sent)).toHaveLength(1)
+    await new Promise((r) => setTimeout(r, 150))
+    await handler.scanStalledSessions()
+    expect(stallOnly(sent)).toHaveLength(2)
+  })
+
+  it("throttles stall independently per session", async () => {
+    const sent: any[] = []
+    const notifier: Notifier = { send: async (m) => { sent.push(m) } }
+    const handler = createEventHandler(makeStallConfig(50), notifier, noopLogger)
+    await handler.handle({ type: "session.created", properties: { info: { id: "ses_a", title: "A" } } })
+    await handler.handle({ type: "session.created", properties: { info: { id: "ses_b", title: "B" } } })
+    await new Promise((r) => setTimeout(r, 150))
+    await handler.scanStalledSessions()
+    await handler.scanStalledSessions()
+    expect(stallOnly(sent)).toHaveLength(2)
+  })
+
+  it("continues scanning when send fails", async () => {
+    const sent: any[] = []
+    const errors: string[] = []
+    const logger: Logger = {
+      info: () => {},
+      debug: () => {},
+      error: (msg: string) => { errors.push(msg) },
+    }
+    const notifier: Notifier = {
+      send: async (m) => {
+        if (m.text.includes("ses_a") || m.text.includes("A")) throw new Error("lark-cli failed")
+        sent.push(m)
+      },
+    }
+    const handler = createEventHandler(makeStallConfig(50), notifier, logger)
+    await handler.handle({ type: "session.created", properties: { info: { id: "ses_a", title: "A" } } })
+    await handler.handle({ type: "session.created", properties: { info: { id: "ses_b", title: "B" } } })
+    await new Promise((r) => setTimeout(r, 150))
+    await handler.scanStalledSessions()
+    expect(stallOnly(sent)).toHaveLength(1)
+    expect(stallOnly(sent)[0].text).toContain("B")
+    expect(errors.some((e) => e.includes("Stall notification send failed"))).toBe(true)
+  })
+
+  it("uses categories.stall.target when configured", async () => {
+    const sent: any[] = []
+    const notifier: Notifier = { send: async (m) => { sent.push(m) } }
+    const config: PluginConfig = {
+      ...makeConfig(100),
+      categories: { stall: { stall_timeout_ms: 50, stall_interval_ms: 60_000, target: { user_id: "ou_stall" } } },
+    }
+    const handler = createEventHandler(config, notifier, noopLogger)
+    await handler.handle({ type: "session.created", properties: { info: { id: "ses_1", title: "T" } } })
+    await new Promise((r) => setTimeout(r, 150))
+    await handler.scanStalledSessions()
+    expect(stallOnly(sent)).toHaveLength(1)
+    expect(stallOnly(sent)[0].target.user_id).toBe("ou_stall")
+  })
 })

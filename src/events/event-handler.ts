@@ -133,18 +133,26 @@ export function createEventHandler(config: PluginConfig, notifier: Notifier, log
     const category = "stall"
     const categoryConfig = config.categories[category] || {}
     const timeout = categoryConfig.stall_timeout_ms ?? 600_000
+    const interval = categoryConfig.stall_interval_ms ?? 3_600_000
     for (const [sessionID, lastActiveAt] of lastActive) {
       if (subagentSessionIds.has(sessionID)) continue
       if (now - lastActiveAt < timeout) {
         logger.debug("Skipping session, not stalled yet", { sessionID, idleMs: now - lastActiveAt })
         continue
       }
+      const lastSent = stallLastSent.get(sessionID)
+      if (lastSent && now - lastSent < interval) continue
+      stallLastSent.set(sessionID, now)
       const target = getEffectiveTarget(config, category)
       const meta = stallMeta.get(sessionID) ?? {}
       const idleDuration = formatDuration(now - lastActiveAt)
       const message = mapStallEvent({ ...meta, idleDuration }, target, categoryConfig.template)
       logger.info("Sending stall notification", { sessionID, text: message.text })
-      await notifier.send(message)
+      try {
+        await notifier.send(message)
+      } catch (err) {
+        logger.error("Stall notification send failed", { sessionID, error: String(err) })
+      }
     }
   }
 
