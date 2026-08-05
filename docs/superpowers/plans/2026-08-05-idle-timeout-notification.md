@@ -123,7 +123,7 @@ git commit -m "feat: add stall category config types and example"
   - `formatDuration(ms: number): string` —— 中文可读时长；`< 60s` → `"N 秒"`；`< 60min` → `"X 分钟"`（整分）或 `"X 分钟 Y 秒"`（Y>0）；`≥ 1h` → `"X 小时"`（整时）或 `"X 小时 Y 分钟"`（Y>0）
   - `mapStallEvent(meta: { projectName?: string; sessionTitle?: string; idleDuration: string }, target: NotificationTarget, template?: string): NotificationMessage` —— 占位符 `{projectName}`/`{sessionTitle}`/`{idleDuration}` 替换，缺失降级 `"unknown"`
 
-- [ ] **Step 1: 编写失败测试 `tests/stall-mapper.test.ts`**
+- [x] **Step 1: 编写失败测试 `tests/stall-mapper.test.ts`**
 
 ```typescript
 import { describe, it, expect } from "bun:test"
@@ -186,12 +186,12 @@ describe("mapStallEvent", () => {
 })
 ```
 
-- [ ] **Step 2: 运行测试确认失败**
+- [x] **Step 2: 运行测试确认失败**
 
 Run: `bun test tests/stall-mapper.test.ts`
 Expected: FAIL —— 找不到模块 `../src/events/stall-mapper`（模块不存在）
 
-- [ ] **Step 3: 实现 `src/events/stall-mapper.ts`**
+- [x] **Step 3: 实现 `src/events/stall-mapper.ts`**
 
 ```typescript
 import type { NotificationMessage, NotificationTarget } from "../types"
@@ -232,12 +232,12 @@ export function mapStallEvent(
 }
 ```
 
-- [ ] **Step 4: 运行测试确认通过**
+- [x] **Step 4: 运行测试确认通过**
 
 Run: `bun test tests/stall-mapper.test.ts`
 Expected: PASS（4 + 4 个用例全绿）
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```bash
 git add src/events/stall-mapper.ts tests/stall-mapper.test.ts
