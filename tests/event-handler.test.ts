@@ -657,6 +657,17 @@ describe("stall tracking", () => {
     expect(sent).toHaveLength(0)
   })
 
+  it("clears tracking on session.deleted with info.id shape", async () => {
+    const sent: any[] = []
+    const notifier: Notifier = { send: async (m) => { sent.push(m) } }
+    const handler = createEventHandler(makeStallConfig(50), notifier, noopLogger)
+    await handler.handle({ type: "session.created", properties: { info: { id: "ses_1", title: "T" } } })
+    await handler.handle({ type: "session.deleted", properties: { info: { id: "ses_1" } } })
+    await new Promise((r) => setTimeout(r, 150))
+    await handler.scanStalledSessions()
+    expect(sent).toHaveLength(0)
+  })
+
   it("does not notify for stalled subagent sessions", async () => {
     const sent: any[] = []
     const notifier: Notifier = { send: async (m) => { sent.push(m) } }

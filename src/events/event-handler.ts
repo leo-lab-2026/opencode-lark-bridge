@@ -177,7 +177,7 @@ export function createEventHandler(config: PluginConfig, notifier: Notifier, log
 
       if (eventType === "session.deleted") {
         const props = (event?.properties ?? event) as Record<string, unknown>
-        const sessionID = extractSessionID(props) ?? "unknown"
+        const sessionID = extractTrackedSessionID(props) ?? "unknown"
         if (sessionID !== "unknown") {
           clearStallTracking(sessionID)
           logger.debug("Cleared stall tracking for deleted session", { sessionID })

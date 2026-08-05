@@ -502,6 +502,57 @@ describe("plugin entry", () => {
       rmSync(projectDir, { recursive: true, force: true })
     }, 10000)
 
+    it("injects projectName into session.created so stall notifications carry the project", async () => {
+      const projectDir = mkdtempSync(path.join(tmpdir(), "stall-project-"))
+      mkdirSync(path.join(projectDir, ".opencode"), { recursive: true })
+      const logFileForProject = path.join(projectDir, "plugin.log")
+
+      writeFileSync(
+        path.join(projectDir, ".opencode", "opencode-lark-bridge.config.jsonc"),
+        JSON.stringify({
+          app_id: "test-app",
+          app_secret: "test-secret",
+          default_target: { chat_id: "test-chat" },
+          log_file: logFileForProject,
+          categories: {
+            stall: {
+              target: { chat_id: "oc_stall" },
+              stall_timeout_ms: 100,
+              stall_interval_ms: 60_000,
+              stall_check_interval_ms: 50,
+            },
+          },
+        })
+      )
+
+      const hooks = await plugin({
+        directory: projectDir,
+        worktree: projectDir,
+        project: { name: "Stall Project" },
+      } as any)
+
+      await hooks.event({
+        event: {
+          type: "session.created",
+          properties: { info: { id: "ses_stall_1", title: "Silent task" } },
+        },
+      })
+
+      const deadline = Date.now() + 5_000
+      let logs = ""
+      while (Date.now() < deadline) {
+        logs = readFileSync(logFileForProject, "utf-8")
+        if (logs.includes("Sending stall notification")) break
+        await new Promise((r) => setTimeout(r, 100))
+      }
+
+      expect(logs).toContain("Sending stall notification")
+      expect(logs).toContain("Stall Project")
+      expect(logs).toContain("Silent task")
+
+      rmSync(projectDir, { recursive: true, force: true })
+    }, 15000)
+
     it("sends completion notification after retry recovery via event hook", async () => {
       const projectDir = mkdtempSync(path.join(tmpdir(), "retry-recover-"))
       mkdirSync(path.join(projectDir, ".opencode"), { recursive: true })

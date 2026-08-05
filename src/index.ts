@@ -114,7 +114,14 @@ export const OpenCodeLarkBridge = async (ctx: any) => {
     const type = event?.type ?? event?.name
     if (type === "session.created" || type === "session.updated") {
       cacheSessionTitle(event)
-      return event
+      const props = event?.properties ?? event ?? {}
+      return {
+        ...event,
+        properties: {
+          ...props,
+          projectName: nonEmpty(props?.projectName) ?? projectName,
+        },
+      }
     }
     if (type === "question.asked") {
       const props = event?.properties ?? event ?? {}
