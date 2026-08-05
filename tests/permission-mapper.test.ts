@@ -222,3 +222,52 @@ describe("mapPermissionEvent", () => {
     expect(msg.text).toContain("Target: bash: rm -rf /tmp/cache")
   })
 })
+
+describe("mapPermissionEvent projectName", () => {
+  it("renders Project line with projectName from properties", () => {
+    const event = {
+      properties: {
+        tool: "bash",
+        args: { command: "rm -f /tmp/foo.txt" },
+        projectName: "My Project",
+      },
+    }
+    const msg = mapPermissionEvent(event, { chat_id: "oc_1" })
+    expect(msg.text).toContain("Project: My Project")
+  })
+
+  it("replaces {projectName} in custom template", () => {
+    const event = {
+      properties: {
+        tool: "read",
+        args: { filePath: "/etc/hosts" },
+        projectName: "My Project",
+      },
+    }
+    const msg = mapPermissionEvent(event, { chat_id: "oc_1" }, "Project: {projectName}\n{tool} wants {resource}")
+    expect(msg.text).toBe("Project: My Project\nread wants /etc/hosts")
+  })
+
+  it("falls back to unknown when projectName is missing", () => {
+    const event = { properties: { tool: "bash", args: { command: "ls" } } }
+    const msg = mapPermissionEvent(event, { chat_id: "oc_1" })
+    expect(msg.text).toContain("Project: unknown")
+  })
+
+  it("falls back to unknown when projectName is blank", () => {
+    const event = {
+      properties: { tool: "bash", args: { command: "ls" }, projectName: "   " },
+    }
+    const msg = mapPermissionEvent(event, { chat_id: "oc_1" })
+    expect(msg.text).toContain("Project: unknown")
+  })
+
+  it("keeps text unchanged when custom template has no {projectName}", () => {
+    const event = {
+      properties: { tool: "read", args: { filePath: "/etc/hosts" }, projectName: "My Project" },
+    }
+    const msg = mapPermissionEvent(event, { chat_id: "oc_1" }, "{tool} wants {resource}")
+    expect(msg.text).toBe("read wants /etc/hosts")
+    expect(msg.text).not.toContain("Project:")
+  })
+})

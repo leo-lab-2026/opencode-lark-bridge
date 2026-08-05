@@ -1,6 +1,6 @@
 import type { NotificationMessage, NotificationTarget } from "../types"
 
-const DEFAULT_TEMPLATE = "🔔 OpenCode Permission Request\nTool: {tool}\nOperation: {operation}\nTarget: {resource}"
+const DEFAULT_TEMPLATE = "🔔 OpenCode Permission Request\nProject: {projectName}\nTool: {tool}\nOperation: {operation}\nTarget: {resource}"
 
 function extractToolName(tool: unknown): string {
   if (typeof tool === "string") {
@@ -103,6 +103,7 @@ export function mapPermissionEvent(event: any, target: NotificationTarget, templ
   const tool = extractToolName(rawTool)
   const permission = typeof props.permission === "string" ? props.permission : ""
   const commandParts = tool === "bash" || permission === "bash" ? extractCommandParts(props) : null
+  const projectName = typeof props.projectName === "string" && props.projectName.trim() ? props.projectName.trim() : "unknown"
 
   const operation = commandParts?.command ?? permission ?? tool
   // 优先从 pattern 提取 resource，兼容 Permission 对象
@@ -114,5 +115,6 @@ export function mapPermissionEvent(event: any, target: NotificationTarget, templ
     .replace(/{tool}/g, tool)
     .replace(/{operation}/g, operation)
     .replace(/{resource}/g, resource)
+    .replace(/{projectName}/g, projectName)
   return { text, target }
 }
