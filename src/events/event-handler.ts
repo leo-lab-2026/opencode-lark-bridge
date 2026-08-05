@@ -92,6 +92,11 @@ export function createEventHandler(config: PluginConfig, notifier: Notifier, log
         const props = (event?.properties ?? event) as Record<string, unknown>
         const sessionID = extractSessionID(props) ?? "unknown"
 
+        if (sessionID === "unknown") {
+          logger.debug("Skipping completion notification, sessionID unresolvable", { event })
+          return
+        }
+
         if (isSubagent(event)) {
           const parentID = subagentParentMap.get(sessionID)
           if (parentID) {
