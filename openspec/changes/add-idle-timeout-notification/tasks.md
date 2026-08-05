@@ -7,7 +7,7 @@
 ## 2. 事件处理
 
 - [x] 2.1 新增 `src/events/stall-mapper.ts`：`mapStallEvent` 渲染模板（占位符 `{projectName}` `{sessionTitle}` `{idleDuration}`），`idleDuration` 格式化为可读时长
-- [ ] 2.2 `src/events/event-handler.ts`：新增 `lastActive`/`stallLastSent` 追踪表；`session.created` 加入追踪，`session.idle`/`session.error`/`session.deleted` 移除追踪；活动事件（message/tool/permission/question/session.status）更新 `touchActivity`
+- [x] 2.2 `src/events/event-handler.ts`：新增 `lastActive`/`stallLastSent` 追踪表；`session.created` 加入追踪，`session.idle`/`session.error`/`session.deleted` 移除追踪；活动事件（message/tool/permission/question/session.status）更新 `touchActivity`
 - [ ] 2.3 `src/events/event-handler.ts`：新增 `scanStalledSessions()`——超时判定（`stall_timeout_ms`）+ 重复提醒节流（`stall_interval_ms`），调用 `mapStallEvent` 发送，失败仅记日志；不写入 `erroredSessions`
 - [ ] 2.4 `src/index.ts`：初始化 `setInterval` 调用 `scanStalledSessions()`（间隔 `stall_check_interval_ms`），定时器句柄随进程生命周期
 

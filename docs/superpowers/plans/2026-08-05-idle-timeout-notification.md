@@ -258,7 +258,7 @@ git commit -m "feat: add stall event mapper with duration formatting"
 - Consumes: Task 2 的 `mapStallEvent`、`formatDuration`（`src/events/stall-mapper.js`）
 - Produces: `createEventHandler` 返回对象新增 `scanStalledSessions(): Promise<void>`，供 Task 5 `src/index.ts` 定时器调用、供 Task 6 集成测试直接调用
 
-- [ ] **Step 1: 编写失败测试（追加到 `tests/event-handler.test.ts` 末尾）**
+- [x] **Step 1: 编写失败测试（追加到 `tests/event-handler.test.ts` 末尾）**
 
 先在被追加用例上方新增辅助工厂（放在现有 `makeConfig` 之后）：
 
@@ -390,12 +390,12 @@ describe("stall tracking", () => {
 })
 ```
 
-- [ ] **Step 2: 运行测试确认失败**
+- [x] **Step 2: 运行测试确认失败**
 
 Run: `bun test tests/event-handler.test.ts`
 Expected: FAIL —— `handler.scanStalledSessions is not a function`（返回对象尚无该方法）
 
-- [ ] **Step 3: 实现活动追踪与扫描骨架**
+- [x] **Step 3: 实现活动追踪与扫描骨架**
 
 3a. 在 `src/events/event-handler.ts` 的 import 区追加：
 
@@ -523,12 +523,12 @@ import { mapStallEvent, formatDuration } from "./stall-mapper.js"
   }
 ```
 
-- [ ] **Step 4: 运行测试确认通过**
+- [x] **Step 4: 运行测试确认通过**
 
 Run: `bun test tests/event-handler.test.ts`
 Expected: PASS（原有全部用例 + 新增 9 个 stall 追踪用例全绿）
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```bash
 git add src/events/event-handler.ts tests/event-handler.test.ts
