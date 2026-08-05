@@ -454,6 +454,100 @@ describe("plugin entry", () => {
 
       rmSync(projectDir, { recursive: true, force: true })
     }, 10000)
+
+    it("injects sessionID/projectName/sessionTitle for session.status retry events", async () => {
+      const projectDir = mkdtempSync(path.join(tmpdir(), "retry-project-"))
+      mkdirSync(path.join(projectDir, ".opencode"), { recursive: true })
+      const logFileForProject = path.join(projectDir, "plugin.log")
+
+      writeFileSync(
+        path.join(projectDir, ".opencode", "opencode-lark-bridge.config.jsonc"),
+        JSON.stringify({
+          app_id: "test-app",
+          app_secret: "test-secret",
+          default_target: { chat_id: "test-chat" },
+          log_file: logFileForProject,
+          categories: { retry: { target: { chat_id: "oc_retry" } } },
+        })
+      )
+
+      const hooks = await plugin({
+        directory: projectDir,
+        worktree: projectDir,
+        project: { name: "Retry Project" },
+      } as any)
+
+      await hooks.event({
+        event: {
+          type: "session.created",
+          properties: { info: { id: "ses_r1", title: "Fix retry" } },
+        },
+      })
+
+      await hooks.event({
+        event: {
+          type: "session.status",
+          properties: {
+            sessionID: "ses_r1",
+            status: { type: "retry", attempt: 1, message: "Provider is overloaded", next: 1750000000000 },
+          },
+        },
+      })
+
+      const logs = readFileSync(logFileForProject, "utf-8")
+      expect(logs).toContain("Sending retry notification")
+      expect(logs).toContain("Retry Project")
+      expect(logs).toContain("Fix retry")
+
+      rmSync(projectDir, { recursive: true, force: true })
+    }, 10000)
+
+    it("sends completion notification after retry recovery via event hook", async () => {
+      const projectDir = mkdtempSync(path.join(tmpdir(), "retry-recover-"))
+      mkdirSync(path.join(projectDir, ".opencode"), { recursive: true })
+      const logFileForProject = path.join(projectDir, "plugin.log")
+
+      writeFileSync(
+        path.join(projectDir, ".opencode", "opencode-lark-bridge.config.jsonc"),
+        JSON.stringify({
+          app_id: "test-app",
+          app_secret: "test-secret",
+          default_target: { chat_id: "test-chat" },
+          log_file: logFileForProject,
+          categories: { retry: { target: { chat_id: "oc_retry" } } },
+        })
+      )
+
+      const hooks = await plugin({
+        directory: projectDir,
+        worktree: projectDir,
+        project: { name: "Recover Project" },
+      } as any)
+
+      await hooks.event({
+        event: {
+          type: "session.status",
+          properties: {
+            sessionID: "ses_r2",
+            status: { type: "retry", attempt: 1, message: "Provider is overloaded", next: 1750000000000 },
+          },
+        },
+      })
+
+      await hooks.event({
+        event: {
+          type: "session.idle",
+          properties: { sessionID: "ses_r2" },
+        },
+      })
+
+      const logs = readFileSync(logFileForProject, "utf-8")
+      expect(logs).toContain("Sending retry notification")
+      expect(logs).toContain("Sending completion notification")
+      expect(logs).toContain("Recover Project")
+
+      rmSync(projectDir, { recursive: true, force: true })
+    }, 10000)
   })
 })
 
