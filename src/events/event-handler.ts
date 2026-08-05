@@ -19,9 +19,11 @@ export function createEventHandler(config: PluginConfig, notifier: Notifier, log
   const stallMeta = new Map<string, { projectName?: string; sessionTitle?: string }>()
 
   function extractSessionID(props: Record<string, unknown>): string | undefined {
+    const info = props.info as Record<string, unknown> | undefined
     return (typeof props.sessionID === "string" ? props.sessionID : undefined)
       ?? (typeof props.id === "string" ? props.id : undefined)
       ?? (typeof (props.data as Record<string, unknown>)?.sessionID === "string" ? (props.data as Record<string, unknown>).sessionID as string : undefined)
+      ?? (typeof info?.id === "string" ? info.id as string : undefined)
   }
 
   function extractTrackedSessionID(props: Record<string, unknown>): string | undefined {

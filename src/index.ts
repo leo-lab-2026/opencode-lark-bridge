@@ -145,7 +145,8 @@ export const OpenCodeLarkBridge = async (ctx: any) => {
     }
     if (type === "session.error") {
       const props = event?.properties ?? event ?? {}
-      const sessionID = props?.sessionID ?? props?.id ?? "unknown"
+      const info = props.info as Record<string, unknown> | undefined
+      const sessionID = props?.sessionID ?? props?.id ?? info?.id ?? "unknown"
       return {
         ...event,
         properties: {
@@ -171,7 +172,8 @@ export const OpenCodeLarkBridge = async (ctx: any) => {
     if (type !== "session.idle") return event
 
     const props = event?.properties ?? event ?? {}
-    const sessionID = props?.sessionID ?? props?.id ?? "unknown"
+    const info = props.info as Record<string, unknown> | undefined
+    const sessionID = props?.sessionID ?? props?.id ?? info?.id ?? "unknown"
     const sessionTitle = resolveSessionTitle(sessionID, event)
 
     return {

@@ -696,6 +696,28 @@ describe("stall tracking", () => {
     expect(stallOnly(sent)).toHaveLength(0)
   })
 
+  it("clears tracking on session.idle with info.id shape", async () => {
+    const sent: any[] = []
+    const notifier: Notifier = { send: async (m) => { sent.push(m) } }
+    const handler = createEventHandler(makeStallConfig(50), notifier, noopLogger)
+    await handler.handle({ type: "session.created", properties: { info: { id: "ses_1", title: "T" } } })
+    await handler.handle({ type: "session.idle", properties: { info: { id: "ses_1", title: "T" } } })
+    await new Promise((r) => setTimeout(r, 150))
+    await handler.scanStalledSessions()
+    expect(stallOnly(sent)).toHaveLength(0)
+  })
+
+  it("clears tracking on session.error with info.id shape", async () => {
+    const sent: any[] = []
+    const notifier: Notifier = { send: async (m) => { sent.push(m) } }
+    const handler = createEventHandler(makeStallConfig(50), notifier, noopLogger)
+    await handler.handle({ type: "session.created", properties: { info: { id: "ses_1", title: "T" } } })
+    await handler.handle({ type: "session.error", properties: { info: { id: "ses_1", error: { type: "T", message: "M" } } } })
+    await new Promise((r) => setTimeout(r, 150))
+    await handler.scanStalledSessions()
+    expect(stallOnly(sent)).toHaveLength(0)
+  })
+
   it("clears tracking on session.deleted", async () => {
     const sent: any[] = []
     const notifier: Notifier = { send: async (m) => { sent.push(m) } }

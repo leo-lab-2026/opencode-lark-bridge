@@ -148,6 +148,44 @@ describe("plugin entry", () => {
       expect(logs).toContain("Refactor auth")
     }, 30000)
 
+    it("sends completion notification when session.idle arrives with info.id shape only", async () => {
+      writeFileSync(
+        path.join(tempDir, ".opencode", "opencode-lark-bridge.config.jsonc"),
+        JSON.stringify({
+          app_id: "test-app",
+          app_secret: "test-secret",
+          default_target: { chat_id: "test-chat" },
+          log_file: logFile,
+          categories: { completion: { target: { chat_id: "oc_completion" } } },
+        })
+      )
+
+      const hooks = await plugin({
+        directory: tempDir,
+        worktree: tempDir,
+        project: { name: "Real Project" },
+      } as any)
+
+      await hooks.event({
+        event: {
+          type: "session.created",
+          properties: { info: { id: "ses_real_2", title: "Refactor auth" } },
+        },
+      })
+
+      await hooks.event({
+        event: {
+          type: "session.idle",
+          properties: { info: { id: "ses_real_2", title: "Refactor auth" } },
+        },
+      })
+
+      const logs = readFileSync(logFile, "utf-8")
+      expect(logs).toContain("Sending completion notification")
+      expect(logs).toContain("Real Project")
+      expect(logs).toContain("Refactor auth")
+    }, 30000)
+
     it("falls back to sessionID when session title is not cached", async () => {
       writeFileSync(
         path.join(tempDir, ".opencode", "opencode-lark-bridge.config.jsonc"),
