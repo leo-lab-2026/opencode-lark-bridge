@@ -1,0 +1,30 @@
+{
+  "change": "permission-notification-project-info",
+  "phase": "design",
+  "mode": "beta",
+  "canonical_spec": "openspec",
+  "generated_by": "comet-handoff.sh",
+  "context_hash": "6b6f58424bad9159f423e9767617b288a3d8f042d53e21e0d2e639189d56d367",
+  "files": [
+    {
+      "path": "openspec/changes/permission-notification-project-info/proposal.md",
+      "sha256": "fffb1917b552e895327c9a3f60b68c70a6fb107fd26affc099a5481008598a10",
+      "role": "supporting"
+    },
+    {
+      "path": "openspec/changes/permission-notification-project-info/design.md",
+      "sha256": "9cd8fea594ceb1398ac30ce8a7317c5cb33ec4645ad9807b28b354ca4853bdcb",
+      "role": "supporting"
+    },
+    {
+      "path": "openspec/changes/permission-notification-project-info/tasks.md",
+      "sha256": "0bff94365c38349cd699f604e8b79d3df38dc5829c9b955b3f1c69a138c88ddd",
+      "role": "supporting"
+    },
+    {
+      "path": "openspec/changes/permission-notification-project-info/specs/permission-notification/spec.md",
+      "sha256": "541cda9b2920f917ce9537c5395bdae82426eef4cbc031d9c6cff1fcd320e3b4",
+      "role": "spec"
+    }
+  ]
+}
