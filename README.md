@@ -366,6 +366,7 @@ opencode 的错误对象形状为 `{ name, data: { message, statusCode } }`（�
 | `{errorMessage}` | 错误消息（可能含 HTTP 状态码） | `429 Too Many Requests`       |
 | `{sessionID}`    | 会话 ID（缺失为 unknown） | `sess-123`                   |
 | `{projectName}`  | 项目名             | `My Project`                 |
+| `{statusCode}`   | HTTP 状态码（仅自定义模板可用，缺失为空） | `429`                        |
 
 各字段缺失时降级为字符串 `unknown`。
 

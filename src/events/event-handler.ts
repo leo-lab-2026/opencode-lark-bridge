@@ -193,7 +193,6 @@ export function createEventHandler(config: PluginConfig, notifier: Notifier, log
       }
 
       if (eventType === "session.status") {
-        logger.debug("Received session.status event", { eventType, event })
         const props = (event?.properties ?? event) as Record<string, unknown>
         const status = props.status
         if (!status || typeof status !== "object") {
@@ -201,6 +200,7 @@ export function createEventHandler(config: PluginConfig, notifier: Notifier, log
           return
         }
         const statusRecord = status as Record<string, unknown>
+        logger.debug("Received session.status event", { sessionID: props.sessionID, statusType: statusRecord.type })
         if (statusRecord.type !== "retry") {
           logger.debug("Skipping non-retry session.status", { statusType: statusRecord.type })
           return

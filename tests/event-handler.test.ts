@@ -396,6 +396,17 @@ describe("EventHandler", () => {
     expect(sent).toHaveLength(0)
   })
 
+  it("skips retry notification when attempt is missing (defaults to 0 below threshold)", async () => {
+    const sent: any[] = []
+    const notifier: Notifier = { send: async (m) => { sent.push(m) } }
+    const handler = createEventHandler(makeConfig(100), notifier, noopLogger)
+    await handler.handle({
+      type: "session.status",
+      properties: { sessionID: "s1", status: { type: "retry", message: "m", next: 1750000000000 } },
+    })
+    expect(sent).toHaveLength(0)
+  })
+
   it("sends retry notification when attempt reaches configured threshold", async () => {
     const sent: any[] = []
     const notifier: Notifier = { send: async (m) => { sent.push(m) } }
