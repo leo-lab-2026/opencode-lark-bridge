@@ -41,7 +41,16 @@
 - 注: 2 个配对保护用例（re-sends after interval / categories.stall.target）在无节流骨架下天然通过，已在报告中注明
 - task-checkoff: PASS（plan Step 1 + openspec 2.3）
 
-## Task 5: index.ts 定时器接入
+## Task 5: index.ts 定时器接入（DONE）
+
+- plan: Task 5（Step 1-5 全勾选）；openspec: 2.4 已勾选
+- 阶段: checkoff
+- 提交: 5038f95（feat: schedule periodic stalled-session scan in plugin entry）
+- RED/GREEN: RED 23 pass/2 fail（intervals 为空）→ GREEN 25 pass/0 fail；全量 222 pass/0 fail；npm run build 零错误
+- review_mode: standard — 未命中风险信号（57 行），无 task reviewer
+- task-checkoff: PASS（plan Step 1 + openspec 2.4）
+
+## Task 6: 集成测试
 
 - 阶段: 待派发 implementer
-- 风险信号: 预期无（~10 行 + 2 测试，mock setInterval）
+- 风险信号: 预期无（1 个端到端用例，~50 行）

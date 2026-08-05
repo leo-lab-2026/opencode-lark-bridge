@@ -789,7 +789,7 @@ git commit -m "feat: schedule periodic stalled-session scan in plugin entry"
 **Interfaces:**
 - Consumes: Task 4 的 `handler.scanStalledSessions()`；`loadConfig`/`createFileLogger`/`createLarkNotifier` 现有导出
 
-- [ ] **Step 1: 追加集成测试用例（`end-to-end flow` describe 块内）**
+- [x] **Step 1: 追加集成测试用例（`end-to-end flow` describe 块内）**
 
 ```typescript
   it("sends stall notification end-to-end after silent timeout", async () => {
@@ -821,12 +821,12 @@ git commit -m "feat: schedule periodic stalled-session scan in plugin entry"
   })
 ```
 
-- [ ] **Step 2: 运行测试确认通过**
+- [x] **Step 2: 运行测试确认通过**
 
 Run: `bun test tests/integration.test.ts`
 Expected: PASS（原有 2 个用例 + 新增 1 个全绿）
 
-- [ ] **Step 3: Commit**
+- [x] **Step 3: Commit**
 
 ```bash
 git add tests/integration.test.ts
