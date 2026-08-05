@@ -6,7 +6,7 @@ base-ref: 2af2a09d86839c795d7f4e97f44afaa58f3e85e5
 
 # permission 通知携带项目信息 — 实施计划
 
-> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
+> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [x]`) syntax for tracking.
 
 **Goal:** 让 6 类通知中唯一缺项目信息的 permission 通知（含 `permission.ask` hook 与 `permission.asked` 事件两条路径）支持 `{projectName}` 模板变量，与 completion/question/retry/stall 对齐。
 
@@ -54,7 +54,7 @@ base-ref: 2af2a09d86839c795d7f4e97f44afaa58f3e85e5
 - Consumes: 现有 `mapPermissionEvent(event: any, target: NotificationTarget, template?: string): NotificationMessage` 签名不变
 - Produces: `mapPermissionEvent` 渲染 `{projectName}`（`props.projectName` 提取：`typeof === "string" && trim() 非空 ? trim() : "unknown"`）；默认模板含 `Project: {projectName}` 行（位于 Tool 行之前）
 
-- [ ] **Step 1: 写失败测试**
+- [x] **Step 1: 写失败测试**
 
 在 `tests/permission-mapper.test.ts` 文件末尾追加（保留现有 `describe("mapPermissionEvent", ...)` 块不变）：
 
@@ -109,12 +109,12 @@ describe("mapPermissionEvent projectName", () => {
 })
 ```
 
-- [ ] **Step 2: 运行测试确认失败**
+- [x] **Step 2: 运行测试确认失败**
 
 Run: `bun test tests/permission-mapper.test.ts`
 Expected: 新增 5 个用例失败——默认模板无 `Project:` 行（`toContain` 不匹配），`{projectName}` 未被替换（`toBe` 不等）。现有用例全部通过。
 
-- [ ] **Step 3: 最小实现**
+- [x] **Step 3: 最小实现**
 
 `src/events/permission-mapper.ts:3` 修改 DEFAULT_TEMPLATE：
 
@@ -138,12 +138,12 @@ const DEFAULT_TEMPLATE = "🔔 OpenCode Permission Request\nProject: {projectNam
     .replace(/{projectName}/g, projectName)
 ```
 
-- [ ] **Step 4: 运行测试确认通过**
+- [x] **Step 4: 运行测试确认通过**
 
 Run: `bun test tests/permission-mapper.test.ts`
 Expected: 全部用例 PASS（原 22 个 + 新增 5 个）。注意 "uses custom template" 用例期望 `toBe("read wants /etc/hosts")`——其模板无 `{projectName}`，replace 无匹配，仍应通过。
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```bash
 git add src/events/permission-mapper.ts tests/permission-mapper.test.ts
@@ -165,7 +165,7 @@ git commit -m "feat: support {projectName} in permission notification template"
   - `permission.ask` hook 调用 `mapPermissionEvent({ ...input, projectName }, target, categoryConfig.template)`
   - 事件路径通知日志文案：`Sending notification`（event-handler.ts:366，无需改动）；hook 路径日志文案：`Sending permission notification`（src/index.ts:192）
 
-- [ ] **Step 1: 写失败测试**
+- [x] **Step 1: 写失败测试**
 
 在 `tests/index.test.ts` 的 `describe("deployed plugin config resolution", ...)` 块内追加 3 个用例（放在 "injects projectName for question.asked events via event hook with real OpenCode shape" 用例之后）：
 
@@ -263,12 +263,12 @@ git commit -m "feat: support {projectName} in permission notification template"
     }, 10000)
 ```
 
-- [ ] **Step 2: 运行测试确认失败**
+- [x] **Step 2: 运行测试确认失败**
 
 Run: `bun test tests/index.test.ts`
 Expected: 前两个新用例失败（通知文本无 `Project:` 行）；"does not mutate" 用例此刻可能通过（enhanceEvent 尚未处理该类型时原样返回）。现有用例全部通过。
 
-- [ ] **Step 3: 最小实现**
+- [x] **Step 3: 最小实现**
 
 `src/index.ts` `enhanceEvent` 中，在 `question.asked` 分支（src/index.ts:126-135）之后、`session.error` 分支（src/index.ts:136）之前插入：
 
@@ -291,12 +291,12 @@ Expected: 前两个新用例失败（通知文本无 `Project:` 行）；"does n
       const message = mapPermissionEvent({ ...input, projectName }, target, categoryConfig.template)
 ```
 
-- [ ] **Step 4: 运行测试确认通过**
+- [x] **Step 4: 运行测试确认通过**
 
 Run: `bun test tests/index.test.ts`
 Expected: 全部用例 PASS（含新增 3 个）。
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```bash
 git add src/index.ts tests/index.test.ts
@@ -318,7 +318,7 @@ git commit -m "feat: inject projectName into permission.ask hook and permission.
 
 **注意**：两个运行配置只改两处文本（注释区加一行、template 字符串加一行），**不得覆盖用户其他修改**（如项目级配置的 `retry_threshold: 4`、`stall_timeout_ms: 200000`、真实凭证等保持原样）。
 
-- [ ] **Step 1: 修改示例配置**
+- [x] **Step 1: 修改示例配置**
 
 `opencode-lark-bridge.config.example.jsonc`：
 
@@ -334,20 +334,20 @@ b) permission 分类的 template（第 62 行）改为：
       "template":  "🔔 OpenCode 权限申请\nProject: {projectName}\n工具：{tool}\n操作：{operation}\n目标：{resource}"
 ```
 
-- [ ] **Step 2: 同步项目级运行配置（本地，不 commit）**
+- [x] **Step 2: 同步项目级运行配置（本地，不 commit）**
 
 `.opencode/opencode-lark-bridge.config.jsonc`：与 Step 1 相同两处修改（注释区加 `{projectName}` 行 + template 加 `Project: {projectName}` 行）。只改这两处，文件其余内容（真实 app_id/app_secret、`retry_threshold: 4`、`stall_timeout_ms: 200000` 等）保持原样。
 
-- [ ] **Step 3: 同步全局运行配置（本地，不 commit）**
+- [x] **Step 3: 同步全局运行配置（本地，不 commit）**
 
 `~/.config/opencode/opencode-lark-bridge.config.jsonc`：同样两处修改（该文件无 retry/stall 分类、error 注释与示例略有差异，仅动 permission 注释区与 permission.template 两处）。
 
-- [ ] **Step 4: 验证配置可解析**
+- [x] **Step 4: 验证配置可解析**
 
 Run: `bun -e "import { loadConfig } from './src/config.ts'; for (const p of ['/home/lifxu/src/opencode-lark-bridge/opencode-lark-bridge.config.example.jsonc','/home/lifxu/src/opencode-lark-bridge/.opencode/opencode-lark-bridge.config.jsonc','/home/lifxu/.config/opencode/opencode-lark-bridge.config.jsonc']) { const c = loadConfig(p); console.log(p, '->', c.categories.permission.template.includes('{projectName}')) }"`
 Expected: 三行均输出 `true`（JSONC 解析成功且模板含变量）。若失败（如全局配置缺 categories.permission），运行该文件的 `mapPermissionEvent` 渲染即受模板驱动——此时改为手工核对三处文本包含 `Project: {projectName}` 即可。
 
-- [ ] **Step 5: Commit（仅示例配置）**
+- [x] **Step 5: Commit（仅示例配置）**
 
 ```bash
 git add opencode-lark-bridge.config.example.jsonc
@@ -365,7 +365,7 @@ git commit -m "chore: add {projectName} to permission template in example config
 - Consumes: 无
 - Produces: README 配置表示例与权限类型覆盖小节标注 `{projectName}` 变量
 
-- [ ] **Step 1: 更新配置表**
+- [x] **Step 1: 更新配置表**
 
 `README.md:284` 将 `categories.permission.template` 行示例改为：
 
@@ -373,7 +373,7 @@ git commit -m "chore: add {projectName} to permission template in example config
 | `categories.permission.template` | 权限通知模板          | `🔔 权限申请\nProject: {projectName}\n{tool} {operation} {resource}` |
 ```
 
-- [ ] **Step 2: 更新权限类型覆盖小节**
+- [x] **Step 2: 更新权限类型覆盖小节**
 
 `README.md:303` 开头句改为：
 
@@ -387,12 +387,12 @@ git commit -m "chore: add {projectName} to permission template in example config
 `{projectName}` 为当前项目名（`ctx.project.name` → worktree/directory basename），缺失或空白时降级为字符串 `unknown`；用户自定义模板未包含 `{projectName}` 时通知文本不含 Project 行。
 ```
 
-- [ ] **Step 3: 核对文档**
+- [x] **Step 3: 核对文档**
 
 Run: `rg -n "projectName" README.md`
 Expected: 新增行出现；确认 permission 相关段落（284、303、318 附近）均已覆盖。
 
-- [ ] **Step 4: Commit**
+- [x] **Step 4: Commit**
 
 ```bash
 git add README.md
@@ -409,22 +409,22 @@ git commit -m "docs: document {projectName} in permission notification templates
 **Interfaces:**
 - Consumes: Task 1-4 全部产物
 
-- [ ] **Step 1: 全量构建**
+- [x] **Step 1: 全量构建**
 
 Run: `npm run build`
 Expected: tsc 编译零错误（strict）。`dist/` 下产物更新。
 
-- [ ] **Step 2: 全量测试**
+- [x] **Step 2: 全量测试**
 
 Run: `bun test`
 Expected: 全部测试 PASS（无失败、无 skipped 中新增失败）。
 
-- [ ] **Step 3: 回归核对 git 状态**
+- [x] **Step 3: 回归核对 git 状态**
 
 Run: `git status --short`
 Expected: 仅期望的文件变更。确认 `.opencode/opencode-lark-bridge.config.jsonc` 未出现在变更列表（git 忽略）；`~/.config/...` 不涉及。若此前任务已各自 commit，此时工作区应干净（或仅有预期外改动需排查）。
 
-- [ ] **Step 4: 手工端到端核对（可选，需真实凭证）**
+- [x] **Step 4: 手工端到端核对（可选，需真实凭证）**
 
 如环境有已登录的 `lark-cli`，在 `ctx.project.name` 可解析的目录触发一次权限操作（如 `rm /tmp/opencode-test-file`），确认飞书通知文本含 `Project: <项目名>` 行。
 
