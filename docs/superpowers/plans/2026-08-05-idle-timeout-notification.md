@@ -549,7 +549,7 @@ git commit -m "feat: track session activity and scan for stalled sessions"
 - Consumes: Task 3 的状态表 `lastActive`/`stallLastSent`/`stallMeta` 与 `scanStalledSessions` 骨架
 - Produces: 完整版 `scanStalledSessions(): Promise<void>` —— 超时判定（`stall_timeout_ms ?? 600_000`）+ 节流（`stall_interval_ms ?? 3_600_000`，首次提醒写入 `stallLastSent`）+ 发送失败仅记日志不中断扫描
 
-- [ ] **Step 1: 编写失败测试（追加到 `tests/event-handler.test.ts` 的 `describe("stall tracking")` 块内）**
+- [x] **Step 1: 编写失败测试（追加到 `tests/event-handler.test.ts` 的 `describe("stall tracking")` 块内）**
 
 ```typescript
   it("throttles repeated stall notifications within interval", async () => {
@@ -629,12 +629,12 @@ git commit -m "feat: track session activity and scan for stalled sessions"
   })
 ```
 
-- [ ] **Step 2: 运行测试确认失败**
+- [x] **Step 2: 运行测试确认失败**
 
 Run: `bun test tests/event-handler.test.ts`
 Expected: FAIL —— "throttles repeated stall notifications within interval" 用例如预期连发 3 条（骨架无节流）；"continues scanning when send fails" 抛错导致用例失败（骨架无 try/catch）
 
-- [ ] **Step 3: 补全 `scanStalledSessions`**
+- [x] **Step 3: 补全 `scanStalledSessions`**
 
 将 Task 3 的骨架函数体整体替换为完整版：
 
@@ -665,12 +665,12 @@ Expected: FAIL —— "throttles repeated stall notifications within interval" �
   }
 ```
 
-- [ ] **Step 4: 运行测试确认通过**
+- [x] **Step 4: 运行测试确认通过**
 
 Run: `bun test tests/event-handler.test.ts`
 Expected: PASS（原有用例 + Task 3 的 9 个 + 本 Task 5 个全绿）
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```bash
 git add src/events/event-handler.ts tests/event-handler.test.ts
