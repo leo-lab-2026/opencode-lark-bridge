@@ -363,4 +363,199 @@ describe("EventHandler", () => {
     expect(sent[0].text).toContain("APIError (429)")
     expect(sent[0].text).toContain("429 Too Many Requests")
   })
+
+  it("sends retry notification on session.status retry at default threshold", async () => {
+    const sent: any[] = []
+    const notifier: Notifier = { send: async (m) => { sent.push(m) } }
+    const handler = createEventHandler(makeConfig(100), notifier, noopLogger)
+    await handler.handle({
+      type: "session.status",
+      properties: { sessionID: "s1", status: { type: "retry", attempt: 1, message: "Provider is overloaded", next: 1750000000000 }, projectName: "P", sessionTitle: "T" },
+    })
+    expect(sent).toHaveLength(1)
+    expect(sent[0].text).toContain("Provider is overloaded")
+    expect(sent[0].target).toEqual({ chat_id: "oc_1" })
+  })
+
+  it("skips retry notification below configured threshold", async () => {
+    const sent: any[] = []
+    const notifier: Notifier = { send: async (m) => { sent.push(m) } }
+    const config: PluginConfig = {
+      ...makeConfig(100),
+      categories: { retry: { retry_threshold: 3 } },
+    }
+    const handler = createEventHandler(config, notifier, noopLogger)
+    await handler.handle({
+      type: "session.status",
+      properties: { sessionID: "s1", status: { type: "retry", attempt: 1, message: "m", next: 1750000000000 } },
+    })
+    await handler.handle({
+      type: "session.status",
+      properties: { sessionID: "s1", status: { type: "retry", attempt: 2, message: "m", next: 1750000000000 } },
+    })
+    expect(sent).toHaveLength(0)
+  })
+
+  it("sends retry notification when attempt reaches configured threshold", async () => {
+    const sent: any[] = []
+    const notifier: Notifier = { send: async (m) => { sent.push(m) } }
+    const config: PluginConfig = {
+      ...makeConfig(100),
+      categories: { retry: { retry_threshold: 3 } },
+    }
+    const handler = createEventHandler(config, notifier, noopLogger)
+    await handler.handle({
+      type: "session.status",
+      properties: { sessionID: "s1", status: { type: "retry", attempt: 3, message: "m", next: 1750000000000 } },
+    })
+    expect(sent).toHaveLength(1)
+  })
+
+  it("skips non-retry session.status types (busy/idle)", async () => {
+    const sent: any[] = []
+    const notifier: Notifier = { send: async (m) => { sent.push(m) } }
+    const handler = createEventHandler(makeConfig(100), notifier, noopLogger)
+    await handler.handle({ type: "session.status", properties: { sessionID: "s1", status: { type: "busy" } } })
+    await handler.handle({ type: "session.status", properties: { sessionID: "s1", status: { type: "idle" } } })
+    expect(sent).toHaveLength(0)
+  })
+
+  it("skips safely when status is missing or malformed", async () => {
+    const sent: any[] = []
+    const notifier: Notifier = { send: async (m) => { sent.push(m) } }
+    const handler = createEventHandler(makeConfig(100), notifier, noopLogger)
+    await handler.handle({ type: "session.status", properties: { sessionID: "s1" } })
+    await handler.handle({ type: "session.status", properties: { sessionID: "s2", status: "retry" } })
+    expect(sent).toHaveLength(0)
+  })
+
+  it("throttles repeated retries within interval window", async () => {
+    const sent: any[] = []
+    const notifier: Notifier = { send: async (m) => { sent.push(m) } }
+    const config: PluginConfig = {
+      ...makeConfig(100),
+      categories: { retry: { retry_interval_ms: 60_000 } },
+    }
+    const handler = createEventHandler(config, notifier, noopLogger)
+    const event = {
+      type: "session.status",
+      properties: { sessionID: "s1", status: { type: "retry", attempt: 2, message: "m", next: 1750000000000 } },
+    }
+    await handler.handle(event)
+    await handler.handle(event)
+    expect(sent).toHaveLength(1)
+  })
+
+  it("sends again after throttle interval elapses", async () => {
+    const sent: any[] = []
+    const notifier: Notifier = { send: async (m) => { sent.push(m) } }
+    const config: PluginConfig = {
+      ...makeConfig(100),
+      categories: { retry: { retry_interval_ms: 50 } },
+    }
+    const handler = createEventHandler(config, notifier, noopLogger)
+    const event = {
+      type: "session.status",
+      properties: { sessionID: "s1", status: { type: "retry", attempt: 2, message: "m", next: 1750000000000 } },
+    }
+    await handler.handle(event)
+    await new Promise((resolve) => setTimeout(resolve, 120))
+    await handler.handle(event)
+    expect(sent).toHaveLength(2)
+  })
+
+  it("throttles retry independently per session", async () => {
+    const sent: any[] = []
+    const notifier: Notifier = { send: async (m) => { sent.push(m) } }
+    const config: PluginConfig = {
+      ...makeConfig(100),
+      categories: { retry: { retry_interval_ms: 60_000 } },
+    }
+    const handler = createEventHandler(config, notifier, noopLogger)
+    const mkEvent = (sessionID: string) => ({
+      type: "session.status",
+      properties: { sessionID, status: { type: "retry", attempt: 1, message: "m", next: 1750000000000 } },
+    })
+    await handler.handle(mkEvent("s1"))
+    await handler.handle(mkEvent("s1"))
+    await handler.handle(mkEvent("s2"))
+    expect(sent).toHaveLength(2)
+  })
+
+  it("skips subagent retry notification by default", async () => {
+    const sent: any[] = []
+    const notifier: Notifier = { send: async (m) => { sent.push(m) } }
+    const handler = createEventHandler(makeConfig(100), notifier, noopLogger)
+    await handler.handle({ type: "session.created", properties: { info: { id: "sub1", parentID: "parent1" } } })
+    await handler.handle({
+      type: "session.status",
+      properties: { sessionID: "sub1", status: { type: "retry", attempt: 1, message: "m", next: 1750000000000 } },
+    })
+    expect(sent).toHaveLength(0)
+  })
+
+  it("sends subagent retry notification when notify_subagent enabled", async () => {
+    const sent: any[] = []
+    const notifier: Notifier = { send: async (m) => { sent.push(m) } }
+    const config: PluginConfig = {
+      ...makeConfig(100),
+      categories: { retry: { notify_subagent: true } },
+    }
+    const handler = createEventHandler(config, notifier, noopLogger)
+    await handler.handle({ type: "session.created", properties: { info: { id: "sub1", parentID: "parent1" } } })
+    await handler.handle({
+      type: "session.status",
+      properties: { sessionID: "sub1", status: { type: "retry", attempt: 1, message: "m", next: 1750000000000 } },
+    })
+    expect(sent).toHaveLength(1)
+  })
+
+  it("subagent retry does not remove child from pendingChildren", async () => {
+    const sent: any[] = []
+    const notifier: Notifier = { send: async (m) => { sent.push(m) } }
+    const config: PluginConfig = {
+      ...makeConfig(100),
+      categories: { retry: { notify_subagent: true } },
+    }
+    const handler = createEventHandler(config, notifier, noopLogger)
+    await handler.handle({ type: "session.created", properties: { info: { id: "sub1", parentID: "parent1" } } })
+    await handler.handle({
+      type: "session.status",
+      properties: { sessionID: "sub1", status: { type: "retry", attempt: 1, message: "m", next: 1750000000000 } },
+    })
+    expect(sent).toHaveLength(1)
+    await handler.handle({ type: "session.idle", properties: { sessionID: "parent1", projectName: "P", sessionTitle: "T" } })
+    expect(sent).toHaveLength(1)
+  })
+
+  it("retry does not pollute erroredSessions and completion still sent", async () => {
+    const sent: any[] = []
+    const notifier: Notifier = { send: async (m) => { sent.push(m) } }
+    const handler = createEventHandler(makeConfig(100), notifier, noopLogger)
+    await handler.handle({
+      type: "session.status",
+      properties: { sessionID: "s1", status: { type: "retry", attempt: 1, message: "m", next: 1750000000000 } },
+    })
+    expect(sent).toHaveLength(1)
+    await handler.handle({ type: "session.idle", properties: { sessionID: "s1", projectName: "P", sessionTitle: "T" } })
+    expect(sent).toHaveLength(2)
+    expect(sent[1].text).toContain("Task Completed")
+  })
+
+  it("uses categories.retry.target when configured", async () => {
+    const sent: any[] = []
+    const notifier: Notifier = { send: async (m) => { sent.push(m) } }
+    const config: PluginConfig = {
+      ...makeConfig(100),
+      categories: { retry: { target: { user_id: "ou_retry" }, retry_detail: false } },
+    }
+    const handler = createEventHandler(config, notifier, noopLogger)
+    await handler.handle({
+      type: "session.status",
+      properties: { sessionID: "s1", status: { type: "retry", attempt: 1, message: "m", next: 1750000000000 } },
+    })
+    expect(sent).toHaveLength(1)
+    expect(sent[0].target.user_id).toBe("ou_retry")
+    expect(sent[0].text).not.toContain("尝试")
+  })
 })

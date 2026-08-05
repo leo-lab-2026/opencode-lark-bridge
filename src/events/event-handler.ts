@@ -3,6 +3,7 @@ import { mapPermissionEvent, extractResource } from "./permission-mapper.js"
 import { mapCompletionEvent } from "./completion-mapper.js"
 import { mapQuestionEvent } from "./question-mapper.js"
 import { mapErrorEvent } from "./error-mapper.js"
+import { mapRetryEvent } from "./retry-mapper.js"
 import { getEffectiveTarget } from "../config.js"
 
 export function createEventHandler(config: PluginConfig, notifier: Notifier, logger: Logger) {
@@ -11,6 +12,7 @@ export function createEventHandler(config: PluginConfig, notifier: Notifier, log
   const subagentParentMap = new Map<string, string>()
   const pendingChildren = new Map<string, Set<string>>()
   const erroredSessions = new Set<string>()
+  const lastRetrySent = new Map<string, number>()
 
   function extractSessionID(props: Record<string, unknown>): string | undefined {
     return (typeof props.sessionID === "string" ? props.sessionID : undefined)
@@ -187,6 +189,52 @@ export function createEventHandler(config: PluginConfig, notifier: Notifier, log
         logger.info("Sending error notification", { target, text: message.text })
         await notifier.send(message)
         erroredSessions.add(sessionID)
+        return
+      }
+
+      if (eventType === "session.status") {
+        logger.debug("Received session.status event", { eventType, event })
+        const props = (event?.properties ?? event) as Record<string, unknown>
+        const status = props.status
+        if (!status || typeof status !== "object") {
+          logger.debug("Skipping session.status without valid status object", { eventType })
+          return
+        }
+        const statusRecord = status as Record<string, unknown>
+        if (statusRecord.type !== "retry") {
+          logger.debug("Skipping non-retry session.status", { statusType: statusRecord.type })
+          return
+        }
+        const sessionID = extractSessionID(props) ?? "unknown"
+        const category = "retry"
+        const categoryConfig = config.categories[category] || {}
+
+        if (isSubagent(event) && categoryConfig.notify_subagent !== true) {
+          logger.debug("Skipping subagent retry notification", { sessionID })
+          return
+        }
+
+        const attempt = typeof statusRecord.attempt === "number" ? statusRecord.attempt : 0
+        const threshold = categoryConfig.retry_threshold ?? 1
+        if (attempt < threshold) {
+          logger.debug("Retry attempt below threshold", { sessionID, attempt, threshold })
+          return
+        }
+
+        const key = `retry:${sessionID}`
+        const now = Date.now()
+        const interval = categoryConfig.retry_interval_ms ?? 900_000
+        const last = lastRetrySent.get(key)
+        if (last && now - last < interval) {
+          logger.debug("Skipping retry notification within throttle window", { key })
+          return
+        }
+        lastRetrySent.set(key, now)
+
+        const target = getEffectiveTarget(config, category)
+        const message = mapRetryEvent(event, target, categoryConfig.template, categoryConfig.retry_detail)
+        logger.info("Sending retry notification", { target, text: message.text })
+        await notifier.send(message)
         return
       }
 
