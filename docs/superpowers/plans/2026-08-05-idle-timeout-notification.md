@@ -842,7 +842,7 @@ git commit -m "test: add end-to-end stall notification integration case"
 **Files:**
 - Modify: `README.md`
 
-- [ ] **Step 1: 功能列表追加条目**
+- [x] **Step 1: 功能列表追加条目**
 
 在 `README.md` 的功能列表（`## 功能`）末尾追加：
 
@@ -850,7 +850,7 @@ git commit -m "test: add end-to-end stall notification integration case"
 - 监听会话活动，对无进展超过 `stall_timeout_ms`（默认 10 分钟）的会话发送停滞提醒（stall），并按 `stall_interval_ms`（默认 60 分钟）节流防刷屏；由内存定时器按 `stall_check_interval_ms`（默认 1 分钟）扫描
 ```
 
-- [ ] **Step 2: 配置表追加 stall 字段**
+- [x] **Step 2: 配置表追加 stall 字段**
 
 在 `### 开发期配置（可选）` 的字段表中、`categories.retry.retry_detail` 行之后追加：
 
@@ -862,7 +862,7 @@ git commit -m "test: add end-to-end stall notification integration case"
 | `categories.stall.stall_check_interval_ms` | 定时器扫描间隔 | `60000`（1 分钟） |
 ```
 
-- [ ] **Step 3: 在"重试通知"章节之后新增"停滞通知"章节**
+- [x] **Step 3: 在"重试通知"章节之后新增"停滞通知"章节**
 
 ```markdown
 ### 停滞通知
@@ -882,11 +882,11 @@ opencode 事件流是异步推送制：模型挂起、SSE 超时、网络黑洞�
 > **能力边界**：停滞检测为插件进程内内存定时器，进程崩溃（如 OpenCode 崩溃）时插件随之消亡，无法自救发通知；子代理会话自身不单独提醒，其卡住由父会话超时覆盖。
 ```
 
-- [ ] **Step 4: 确认渲染**
+- [x] **Step 4: 确认渲染**
 
 Run: 人工阅读新增章节，确认表格列对齐、链接与既有文风一致（无命令可运行）。
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```bash
 git add README.md

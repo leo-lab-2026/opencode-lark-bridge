@@ -50,7 +50,16 @@
 - review_mode: standard — 未命中风险信号（57 行），无 task reviewer
 - task-checkoff: PASS（plan Step 1 + openspec 2.4）
 
-## Task 6: 集成测试
+## Task 6: 集成测试（DONE）
+
+- plan: Task 6（Step 1-3 全勾选）；openspec: 3.3 已勾选
+- 阶段: checkoff
+- 提交: 4af950b（test: add end-to-end stall notification integration case）
+- 证据: integration 3 pass/0 fail；全量 223 pass/0 fail；npm run build 零错误
+- review_mode: standard — 未命中风险信号（28 行单文件测试），无 task reviewer
+- task-checkoff: PASS（plan Step 1 + openspec 3.3）
+
+## Task 7: README 文档
 
 - 阶段: 待派发 implementer
-- 风险信号: 预期无（1 个端到端用例，~50 行）
+- 风险信号: 预期无（纯文档，review_mode: off 等价低风险，仍按 standard 走）

@@ -20,5 +20,5 @@
 
 ## 4. 文档与验证
 
-- [ ] 4.1 `README.md`：新增 stall 通知说明（配置项、默认行为、与 retry 通知分工、进程崩溃属能力边界）
+- [x] 4.1 `README.md`：新增 stall 通知说明（配置项、默认行为、与 retry 通知分工、进程崩溃属能力边界）
 - [ ] 4.2 运行 `npm run build`（tsc strict 零错误）与 `bun test` 全绿
