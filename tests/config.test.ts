@@ -40,4 +40,11 @@ describe("getEffectiveTarget", () => {
   it("uses category target when available", () => {
     expect(getEffectiveTarget(cfg, "permission").user_id).toBe("u")
   })
+  it("falls back to default target for retry category when not configured", () => {
+    expect(getEffectiveTarget(cfg, "retry").chat_id).toBe("default")
+  })
+  it("uses retry category target when configured", () => {
+    const withRetry = { ...cfg, categories: { ...cfg.categories, retry: { target: { chat_id: "oc_retry" } } } }
+    expect(getEffectiveTarget(withRetry, "retry").chat_id).toBe("oc_retry")
+  })
 })
