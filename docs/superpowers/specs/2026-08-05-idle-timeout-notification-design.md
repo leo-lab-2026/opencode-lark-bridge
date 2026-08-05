@@ -2,6 +2,8 @@
 comet_change: add-idle-timeout-notification
 role: technical-design
 canonical_spec: openspec
+archived-with: 2026-08-05-add-idle-timeout-notification
+status: final
 ---
 
 # 会话停滞（Stall）通知 — 技术设计

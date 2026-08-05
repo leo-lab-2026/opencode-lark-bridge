@@ -2,6 +2,7 @@
 change: add-idle-timeout-notification
 design-doc: docs/superpowers/specs/2026-08-05-idle-timeout-notification-design.md
 base-ref: ab20190ce4cc41581280f0c7ea99a3dda0d68938
+archived-with: 2026-08-05-add-idle-timeout-notification
 ---
 
 # 会话停滞（Stall）通知实施计划
