@@ -35,6 +35,27 @@ describe("mapCompletionEvent", () => {
     expect(msg.text).toContain("unknown")
   })
 
+  it("falls back to unknown for empty string projectName", () => {
+    const event = { properties: { sessionID: "ses_1", projectName: "", sessionTitle: "T" } }
+    const msg = mapCompletionEvent(event, { chat_id: "oc_1" })
+    expect(msg.text).toContain("Project: unknown")
+    expect(msg.text).toContain("Session: T")
+  })
+
+  it("falls back to unknown for empty string sessionTitle", () => {
+    const event = { properties: { sessionID: "ses_1", projectName: "P", sessionTitle: "" } }
+    const msg = mapCompletionEvent(event, { chat_id: "oc_1" })
+    expect(msg.text).toContain("Project: P")
+    expect(msg.text).toContain("Session: unknown")
+  })
+
+  it("falls back to unknown for whitespace-only fields", () => {
+    const event = { properties: { sessionID: "ses_1", projectName: "   ", sessionTitle: "\t\n" } }
+    const msg = mapCompletionEvent(event, { chat_id: "oc_1" })
+    expect(msg.text).toContain("Project: unknown")
+    expect(msg.text).toContain("Session: unknown")
+  })
+
   it("uses user_id target", () => {
     const msg = mapCompletionEvent({ properties: {} }, { user_id: "ou_1" })
     expect(msg.target.user_id).toBe("ou_1")

@@ -67,15 +67,21 @@ export const OpenCodeLarkBridge = async (ctx: any) => {
     if (typeof explicitName === "string" && explicitName.trim()) {
       return explicitName.trim()
     }
-    const dir = ctx?.worktree ?? ctx?.directory
-    if (typeof dir === "string" && dir.trim()) {
-      return path.basename(dir.trim())
+    for (const dir of [ctx?.worktree, ctx?.directory]) {
+      if (typeof dir === "string" && dir.trim()) {
+        const base = path.basename(dir.trim())
+        if (base) return base
+      }
     }
     return "unknown"
   }
 
   const projectName = resolveProjectName(ctx)
   const sessionTitles = new Map<string, string>()
+
+  function nonEmpty(value: unknown): string | undefined {
+    return typeof value === "string" && value.trim() ? value.trim() : undefined
+  }
 
   function cacheSessionTitle(event: any) {
     const info = event?.properties?.info ?? event?.info
@@ -91,9 +97,11 @@ export const OpenCodeLarkBridge = async (ctx: any) => {
     const cached = sessionTitles.get(sessionID)
     if (cached) return cached
     const session = input?.session ?? {}
+    const props = input?.properties ?? input ?? {}
     return (
       session.title ??
       session.sessionTitle ??
+      nonEmpty(props?.sessionTitle) ??
       input?.sessionTitle ??
       sessionID
     )
@@ -111,7 +119,7 @@ export const OpenCodeLarkBridge = async (ctx: any) => {
         ...event,
         properties: {
           ...props,
-          projectName: props?.projectName ?? projectName,
+          projectName: nonEmpty(props?.projectName) ?? projectName,
         },
       }
     }
@@ -123,7 +131,7 @@ export const OpenCodeLarkBridge = async (ctx: any) => {
         properties: {
           ...props,
           sessionID,
-          projectName: props?.projectName ?? projectName,
+          projectName: nonEmpty(props?.projectName) ?? projectName,
         },
       }
     }
@@ -138,7 +146,7 @@ export const OpenCodeLarkBridge = async (ctx: any) => {
       properties: {
         ...props,
         sessionID,
-        projectName: props?.projectName ?? projectName,
+        projectName: nonEmpty(props?.projectName) ?? projectName,
         sessionTitle,
       },
     }
@@ -172,7 +180,7 @@ export const OpenCodeLarkBridge = async (ctx: any) => {
           type: "session.idle",
           properties: {
             sessionID,
-            projectName: input?.projectName ?? projectName,
+            projectName: nonEmpty(input?.projectName) ?? projectName,
             sessionTitle: resolveSessionTitle(sessionID, input),
           },
         })

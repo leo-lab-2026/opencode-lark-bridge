@@ -254,6 +254,129 @@ describe("plugin entry", () => {
       rmSync(projectDir, { recursive: true, force: true })
     }, 10000)
 
+    it("regression: non-git project with worktree=/ falls back to directory basename", async () => {
+      const projectDir = mkdtempSync(path.join(tmpdir(), "non-git-project-"))
+      mkdirSync(path.join(projectDir, ".opencode"), { recursive: true })
+      const logFileForProject = path.join(projectDir, "plugin.log")
+
+      writeFileSync(
+        path.join(projectDir, ".opencode", "opencode-lark-bridge.config.jsonc"),
+        JSON.stringify({
+          app_id: "test-app",
+          app_secret: "test-secret",
+          default_target: { chat_id: "test-chat" },
+          log_file: logFileForProject,
+          categories: { completion: { target: { chat_id: "oc_completion" } } },
+        })
+      )
+
+      const dirName = path.basename(projectDir)
+      const hooks = await plugin({
+        directory: projectDir,
+        worktree: "/",
+      } as any)
+
+      await hooks.event({
+        event: {
+          type: "session.idle",
+          properties: {
+            sessionID: "ses_nongit_1",
+            projectName: "",
+            sessionTitle: "New session",
+          },
+        },
+      })
+
+      const logs = readFileSync(logFileForProject, "utf-8")
+      expect(logs).toContain("Sending completion notification")
+      expect(logs).toContain(`Project: ${dirName}`)
+      expect(logs).toContain("Session: New session")
+
+      rmSync(projectDir, { recursive: true, force: true })
+    }, 10000)
+
+    it("regression: git repo subdirectory uses worktree basename (repo root)", async () => {
+      const repoDir = mkdtempSync(path.join(tmpdir(), "my-repo-"))
+      const subDir = path.join(repoDir, "packages", "api")
+      mkdirSync(path.join(subDir, ".opencode"), { recursive: true })
+      const logFileForProject = path.join(subDir, "plugin.log")
+
+      writeFileSync(
+        path.join(subDir, ".opencode", "opencode-lark-bridge.config.jsonc"),
+        JSON.stringify({
+          app_id: "test-app",
+          app_secret: "test-secret",
+          default_target: { chat_id: "test-chat" },
+          log_file: logFileForProject,
+          categories: { completion: { target: { chat_id: "oc_completion" } } },
+        })
+      )
+
+      const repoName = path.basename(repoDir)
+      const hooks = await plugin({
+        directory: subDir,
+        worktree: repoDir,
+      } as any)
+
+      await hooks.event({
+        event: {
+          type: "session.idle",
+          properties: {
+            sessionID: "ses_subdir_1",
+            projectName: "",
+            sessionTitle: "Work",
+          },
+        },
+      })
+
+      const logs = readFileSync(logFileForProject, "utf-8")
+      expect(logs).toContain("Sending completion notification")
+      expect(logs).toContain(`Project: ${repoName}`)
+      expect(logs).toContain("Session: Work")
+
+      rmSync(repoDir, { recursive: true, force: true })
+    }, 10000)
+
+    it("regression: explicit project.name takes priority over worktree/directory", async () => {
+      const repoDir = mkdtempSync(path.join(tmpdir(), "repo-explicit-"))
+      mkdirSync(path.join(repoDir, ".opencode"), { recursive: true })
+      const logFileForProject = path.join(repoDir, "plugin.log")
+
+      writeFileSync(
+        path.join(repoDir, ".opencode", "opencode-lark-bridge.config.jsonc"),
+        JSON.stringify({
+          app_id: "test-app",
+          app_secret: "test-secret",
+          default_target: { chat_id: "test-chat" },
+          log_file: logFileForProject,
+          categories: { completion: { target: { chat_id: "oc_completion" } } },
+        })
+      )
+
+      const hooks = await plugin({
+        directory: repoDir,
+        worktree: repoDir,
+        project: { name: "Explicit Name" },
+      } as any)
+
+      await hooks.event({
+        event: {
+          type: "session.idle",
+          properties: {
+            sessionID: "ses_explicit_1",
+            projectName: "",
+            sessionTitle: "T",
+          },
+        },
+      })
+
+      const logs = readFileSync(logFileForProject, "utf-8")
+      expect(logs).toContain("Sending completion notification")
+      expect(logs).toContain("Project: Explicit Name")
+
+      rmSync(repoDir, { recursive: true, force: true })
+    }, 10000)
+
     it("injects projectName for question.asked events via enhanceEvent", async () => {
       const projectDir = mkdtempSync(path.join(tmpdir(), "question-project-"))
       mkdirSync(path.join(projectDir, ".opencode"), { recursive: true })
