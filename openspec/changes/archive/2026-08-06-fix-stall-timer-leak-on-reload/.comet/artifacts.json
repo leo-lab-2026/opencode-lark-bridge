@@ -1,5 +1,6 @@
 {
   "openspec_proposal": "openspec/changes/fix-stall-timer-leak-on-reload/proposal.md",
   "openspec_design": "openspec/changes/fix-stall-timer-leak-on-reload/design.md",
-  "openspec_tasks": "openspec/changes/fix-stall-timer-leak-on-reload/tasks.md"
+  "openspec_tasks": "openspec/changes/fix-stall-timer-leak-on-reload/tasks.md",
+  "archive_directory": "openspec/changes/archive/2026-08-06-fix-stall-timer-leak-on-reload"
 }
