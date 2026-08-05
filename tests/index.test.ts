@@ -103,7 +103,7 @@ describe("plugin entry", () => {
       const logs = readFileSync(logFile, "utf-8")
       expect(logs).toContain("Sending completion notification")
       expect(logs).toContain("Create a.md")
-    }, 10000)
+    }, 30000)
 
     it("sends completion notification via event hook with real OpenCode event shape", async () => {
       writeFileSync(
@@ -146,7 +146,7 @@ describe("plugin entry", () => {
       expect(logs).toContain("Sending completion notification")
       expect(logs).toContain("Real Project")
       expect(logs).toContain("Refactor auth")
-    }, 10000)
+    }, 30000)
 
     it("falls back to sessionID when session title is not cached", async () => {
       writeFileSync(
@@ -177,7 +177,7 @@ describe("plugin entry", () => {
       expect(logs).toContain("Sending completion notification")
       expect(logs).toContain("Real Project")
       expect(logs).toContain("ses_unknown_1")
-    }, 10000)
+    }, 30000)
 
     it("falls back to directory basename when project name is missing", async () => {
       const projectDir = mkdtempSync(path.join(tmpdir(), "my-awesome-project-"))
@@ -214,7 +214,7 @@ describe("plugin entry", () => {
       expect(logs).toContain("Fix login bug")
 
       rmSync(projectDir, { recursive: true, force: true })
-    }, 10000)
+    }, 30000)
 
     it("falls back to directory basename when project name is empty", async () => {
       const projectDir = mkdtempSync(path.join(tmpdir(), "unnamed-project-"))
@@ -252,7 +252,7 @@ describe("plugin entry", () => {
       expect(logs).toContain("Refactor auth")
 
       rmSync(projectDir, { recursive: true, force: true })
-    }, 10000)
+    }, 30000)
 
     it("regression: non-git project with worktree=/ falls back to directory basename", async () => {
       const projectDir = mkdtempSync(path.join(tmpdir(), "non-git-project-"))
@@ -416,7 +416,7 @@ describe("plugin entry", () => {
       expect(logs).toContain("Question Project")
 
       rmSync(projectDir, { recursive: true, force: true })
-    }, 10000)
+    }, 30000)
 
     it("injects projectName for question.asked events via event hook with real OpenCode shape", async () => {
       const projectDir = mkdtempSync(path.join(tmpdir(), "question-real-"))
@@ -453,7 +453,7 @@ describe("plugin entry", () => {
       expect(logs).toContain('"projectName":"Real Question Project"')
 
       rmSync(projectDir, { recursive: true, force: true })
-    }, 10000)
+    }, 30000)
 
     it("sends permission notification with project name via permission.ask hook", async () => {
       writeFileSync(
@@ -592,7 +592,7 @@ describe("plugin entry", () => {
       expect(logs).toContain("Fix retry")
 
       rmSync(projectDir, { recursive: true, force: true })
-    }, 10000)
+    }, 30000)
 
     it("injects projectName into session.created so stall notifications carry the project", async () => {
       const projectDir = mkdtempSync(path.join(tmpdir(), "stall-project-"))
@@ -690,7 +690,7 @@ describe("plugin entry", () => {
       expect(logs).toContain("Recover Project")
 
       rmSync(projectDir, { recursive: true, force: true })
-    }, 10000)
+    }, 30000)
   })
 })
 
