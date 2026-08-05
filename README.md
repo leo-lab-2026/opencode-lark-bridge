@@ -57,7 +57,7 @@ npx opencode-lark-bridge init --global
 
 ### 卸载
 
-按安装方式选择对应的卸载步骤。`npx opencode-lark-bridge uninstall` 只删除插件文件并清理配置注册（`opencode.jsonc`/`opencode.json` 中的本插件条目，其他内容保留），**不会**卸载 npm 包本身，也**不会**清理 OpenCode 的插件缓存目录（见下）。
+按安装方式选择对应的卸载步骤。`npx opencode-lark-bridge uninstall` 只删除插件文件并清理配置注册（`opencode.jsonc`/`opencode.json` 中的本插件**本地路径**条目，其他内容保留），**不会**卸载 npm 包本身，也**不会**清理 OpenCode 的插件缓存目录（见下）。注意在项目根目录运行（项目级），插件目录按当前目录定位。
 
 #### npm install / bun add 安装的卸载
 
@@ -91,13 +91,13 @@ rm -rf .opencode/plugins/opencode-lark-bridge
 rm -rf ~/.config/opencode/plugins/opencode-lark-bridge
 ```
 
-同时从 `opencode.jsonc`/`opencode.json` 的 `plugin` 数组中移除 `"./plugins/opencode-lark-bridge"` 条目（其他内容保留）。
+同时从 `opencode.jsonc`/`opencode.json` 的 `plugin` 数组中移除本插件条目（项目级为 `"./plugins/opencode-lark-bridge"` 相对路径；全局安装注册的是绝对路径 `~/.config/opencode/plugins/opencode-lark-bridge`），其他内容保留。
 
 #### opencode.jsonc 声明 npm 包名的卸载
 
 通过 `"plugin": ["opencode-lark-bridge"]` 声明安装的插件由 OpenCode 自动安装到缓存目录，卸载分三步：
 
-1. **移除配置条目**：从配置文件（项目级 `.opencode/opencode.jsonc`、`./opencode.jsonc`，或全局 `~/.config/opencode/opencode.json(c)`）的 `plugin` 数组中删除 `"opencode-lark-bridge"`。若该数组中还保留着 `"./plugins/opencode-lark-bridge"` 本地路径条目（比如之前用 `install:local` 装过），也一并移除。
+1. **移除配置条目**：从配置文件（项目级 `.opencode/opencode.jsonc`、`.opencode/opencode.json`、`./opencode.jsonc`、`./opencode.json`，或全局 `~/.config/opencode/opencode.json(c)`）的 `plugin` 数组中删除 `"opencode-lark-bridge"`。若该数组中还保留着本地路径条目（项目级 `"./plugins/opencode-lark-bridge"`，全局为绝对路径 `~/.config/opencode/plugins/opencode-lark-bridge`，比如之前用 `install:local`/`install:global` 装过），也一并移除。
 2. **删除插件缓存**（可选，释放磁盘空间；不删则文件残留但不再加载）：
 
    ```bash
@@ -119,7 +119,7 @@ rm -rf ~/.config/opencode/plugins/opencode-lark-bridge
 | 位置                                                               | 说明                          |
 | ---------------------------------------------------------------- | --------------------------- |
 | `plugin` 数组中的 `"opencode-lark-bridge"`（npm 包名）条目                   | 配置声明方式                    |
-| `plugin` 数组中的 `"./plugins/opencode-lark-bridge"`（本地路径）条目            | npm install / 本地脚本方式       |
+| `plugin` 数组中的本地路径条目（项目级 `"./plugins/opencode-lark-bridge"`，全局为绝对路径）    | npm install / 本地脚本方式       |
 | `.opencode/plugins/opencode-lark-bridge/` 或 `~/.config/opencode/plugins/opencode-lark-bridge/` | 本地插件目录                     |
 | `~/.cache/opencode/packages/` 下的 `opencode-lark-bridge*` 缓存目录         | OpenCode 自动安装缓存             |
 | `.opencode/opencode-lark-bridge.config.jsonc` 或 `~/.config/opencode/opencode-lark-bridge.config.jsonc` | 运行时配置（含飞书凭证，卸载时一并删除）    |
