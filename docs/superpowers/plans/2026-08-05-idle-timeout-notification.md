@@ -901,21 +901,21 @@ git commit -m "docs: document stalled session notification feature"
 
 **Files:** 无（只运行验证）
 
-- [ ] **Step 1: 运行 tsc 构建**
+- [x] **Step 1: 运行 tsc 构建**
 
 Run: `npm run build`
 Expected: PASS —— tsc strict 零错误，`dist/` 产物更新（`dist/events/stall-mapper.js` + `.d.ts` 存在）
 
-- [ ] **Step 2: 运行全量测试**
+- [x] **Step 2: 运行全量测试**
 
 Run: `bun test`
 Expected: PASS —— 全部测试文件绿（含新增 `tests/stall-mapper.test.ts`、扩展的 `tests/event-handler.test.ts`、`tests/index.test.ts`、`tests/integration.test.ts`、`tests/config.test.ts`）
 
-- [ ] **Step 3: 对照 openspec tasks.md 勾选全部任务**
+- [x] **Step 3: 对照 openspec tasks.md 勾选全部任务**
 
 在 `openspec/changes/add-idle-timeout-notification/tasks.md` 中勾选 1.1–4.2 全部 13 项。
 
-- [ ] **Step 4: Commit（如存在遗留文件）**
+- [x] **Step 4: Commit（如存在遗留文件）**
 
 ```bash
 git add -A
