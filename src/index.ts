@@ -62,6 +62,9 @@ export const OpenCodeLarkBridge = async (ctx: any) => {
 
   const handler = createEventHandler(config, notifier, logger)
 
+  const stallCheckMs = config.categories.stall?.stall_check_interval_ms ?? 60_000
+  setInterval(() => { void handler.scanStalledSessions() }, stallCheckMs)
+
   function resolveProjectName(ctx: any): string {
     const explicitName = ctx?.project?.name
     if (typeof explicitName === "string" && explicitName.trim()) {

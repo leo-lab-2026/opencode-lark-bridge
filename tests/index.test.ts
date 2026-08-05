@@ -551,6 +551,60 @@ describe("plugin entry", () => {
   })
 })
 
+describe("stall scan timer", () => {
+  let tempDir: string
+  let logFile: string
+
+  beforeEach(() => {
+    tempDir = mkdtempSync(path.join(tmpdir(), "lark-stall-timer-"))
+    mkdirSync(path.join(tempDir, ".opencode"), { recursive: true })
+    logFile = path.join(tempDir, "plugin.log")
+  })
+
+  afterEach(() => {
+    rmSync(tempDir, { recursive: true, force: true })
+  })
+
+  function writeConfig(overrides: Record<string, unknown> = {}) {
+    writeFileSync(
+      path.join(tempDir, ".opencode", "opencode-lark-bridge.config.jsonc"),
+      JSON.stringify({
+        app_id: "test-app",
+        app_secret: "test-secret",
+        default_target: { chat_id: "test-chat" },
+        log_file: logFile,
+        ...overrides,
+      })
+    )
+  }
+
+  it("creates timer with configured stall_check_interval_ms", async () => {
+    writeConfig({ categories: { stall: { stall_check_interval_ms: 5_000 } } })
+    const original = globalThis.setInterval
+    const intervals: number[] = []
+    globalThis.setInterval = ((_fn: () => void, ms?: number) => { intervals.push(ms ?? 0); return 0 as any }) as any
+    try {
+      await plugin({ directory: tempDir, worktree: tempDir } as any)
+      expect(intervals).toContain(5_000)
+    } finally {
+      globalThis.setInterval = original
+    }
+  })
+
+  it("creates timer with default interval when stall category unset", async () => {
+    writeConfig()
+    const original = globalThis.setInterval
+    const intervals: number[] = []
+    globalThis.setInterval = ((_fn: () => void, ms?: number) => { intervals.push(ms ?? 0); return 0 as any }) as any
+    try {
+      await plugin({ directory: tempDir, worktree: tempDir } as any)
+      expect(intervals).toContain(60_000)
+    } finally {
+      globalThis.setInterval = original
+    }
+  })
+})
+
 describe("resolveConfigPath", () => {
   let projectDir: string
   let globalDir: string
