@@ -3,6 +3,7 @@
 // 所有模板都支持自定义修改。模板中的变量会被实际值替换，其他文本保持不变。
 //
 // === 权限通知模板变量（permission） ===
+//   {projectName}  项目名（缺失/空白时降级 unknown）
 //   {tool}      工具名（bash / edit / read / glob / grep / task / skill / lsp /
 //              webfetch / websearch / external_directory / doom_loop）
 //   {operation} 操作类型（permission 名或 command 起始词）
@@ -59,7 +60,7 @@
   "categories": {
     "permission": {
       //"target": { "chat_id": "oc_xxxxxxxxxxxxxxxx" }, // 可选：未设置则用 default_target
-      "template":  "🔔 OpenCode 权限申请\n工具：{tool}\n操作：{operation}\n目标：{resource}"
+      "template":  "🔔 OpenCode 权限申请\nProject: {projectName}\n工具：{tool}\n操作：{operation}\n目标：{resource}"
     },
     "completion": {
       //"target": { "chat_id": "oc_xxxxxxxxxxxxxxxx" }, // 可选：未设置则用 default_target
