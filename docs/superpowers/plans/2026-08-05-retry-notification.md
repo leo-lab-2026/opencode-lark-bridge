@@ -2,6 +2,7 @@
 change: add-retry-notification
 design-doc: docs/superpowers/specs/2026-08-05-retry-notification-design.md
 base-ref: 9ab5c8c3b9e400f01729d221427447eec552e293
+archived-with: 2026-08-05-add-retry-notification
 ---
 
 # Retry Notification & Error Field Extraction Fix Implementation Plan

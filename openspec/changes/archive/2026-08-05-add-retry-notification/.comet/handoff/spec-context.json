@@ -1,0 +1,35 @@
+{
+  "change": "add-retry-notification",
+  "phase": "design",
+  "mode": "beta",
+  "canonical_spec": "openspec",
+  "generated_by": "comet-handoff.sh",
+  "context_hash": "c89ee75291f2f0689b48b98a793b0c2a71dfc4e00d74706d6522b6e368213cfc",
+  "files": [
+    {
+      "path": "openspec/changes/add-retry-notification/proposal.md",
+      "sha256": "7639127855ef1e5f49403c84606f4b01abba667674d3acec08f767f32bfaf50c",
+      "role": "supporting"
+    },
+    {
+      "path": "openspec/changes/add-retry-notification/design.md",
+      "sha256": "e279a61356d24ce0459dd6170d1ce82261cfb5dc7438a7ac9881cd0eec7a7550",
+      "role": "supporting"
+    },
+    {
+      "path": "openspec/changes/add-retry-notification/tasks.md",
+      "sha256": "6199369d7e01048bd2fb44ca59d849c7c38fd158d8fe83d5734f31364e4051b9",
+      "role": "supporting"
+    },
+    {
+      "path": "openspec/changes/add-retry-notification/specs/error-notification/spec.md",
+      "sha256": "275e36fbcee15646671513cd06cd0a4219f7ffb1d0a6bf7d472d1a7d911d14e9",
+      "role": "spec"
+    },
+    {
+      "path": "openspec/changes/add-retry-notification/specs/retry-notification/spec.md",
+      "sha256": "f58026bbe959a0b2399479412bde9f46b0f9adb3903677b81fabc6fc17c84029",
+      "role": "spec"
+    }
+  ]
+}
