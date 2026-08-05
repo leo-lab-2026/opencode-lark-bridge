@@ -1,6 +1,6 @@
 workflow: hotfix
 language: zh-CN
-phase: verify
+phase: archive
 context_compression: beta
 build_mode: direct
 build_pause: null
@@ -13,13 +13,13 @@ auto_transition: true
 base_ref: 4abe71eca7f02e9ce444feb4abcab40ac84c25de
 design_doc: null
 plan: null
-verify_result: pending
+verify_result: pass
 verify_failures: 0
-verification_report: null
+verification_report: docs/superpowers/reports/2026-08-05-fix-completion-empty-project-verify.md
 branch_status: pending
 created_at: 2026-08-05
-verified_at: null
-archive_confirmation: null
+verified_at: 2026-08-05
+archive_confirmation: pending
 archived: false
 bound_branch: hotfix/20260805/fix-completion-empty-project
 direct_override: null
