@@ -2,5 +2,6 @@
   "openspec_proposal": "openspec/changes/fix-spurious-completion-tmp-unknown/proposal.md",
   "openspec_design": "openspec/changes/fix-spurious-completion-tmp-unknown/design.md",
   "openspec_tasks": "openspec/changes/fix-spurious-completion-tmp-unknown/tasks.md",
-  "build_tasks_complete": "openspec/changes/fix-spurious-completion-tmp-unknown/tasks.md"
+  "build_tasks_complete": "openspec/changes/fix-spurious-completion-tmp-unknown/tasks.md",
+  "archive_directory": "openspec/changes/archive/2026-08-05-fix-spurious-completion-tmp-unknown"
 }
