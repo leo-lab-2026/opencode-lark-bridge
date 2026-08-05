@@ -455,6 +455,98 @@ describe("plugin entry", () => {
       rmSync(projectDir, { recursive: true, force: true })
     }, 10000)
 
+    it("sends permission notification with project name via permission.ask hook", async () => {
+      writeFileSync(
+        path.join(tempDir, ".opencode", "opencode-lark-bridge.config.jsonc"),
+        JSON.stringify({
+          app_id: "test-app",
+          app_secret: "test-secret",
+          default_target: { chat_id: "test-chat" },
+          log_file: logFile,
+          categories: { permission: { target: { chat_id: "oc_perm" } } },
+        })
+      )
+
+      const hooks = await plugin({
+        directory: tempDir,
+        worktree: tempDir,
+        project: { name: "Perm Project" },
+      } as any)
+
+      await hooks["permission.ask"]({
+        tool: "bash",
+        args: { command: "rm -f /tmp/test.txt" },
+      })
+
+      const logs = readFileSync(logFile, "utf-8")
+      expect(logs).toContain("Sending permission notification")
+      expect(logs).toContain("Project: Perm Project")
+    }, 10000)
+
+    it("injects projectName into permission.asked events via enhanceEvent", async () => {
+      writeFileSync(
+        path.join(tempDir, ".opencode", "opencode-lark-bridge.config.jsonc"),
+        JSON.stringify({
+          app_id: "test-app",
+          app_secret: "test-secret",
+          default_target: { chat_id: "test-chat" },
+          log_file: logFile,
+          categories: { permission: { target: { chat_id: "oc_perm" } } },
+        })
+      )
+
+      const hooks = await plugin({
+        directory: tempDir,
+        worktree: tempDir,
+        project: { name: "Perm Event Project" },
+      } as any)
+
+      await hooks.event({
+        event: {
+          type: "permission.asked",
+          properties: {
+            tool: { name: "bash" },
+            patterns: ["rm -f /tmp/foo.txt"],
+          },
+        },
+      })
+
+      const logs = readFileSync(logFile, "utf-8")
+      expect(logs).toContain("Sending notification")
+      expect(logs).toContain("Project: Perm Event Project")
+    }, 10000)
+
+    it("does not mutate the original permission.asked event object", async () => {
+      writeFileSync(
+        path.join(tempDir, ".opencode", "opencode-lark-bridge.config.jsonc"),
+        JSON.stringify({
+          app_id: "test-app",
+          app_secret: "test-secret",
+          default_target: { chat_id: "test-chat" },
+          log_file: logFile,
+          categories: { permission: { target: { chat_id: "oc_perm" } } },
+        })
+      )
+
+      const hooks = await plugin({
+        directory: tempDir,
+        worktree: tempDir,
+        project: { name: "Perm Project" },
+      } as any)
+
+      const original = {
+        type: "permission.asked",
+        properties: {
+          tool: { name: "bash" },
+          patterns: ["rm -f /tmp/foo.txt"],
+        },
+      }
+
+      await hooks.event({ event: original })
+
+      expect((original.properties as Record<string, unknown>).projectName).toBeUndefined()
+    }, 10000)
+
     it("injects sessionID/projectName/sessionTitle for session.status retry events", async () => {
       const projectDir = mkdtempSync(path.join(tmpdir(), "retry-project-"))
       mkdirSync(path.join(projectDir, ".opencode"), { recursive: true })
