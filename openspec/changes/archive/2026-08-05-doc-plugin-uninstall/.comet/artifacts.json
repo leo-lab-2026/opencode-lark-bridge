@@ -1,5 +1,6 @@
 {
   "openspec_proposal": "openspec/changes/doc-plugin-uninstall/proposal.md",
   "openspec_design": "openspec/changes/doc-plugin-uninstall/design.md",
-  "openspec_tasks": "openspec/changes/doc-plugin-uninstall/tasks.md"
+  "openspec_tasks": "openspec/changes/doc-plugin-uninstall/tasks.md",
+  "archive_directory": "openspec/changes/archive/2026-08-05-doc-plugin-uninstall"
 }
