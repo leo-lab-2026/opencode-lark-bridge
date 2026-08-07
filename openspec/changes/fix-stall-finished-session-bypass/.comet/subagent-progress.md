@@ -5,9 +5,16 @@
 - review_mode: standard
 - tdd_mode: tdd
 
-## Task 1
+## Task 1 (complete)
 
-- Plan task: Task 1 编写失败测试验证 Bug 存在（tasks 2.5）
-- OpenSpec task: 2.5 新增测试：已完成会话收到未知事件类型（如 `message.removed`、`permission.updated`）后不重新激活
+- Stage: checkoff
+- OpenSpec task 2.5 checked off
+- Result: 2 failing tests written (RED confirmed), review clean
+
+## Task 2
+
+- Plan task: Task 2 实现 isActivityEvent allowlist 替换（tasks 1.1, 1.2, 1.3, 1.4）
+- OpenSpec task: 1.1, 1.2, 1.3, 1.4
 - Stage: implementing
 - Base commit: e0aae06ee0b13d7f9f00143d0f66d4185cc88615
+- Note: event-handler.ts has uncommitted DEBUG logs from investigation; Task 2 Step 2 removes them

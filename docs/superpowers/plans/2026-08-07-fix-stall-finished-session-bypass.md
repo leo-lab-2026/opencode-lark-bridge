@@ -111,7 +111,7 @@ Expected: 2 个测试 FAIL。`permission.updated` / `message.removed` 不在 `is
 - Consumes: 无（首个实现任务）
 - Produces: `isActivityEvent(event: any): boolean` 闭包函数；修改后的 `handle()` 入口逻辑
 
-- [ ] **Step 1: 新增 `isActivityEvent` 函数（tasks 1.1）**
+- [x] **Step 1: 新增 `isActivityEvent` 函数（tasks 1.1）**
 
 在 `src/events/event-handler.ts` 中，将 `isLifecycleEvent` 函数（第 22-36 行）替换为 `isActivityEvent`：
 
@@ -149,7 +149,7 @@ Expected: 2 个测试 FAIL。`permission.updated` / `message.removed` 不在 `is
   }
 ```
 
-- [ ] **Step 2: 修改入口逻辑 + 移除调试日志（tasks 1.2, 1.4）**
+- [x] **Step 2: 修改入口逻辑 + 移除调试日志（tasks 1.2, 1.4）**
 
 在 `src/events/event-handler.ts` 的 `handle()` 方法中，将入口逻辑（当前第 185-197 行）：
 
@@ -183,13 +183,13 @@ Expected: 2 个测试 FAIL。`permission.updated` / `message.removed` 不在 `is
       }
 ```
 
-- [ ] **Step 3: 运行 Task 1 的失败测试，验证它们现在通过**
+- [x] **Step 3: 运行 Task 1 的失败测试，验证它们现在通过**
 
 Run: `bun test tests/event-handler.test.ts --test-name-pattern "permission.updated trailing session.idle|message.removed trailing session.idle"`
 
 Expected: 2 个测试 PASS。`isActivityEvent` 对 `permission.updated` / `message.removed` 返回 false → 不执行 `finishedSessions.delete` + `touchActivity` → `lastActive` 不含该 sessionID → `scanStalledSessions` 不发送 → `stallOnly(sent)` 长度为 0。
 
-- [ ] **Step 4: 运行全量测试，验证无回归（tasks 3.1 部分）**
+- [x] **Step 4: 运行全量测试，验证无回归（tasks 3.1 部分）**
 
 Run: `bun test`
 
@@ -199,7 +199,7 @@ Expected: 全部 PASS。重点关注 `stall tracking` describe 块中以下既�
 - `session.created trailing session.idle does not re-activate stall tracking`（第 745 行）：`session.created` 不在 allowlist → 不重新激活 ✓
 - `activity after session.idle re-activates stall tracking`（第 757 行）：`session.status` busy 在 allowlist → 重新激活 ✓
 
-- [ ] **Step 5: 提交**
+- [x] **Step 5: 提交**
 
 ```bash
 git add src/events/event-handler.ts tests/event-handler.test.ts

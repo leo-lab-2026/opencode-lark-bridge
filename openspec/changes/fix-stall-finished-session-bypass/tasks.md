@@ -1,9 +1,9 @@
 ## 1. 核心实现
 
-- [ ] 1.1 在 `src/events/event-handler.ts` 中新增 `isActivityEvent(event)` 函数：仅对 `permission.asked`、`question.asked`、`session.status`（`status.type === "busy"`）返回 true
-- [ ] 1.2 修改入口逻辑：将 `isLifecycleEvent` 替换为 `isActivityEvent`，仅当 `isActivityEvent` 返回 true 时才 `finishedSessions.delete` + `touchActivity`
-- [ ] 1.3 删除 `isLifecycleEvent` 函数（不再使用）
-- [ ] 1.4 移除临时调试日志（`DEBUG:` 前缀的 `logger.debug` 调用）
+- [x] 1.1 在 `src/events/event-handler.ts` 中新增 `isActivityEvent(event)` 函数：仅对 `permission.asked`、`question.asked`、`session.status`（`status.type === "busy"`）返回 true
+- [x] 1.2 修改入口逻辑：将 `isLifecycleEvent` 替换为 `isActivityEvent`，仅当 `isActivityEvent` 返回 true 时才 `finishedSessions.delete` + `touchActivity`
+- [x] 1.3 删除 `isLifecycleEvent` 函数（不再使用）
+- [x] 1.4 移除临时调试日志（`DEBUG:` 前缀的 `logger.debug` 调用）
 
 ## 2. 测试
 
