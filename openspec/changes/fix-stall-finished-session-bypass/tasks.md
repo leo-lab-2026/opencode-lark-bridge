@@ -8,11 +8,11 @@
 ## 2. 测试
 
 - [ ] 2.1 新增测试：已完成会话收到 `session.updated` 事件后不重新激活停滞跟踪（`lastActive` 不含该 sessionID）
-- [ ] 2.2 新增测试：已完成会话收到 `permission.asked` 事件后恢复停滞跟踪
-- [ ] 2.3 新增测试：已完成会话收到 `question.asked` 事件后恢复停滞跟踪
+- [x] 2.2 新增测试：已完成会话收到 `permission.asked` 事件后恢复停滞跟踪
+- [x] 2.3 新增测试：已完成会话收到 `question.asked` 事件后恢复停滞跟踪
 - [ ] 2.4 新增测试：已完成会话收到 `session.status` busy 事件后恢复停滞跟踪
 - [x] 2.5 新增测试：已完成会话收到未知事件类型（如 `message.removed`、`permission.updated`）后不重新激活
-- [ ] 2.6 新增测试：活跃（未完成）会话收到任意事件仍正常 `touchActivity`
+- [x] 2.6 新增测试：活跃（未完成）会话收到任意事件仍正常 `touchActivity`
 
 ## 3. 验证
 

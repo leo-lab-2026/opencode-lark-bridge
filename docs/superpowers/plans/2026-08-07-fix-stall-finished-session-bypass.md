@@ -226,7 +226,7 @@ Remove temporary DEBUG logs."
 - Consumes: `isActivityEvent` allowlist（Task 2 产物）、`createEventHandler`、`makeStallConfig`、`stallOnly`
 - Produces: 3 个回归测试，验证 allowlist 中的活动事件正确重新激活、活跃会话不受影响
 
-- [ ] **Step 1: 编写 `permission.asked` 重新激活测试（tasks 2.2）**
+- [x] **Step 1: 编写 `permission.asked` 重新激活测试（tasks 2.2）**
 
 在 `tests/event-handler.test.ts` 的 `describe("stall tracking", ...)` 块内、`message.removed` 测试之后追加：
 
@@ -244,7 +244,7 @@ Remove temporary DEBUG logs."
   })
 ```
 
-- [ ] **Step 2: 编写 `question.asked` 重新激活测试（tasks 2.3）**
+- [x] **Step 2: 编写 `question.asked` 重新激活测试（tasks 2.3）**
 
 紧接上一个测试之后追加：
 
@@ -265,7 +265,7 @@ Remove temporary DEBUG logs."
   })
 ```
 
-- [ ] **Step 3: 编写活跃会话回归测试（tasks 2.6）**
+- [x] **Step 3: 编写活跃会话回归测试（tasks 2.6）**
 
 紧接上一个测试之后追加：
 
@@ -285,13 +285,13 @@ Remove temporary DEBUG logs."
   })
 ```
 
-- [ ] **Step 4: 运行全量测试，验证全部通过（tasks 3.1）**
+- [x] **Step 4: 运行全量测试，验证全部通过（tasks 3.1）**
 
 Run: `bun test`
 
 Expected: 全部 PASS，包含新增 5 个测试（2 个 bug 验证 + 3 个回归）+ 既有全部测试。新增测试总数确认：`stall tracking` describe 块内原有测试数 + 5。
 
-- [ ] **Step 5: 提交**
+- [x] **Step 5: 提交**
 
 ```bash
 git add tests/event-handler.test.ts

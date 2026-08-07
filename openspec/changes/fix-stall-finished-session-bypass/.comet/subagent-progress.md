@@ -11,10 +11,16 @@
 - OpenSpec task 2.5 checked off
 - Result: 2 failing tests written (RED confirmed), review clean
 
-## Task 2
+## Task 2 (complete)
 
-- Plan task: Task 2 实现 isActivityEvent allowlist 替换（tasks 1.1, 1.2, 1.3, 1.4）
-- OpenSpec task: 1.1, 1.2, 1.3, 1.4
+- Stage: checkoff
+- Commit: ba8ed9dea4fd30340b82841ba501967303ed0b29
+- OpenSpec tasks 1.1-1.4 checked off
+- Result: isActivityEvent allowlist implemented, DEBUG logs removed, 246 tests pass
+
+## Task 3
+
+- Plan task: Task 3 补充回归测试（tasks 2.2, 2.3, 2.6）
+- OpenSpec task: 2.2, 2.3, 2.6
 - Stage: implementing
-- Base commit: e0aae06ee0b13d7f9f00143d0f66d4185cc88615
-- Note: event-handler.ts has uncommitted DEBUG logs from investigation; Task 2 Step 2 removes them
+- Base commit: 88dad85
