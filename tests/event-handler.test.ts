@@ -946,4 +946,45 @@ describe("stall tracking", () => {
     await handler.scanStalledSessions()
     expect(stallOnly(sent)).toHaveLength(0)
   })
+
+  it("permission.asked after session.idle re-activates stall tracking", async () => {
+    const sent: any[] = []
+    const notifier: Notifier = { send: async (m) => { sent.push(m) } }
+    const handler = createEventHandler(makeStallConfig(50), notifier, noopLogger)
+    await handler.handle({ type: "session.created", properties: { info: { id: "ses_1", title: "T" } } })
+    await handler.handle({ type: "session.idle", properties: { sessionID: "ses_1", projectName: "P", sessionTitle: "T" } })
+    await handler.handle({ type: "permission.asked", properties: { sessionID: "ses_1", tool: "bash", args: { command: "rm x" } } })
+    await new Promise((r) => setTimeout(r, 150))
+    await handler.scanStalledSessions()
+    expect(stallOnly(sent)).toHaveLength(1)
+  })
+
+  it("question.asked after session.idle re-activates stall tracking", async () => {
+    const sent: any[] = []
+    const notifier: Notifier = { send: async (m) => { sent.push(m) } }
+    const handler = createEventHandler(makeStallConfig(50), notifier, noopLogger)
+    await handler.handle({ type: "session.created", properties: { info: { id: "ses_1", title: "T" } } })
+    await handler.handle({ type: "session.idle", properties: { sessionID: "ses_1", projectName: "P", sessionTitle: "T" } })
+    await handler.handle({
+      type: "question.asked",
+      properties: { sessionID: "ses_1", id: "q1", projectName: "P", questions: [{ question: "Q?", header: "H", options: [] }] }
+    })
+    await new Promise((r) => setTimeout(r, 150))
+    await handler.scanStalledSessions()
+    expect(stallOnly(sent)).toHaveLength(1)
+  })
+
+  it("active session tracks activity on non-activity events (regression)", async () => {
+    const sent: any[] = []
+    const notifier: Notifier = { send: async (m) => { sent.push(m) } }
+    const handler = createEventHandler(makeStallConfig(50), notifier, noopLogger)
+    await handler.handle({ type: "session.created", properties: { info: { id: "ses_1", title: "T" } } })
+    await new Promise((r) => setTimeout(r, 80))
+    await handler.handle({ type: "message.removed", properties: { sessionID: "ses_1" } })
+    await handler.scanStalledSessions()
+    expect(stallOnly(sent)).toHaveLength(0)
+    await new Promise((r) => setTimeout(r, 100))
+    await handler.scanStalledSessions()
+    expect(stallOnly(sent)).toHaveLength(1)
+  })
 })
