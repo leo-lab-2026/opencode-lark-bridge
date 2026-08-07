@@ -11,7 +11,7 @@
 - **WHEN** 收到某 sessionID 的 `session.created` 事件
 - **THEN** 插件记录该会话的活动起点时间并纳入扫描范围
 
-#### Scenario: 活跃会话事件更新活动时间
+#### Scenario: 事件更新活动时间
 
 - **WHEN** 已追踪且未完成的会话收到任何事件
 - **THEN** 插件更新该会话的最后活动时间

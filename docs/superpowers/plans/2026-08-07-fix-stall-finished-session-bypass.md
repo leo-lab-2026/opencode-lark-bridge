@@ -2,6 +2,7 @@
 change: fix-stall-finished-session-bypass
 design-doc: docs/superpowers/specs/2026-08-07-fix-stall-finished-session-bypass-design.md
 base-ref: e0aae06ee0b13d7f9f00143d0f66d4185cc88615
+archived-with: 2026-08-07-fix-stall-finished-session-bypass
 ---
 
 # 修复已完成会话被非活动事件重新激活停滞跟踪 Implementation Plan

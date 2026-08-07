@@ -2,6 +2,8 @@
 comet_change: fix-stall-finished-session-bypass
 role: technical-design
 canonical_spec: openspec
+archived-with: 2026-08-07-fix-stall-finished-session-bypass
+status: final
 ---
 
 # 修复已完成会话被非活动事件重新激活停滞跟踪
