@@ -1,0 +1,30 @@
+{
+  "change": "fix-stall-finished-session-bypass",
+  "phase": "design",
+  "mode": "beta",
+  "canonical_spec": "openspec",
+  "generated_by": "comet-handoff.sh",
+  "context_hash": "23e116f88bef4151ec0ac420fac21f2a575264ad803f3a4ac68b22e1cf3d016d",
+  "files": [
+    {
+      "path": "openspec/changes/fix-stall-finished-session-bypass/proposal.md",
+      "sha256": "aa159ba6b212201096a5ffee591d672d95aa059e07b8a7024d20eaa7df82154f",
+      "role": "supporting"
+    },
+    {
+      "path": "openspec/changes/fix-stall-finished-session-bypass/design.md",
+      "sha256": "191f7bff40ef22fd91b6e725623ae51ada933163f5e0f265fd8cb9ed83f1e7b1",
+      "role": "supporting"
+    },
+    {
+      "path": "openspec/changes/fix-stall-finished-session-bypass/tasks.md",
+      "sha256": "5cc0a013ba2b6240acfde88ca75e42d3b5b6204ff011242043b2a38a3f322c5e",
+      "role": "supporting"
+    },
+    {
+      "path": "openspec/changes/fix-stall-finished-session-bypass/specs/stall-notification/spec.md",
+      "sha256": "4ef57623d4aa358a9a5cee5eb830eb070fdf5d3aa95c180ec6c4fcc80e352678",
+      "role": "spec"
+    }
+  ]
+}
