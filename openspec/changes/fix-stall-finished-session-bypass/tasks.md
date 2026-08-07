@@ -18,4 +18,4 @@
 
 - [x] 3.1 运行 `bun test` 确保全部测试通过（含新增测试）
 - [x] 3.2 运行 `npm run build` 确保 TypeScript 编译零错误
-- [ ] 3.3 运行 `npm run install:local` 安装插件，触发会话完成，观察日志确认无停滞通知误发
+- [x] 3.3 运行 `npm run install:local` 安装插件，触发会话完成，观察日志确认无停滞通知误发

@@ -327,7 +327,7 @@ Run: `npm run install:local`
 
 Expected: 构建 + 复制到 `.opencode/plugins/opencode-lark-bridge/` + 配置种子成功。
 
-- [ ] **Step 4: 端到端验证（tasks 3.3，手动）**
+- [x] **Step 4: 端到端验证（tasks 3.3，手动）**
 
 触发一次 opencode 会话完成（如执行一个简单任务并等待 `session.idle`），观察插件日志文件：
 
