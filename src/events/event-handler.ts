@@ -19,18 +19,14 @@ export function createEventHandler(config: PluginConfig, notifier: Notifier, log
   const stallMeta = new Map<string, { projectName?: string; sessionTitle?: string }>()
   const finishedSessions = new Set<string>()
 
-  function isLifecycleEvent(event: any): boolean {
+  function isActivityEvent(event: any): boolean {
     const eventType = event?.type ?? event?.name
-    if (
-      eventType === "session.created"
-      || eventType === "session.updated"
-      || eventType === "session.deleted"
-      || eventType === "session.idle"
-      || eventType === "session.error"
-    ) return true
+    if (eventType === "permission.asked" || eventType === "question.asked") {
+      return true
+    }
     if (eventType === "session.status") {
       const status = (event?.properties ?? event)?.status
-      return typeof status === "object" && status?.type === "idle"
+      return typeof status === "object" && status?.type === "busy"
     }
     return false
   }
@@ -184,7 +180,7 @@ export function createEventHandler(config: PluginConfig, notifier: Notifier, log
       const entrySessionID = extractTrackedSessionID(props) ?? "unknown"
       if (entrySessionID !== "unknown") {
         if (finishedSessions.has(entrySessionID)) {
-          if (!isLifecycleEvent(event)) {
+          if (isActivityEvent(event)) {
             finishedSessions.delete(entrySessionID)
             touchActivity(entrySessionID, event)
           }
