@@ -25,10 +25,15 @@
 - OpenSpec tasks 2.2, 2.3, 2.6 checked off
 - Result: 3 regression tests added, 249 tests pass
 
-## Task 4
+## Task 4 (in progress)
 
 - Plan task: Task 4 编译与安装验证（tasks 3.2, 3.3）
-- OpenSpec task: 3.1 (final), 3.2, 3.3
-- Stage: implementing
-- Base commit: (after Task 3 progress commit)
-- Note: pure verification task, no file modifications
+- OpenSpec task: 3.1, 3.2 checked off; 3.3 pending E2E
+- Stage: E2E-manual-verification (BLOCKED on plugin reload)
+- Result so far: npm run build zero errors, bun test 249 pass, npm run install:local success
+- **E2E 状态**: 修复已安装到 .opencode/plugins/opencode-lark-bridge/，但当前 opencode 进程 (16:02 启动) 仍加载旧插件。用户已选择重启 opencode 做 E2E。
+- **E2E 验证步骤**（重启后）:
+  1. 重启 opencode（加载新插件，日志出现新的 "Plugin initialized"）
+  2. 触发一次会话完成（简单任务 → session.idle）
+  3. 观察 .opencode/logs/opencode-lark-bridge.log: session.idle 后 200 秒内不得出现 "Sending stall notification"；不得出现 "DEBUG:" 日志行
+  4. 确认后勾选 plan Step 4 与 tasks 3.3，运行 `comet guard build --apply`
