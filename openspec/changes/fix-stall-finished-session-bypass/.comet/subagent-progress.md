@@ -18,9 +18,17 @@
 - OpenSpec tasks 1.1-1.4 checked off
 - Result: isActivityEvent allowlist implemented, DEBUG logs removed, 246 tests pass
 
-## Task 3
+## Task 3 (complete)
 
-- Plan task: Task 3 补充回归测试（tasks 2.2, 2.3, 2.6）
-- OpenSpec task: 2.2, 2.3, 2.6
+- Stage: checkoff
+- Commit: c3a4bf64629e5d09618fd473985c36bfe8aa17c9
+- OpenSpec tasks 2.2, 2.3, 2.6 checked off
+- Result: 3 regression tests added, 249 tests pass
+
+## Task 4
+
+- Plan task: Task 4 编译与安装验证（tasks 3.2, 3.3）
+- OpenSpec task: 3.1 (final), 3.2, 3.3
 - Stage: implementing
-- Base commit: 88dad85
+- Base commit: (after Task 3 progress commit)
+- Note: pure verification task, no file modifications

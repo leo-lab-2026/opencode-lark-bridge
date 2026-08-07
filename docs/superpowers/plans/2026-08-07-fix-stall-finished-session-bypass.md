@@ -309,19 +309,19 @@ git commit -m "test: add regression tests for isActivityEvent allowlist
 **Files:**
 - 无文件修改
 
-- [ ] **Step 1: TypeScript 编译验证（tasks 3.2）**
+- [x] **Step 1: TypeScript 编译验证（tasks 3.2）**
 
 Run: `npm run build`
 
 Expected: 零错误，`dist/` 目录更新。`isActivityEvent` 使用 `any` 参数类型，符合现有 `isLifecycleEvent` 的类型风格，strict 模式无额外报错。
 
-- [ ] **Step 2: 全量测试最终确认（tasks 3.1 最终）**
+- [x] **Step 2: 全量测试最终确认（tasks 3.1 最终）**
 
 Run: `bun test`
 
 Expected: 全部 PASS。
 
-- [ ] **Step 3: 安装插件到本地（tasks 3.3）**
+- [x] **Step 3: 安装插件到本地（tasks 3.3）**
 
 Run: `npm run install:local`
 
