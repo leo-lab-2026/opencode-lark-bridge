@@ -39,5 +39,8 @@ logs/
 # npm pack artifacts
 *.tgz
 
+# npm auth config (contains token placeholder)
+.npmrc
+
 # Comet runtime selection state (machine-local, not shared)
 .comet/current-change.json
